@@ -336,6 +336,9 @@ class PackageReader {
     } else {
       throw Exception('Unsupported EPUB version: $epubVersionValue.');
     }
+
+    result.Dir = packageNode.getAttribute('dir');
+
     var metadataNode = packageNode
         .findElements('metadata', namespace: opfNamespace)
         .cast<XmlElement?>()

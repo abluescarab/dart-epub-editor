@@ -8,19 +8,17 @@ import 'epub_version.dart';
 
 class EpubPackage {
   EpubVersion? Version;
+
+  /// Paragraph direction/Global base direction. (v3.3)
+  String? Dir;
   EpubMetadata? Metadata;
   EpubManifest? Manifest;
   EpubSpine? Spine;
   EpubGuide? Guide;
 
   @override
-  int get hashCode => hashObjects([
-        Version.hashCode,
-        Metadata.hashCode,
-        Manifest.hashCode,
-        Spine.hashCode,
-        Guide.hashCode
-      ]);
+  int get hashCode =>
+      hashObjects([Version.hashCode, Metadata.hashCode, Manifest.hashCode, Spine.hashCode, Guide.hashCode]);
 
   @override
   bool operator ==(other) {
