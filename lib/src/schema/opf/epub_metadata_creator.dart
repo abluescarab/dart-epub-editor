@@ -1,9 +1,12 @@
 import 'package:quiver/core.dart';
 
+import '../../../epubx.dart';
+
 class EpubMetadataCreator {
   String? Creator;
   String? FileAs;
   String? Role;
+  EpubLanguageRelatedAttributes? LanguageRelatedAttributes;
 
   @override
   int get hashCode => hash3(Creator.hashCode, FileAs.hashCode, Role.hashCode);
