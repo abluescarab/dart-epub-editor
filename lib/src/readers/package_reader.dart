@@ -7,6 +7,7 @@ import 'package:xml/xml.dart';
 
 import '../schema/opf/epub_guide.dart';
 import '../schema/opf/epub_guide_reference.dart';
+import '../schema/opf/epub_language_related_attributes.dart';
 import '../schema/opf/epub_manifest.dart';
 import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata.dart';
@@ -337,7 +338,10 @@ class PackageReader {
       throw Exception('Unsupported EPUB version: $epubVersionValue.');
     }
 
-    result.Dir = packageNode.getAttribute('dir');
+    result.LanguageRelatedAttributes = EpubLanguageRelatedAttributes(
+      XmlLang: packageNode.getAttribute('xml:lang'),
+      Dir: packageNode.getAttribute('dir'),
+    );
 
     var metadataNode = packageNode
         .findElements('metadata', namespace: opfNamespace)

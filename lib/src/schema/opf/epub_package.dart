@@ -1,6 +1,7 @@
 import 'package:quiver/core.dart';
 
 import 'epub_guide.dart';
+import 'epub_language_related_attributes.dart';
 import 'epub_manifest.dart';
 import 'epub_metadata.dart';
 import 'epub_spine.dart';
@@ -8,9 +9,7 @@ import 'epub_version.dart';
 
 class EpubPackage {
   EpubVersion? Version;
-
-  /// Paragraph direction/Global base direction. (v3.3)
-  String? Dir;
+  EpubLanguageRelatedAttributes? LanguageRelatedAttributes;
   EpubMetadata? Metadata;
   EpubManifest? Manifest;
   EpubSpine? Spine;
