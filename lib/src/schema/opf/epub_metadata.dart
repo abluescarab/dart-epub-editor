@@ -6,9 +6,10 @@ import 'epub_metadata_creator.dart';
 import 'epub_metadata_date.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
+import 'epub_metadata_title.dart';
 
 class EpubMetadata {
-  List<String>? Titles;
+  List<EpubMetadataTitle>? Titles;
   List<EpubMetadataCreator>? Creators;
   List<String>? Subjects;
   String? Description;

@@ -16,6 +16,7 @@ import '../schema/opf/epub_metadata_creator.dart';
 import '../schema/opf/epub_metadata_date.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
+import '../schema/opf/epub_metadata_title.dart';
 import '../schema/opf/epub_package.dart';
 import '../schema/opf/epub_spine.dart';
 import '../schema/opf/epub_spine_item_ref.dart';
@@ -110,7 +111,7 @@ class PackageReader {
 
   static EpubMetadata readMetadata(XmlElement metadataNode, EpubVersion? epubVersion) {
     var result = EpubMetadata();
-    result.Titles = <String>[];
+    result.Titles = <EpubMetadataTitle>[];
     result.Creators = <EpubMetadataCreator>[];
     result.Subjects = <String>[];
     result.Publishers = <String>[];
@@ -129,7 +130,16 @@ class PackageReader {
       var innerText = metadataItemNode.text;
       switch (metadataItemNode.name.local.toLowerCase()) {
         case 'title':
-          result.Titles!.add(innerText);
+          result.Titles!.add(
+            EpubMetadataTitle(
+              Id: metadataItemNode.getAttribute('id'),
+              Title: innerText,
+              LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
+                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Dir: metadataItemNode.getAttribute('dir'),
+              ),
+            ),
+          );
           break;
         case 'creator':
           var creator = readMetadataCreator(metadataItemNode);
@@ -325,9 +335,7 @@ class PackageReader {
     }
     var containerDocument = XmlDocument.parse(convert.utf8.decode(rootFileEntry.content));
     var opfNamespace = 'http://www.idpf.org/2007/opf';
-    var packageNode = containerDocument
-        .findElements('package', namespace: opfNamespace)
-        .firstWhere((XmlElement? elem) => elem != null);
+    var packageNode = containerDocument.findElements('package', namespace: opfNamespace).firstWhere((XmlElement? elem) => elem != null);
     var result = EpubPackage();
     var epubVersionValue = packageNode.getAttribute('version');
     if (epubVersionValue == '2.0') {
@@ -343,36 +351,28 @@ class PackageReader {
       Dir: packageNode.getAttribute('dir'),
     );
 
-    var metadataNode = packageNode
-        .findElements('metadata', namespace: opfNamespace)
-        .cast<XmlElement?>()
-        .firstWhere((XmlElement? elem) => elem != null);
+    var metadataNode =
+        packageNode.findElements('metadata', namespace: opfNamespace).cast<XmlElement?>().firstWhere((XmlElement? elem) => elem != null);
     if (metadataNode == null) {
       throw Exception('EPUB parsing error: metadata not found in the package.');
     }
     var metadata = readMetadata(metadataNode, result.Version);
     result.Metadata = metadata;
-    var manifestNode = packageNode
-        .findElements('manifest', namespace: opfNamespace)
-        .cast<XmlElement?>()
-        .firstWhere((XmlElement? elem) => elem != null);
+    var manifestNode =
+        packageNode.findElements('manifest', namespace: opfNamespace).cast<XmlElement?>().firstWhere((XmlElement? elem) => elem != null);
     if (manifestNode == null) {
       throw Exception('EPUB parsing error: manifest not found in the package.');
     }
     var manifest = readManifest(manifestNode);
     result.Manifest = manifest;
 
-    var spineNode = packageNode
-        .findElements('spine', namespace: opfNamespace)
-        .cast<XmlElement?>()
-        .firstWhere((XmlElement? elem) => elem != null);
+    var spineNode = packageNode.findElements('spine', namespace: opfNamespace).cast<XmlElement?>().firstWhere((XmlElement? elem) => elem != null);
     if (spineNode == null) {
       throw Exception('EPUB parsing error: spine not found in the package.');
     }
     var spine = readSpine(spineNode);
     result.Spine = spine;
-    var guideNode =
-        packageNode.findElements('guide', namespace: opfNamespace).firstWhereOrNull((XmlElement? elem) => elem != null);
+    var guideNode = packageNode.findElements('guide', namespace: opfNamespace).firstWhereOrNull((XmlElement? elem) => elem != null);
     if (guideNode != null) {
       var guide = readGuide(guideNode);
       result.Guide = guide;

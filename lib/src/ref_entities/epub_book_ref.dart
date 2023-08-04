@@ -8,13 +8,15 @@ import 'package:quiver/core.dart';
 import '../entities/epub_schema.dart';
 import '../readers/book_cover_reader.dart';
 import '../readers/chapter_reader.dart';
+import '../schema/opf/epub_metadata_title.dart';
 import 'epub_chapter_ref.dart';
 import 'epub_content_ref.dart';
 
 class EpubBookRef {
   Archive? _epubArchive;
 
-  String? Title;
+  /// Main title.
+  EpubMetadataTitle? Title;
   String? Author;
   List<String?>? AuthorList;
   EpubSchema? Schema;
