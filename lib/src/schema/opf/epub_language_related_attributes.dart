@@ -12,4 +12,13 @@ class EpubLanguageRelatedAttributes {
     this.XmlLang,
     this.Dir,
   });
+
+  @override
+  bool operator ==(other) {
+    final otherAs = (other as EpubLanguageRelatedAttributes?);
+
+    if (otherAs == null) return false;
+
+    return ((XmlLang == otherAs.XmlLang) && (Dir == otherAs.Dir));
+  }
 }
