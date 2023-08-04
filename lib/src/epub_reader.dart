@@ -83,7 +83,7 @@ class EpubReader {
 
     var epubBookRef = await openBook(loadedBytes);
     result.Schema = epubBookRef.Schema;
-    result.Title = epubBookRef.Title;
+    result.MainTitle = epubBookRef.Title!;
     result.AuthorList = epubBookRef.AuthorList;
     result.Author = epubBookRef.Author;
     result.Content = await readContent(epubBookRef.Content!);

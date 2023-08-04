@@ -2,12 +2,13 @@ import 'package:image/image.dart';
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
+import '../../epubx.dart' show EpubMetadataTitle;
 import 'epub_chapter.dart';
 import 'epub_content.dart';
 import 'epub_schema.dart';
 
 class EpubBook {
-  String? Title;
+  late EpubMetadataTitle MainTitle;
   String? Author;
   List<String?>? AuthorList;
   EpubSchema? Schema;
@@ -18,7 +19,7 @@ class EpubBook {
   @override
   int get hashCode {
     var objects = [
-      Title.hashCode,
+      MainTitle.hashCode,
       Author.hashCode,
       Schema.hashCode,
       Content.hashCode,
@@ -35,7 +36,7 @@ class EpubBook {
       return false;
     }
 
-    return Title == other.Title &&
+    return MainTitle == other.MainTitle &&
         Author == other.Author &&
         collections.listsEqual(AuthorList, other.AuthorList) &&
         Schema == other.Schema &&
