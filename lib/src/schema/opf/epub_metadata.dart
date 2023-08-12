@@ -4,6 +4,7 @@ import 'package:quiver/core.dart';
 import 'epub_metadata_contributor.dart';
 import 'epub_metadata_creator.dart';
 import 'epub_metadata_date.dart';
+import 'epub_metadata_description.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
 import 'epub_metadata_title.dart';
@@ -12,7 +13,7 @@ class EpubMetadata {
   List<EpubMetadataTitle>? Titles;
   List<EpubMetadataCreator>? Creators;
   List<String>? Subjects;
-  String? Description;
+  List<EpubMetadataDescription>? Descriptions;
   List<String>? Publishers;
   List<EpubMetadataContributor>? Contributors;
   List<EpubMetadataDate>? Dates;
@@ -44,7 +45,7 @@ class EpubMetadata {
       ...Coverages!.map((coverage) => coverage.hashCode),
       ...Rights!.map((right) => right.hashCode),
       ...MetaItems!.map((metaItem) => metaItem.hashCode),
-      Description.hashCode
+      ...Descriptions!.map((description) => description.hashCode),
     ];
 
     return hashObjects(objects);
@@ -54,7 +55,6 @@ class EpubMetadata {
   bool operator ==(other) {
     var otherAs = other as EpubMetadata?;
     if (otherAs == null) return false;
-    if (Description != otherAs.Description) return false;
 
     if (!collections.listsEqual(Titles, otherAs.Titles) ||
         !collections.listsEqual(Creators, otherAs.Creators) ||
@@ -70,7 +70,8 @@ class EpubMetadata {
         !collections.listsEqual(Relations, otherAs.Relations) ||
         !collections.listsEqual(Coverages, otherAs.Coverages) ||
         !collections.listsEqual(Rights, otherAs.Rights) ||
-        !collections.listsEqual(MetaItems, otherAs.MetaItems)) {
+        !collections.listsEqual(MetaItems, otherAs.MetaItems) ||
+        !collections.listsEqual(Descriptions, otherAs.Descriptions)) {
       return false;
     }
 

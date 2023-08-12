@@ -14,6 +14,7 @@ import '../schema/opf/epub_metadata.dart';
 import '../schema/opf/epub_metadata_contributor.dart';
 import '../schema/opf/epub_metadata_creator.dart';
 import '../schema/opf/epub_metadata_date.dart';
+import '../schema/opf/epub_metadata_description.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
 import '../schema/opf/epub_metadata_title.dart';
@@ -112,6 +113,7 @@ class PackageReader {
   static EpubMetadata readMetadata(XmlElement metadataNode, EpubVersion? epubVersion) {
     var result = EpubMetadata();
     result.Titles = <EpubMetadataTitle>[];
+    result.Descriptions = <EpubMetadataDescription>[];
     result.Creators = <EpubMetadataCreator>[];
     result.Subjects = <String>[];
     result.Publishers = <String>[];
@@ -149,7 +151,16 @@ class PackageReader {
           result.Subjects!.add(innerText);
           break;
         case 'description':
-          result.Description = innerText;
+          result.Descriptions!.add(
+            EpubMetadataDescription(
+              Id: metadataItemNode.getAttribute('id'),
+              Description: innerText,
+              LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
+                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Dir: metadataItemNode.getAttribute('dir'),
+              ),
+            ),
+          );
           break;
         case 'publisher':
           result.Publishers!.add(innerText);
