@@ -29,6 +29,7 @@ export 'src/schema/opf/epub_metadata_description.dart';
 export 'src/schema/opf/epub_metadata_publisher.dart';
 export 'src/schema/opf/epub_metadata_right.dart';
 export 'src/schema/opf/epub_metadata_meta.dart';
+export 'src/schema/opf/epub_metadata_date.dart';
 export 'src/schema/opf/epub_version.dart';
 export 'src/schema/navigation/epub_metadata.dart';
 export 'src/schema/navigation/epub_navigation.dart';
