@@ -17,6 +17,7 @@ import '../schema/opf/epub_metadata_date.dart';
 import '../schema/opf/epub_metadata_description.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
+import '../schema/opf/epub_metadata_publisher.dart';
 import '../schema/opf/epub_metadata_title.dart';
 import '../schema/opf/epub_package.dart';
 import '../schema/opf/epub_spine.dart';
@@ -116,7 +117,7 @@ class PackageReader {
     result.Descriptions = <EpubMetadataDescription>[];
     result.Creators = <EpubMetadataCreator>[];
     result.Subjects = <String>[];
-    result.Publishers = <String>[];
+    result.Publishers = <EpubMetadataPublisher>[];
     result.Contributors = <EpubMetadataContributor>[];
     result.Dates = <EpubMetadataDate>[];
     result.Types = <String>[];
@@ -163,7 +164,16 @@ class PackageReader {
           );
           break;
         case 'publisher':
-          result.Publishers!.add(innerText);
+          result.Publishers!.add(
+            EpubMetadataPublisher(
+              Id: metadataItemNode.getAttribute('id'),
+              Publisher: innerText,
+              LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
+                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Dir: metadataItemNode.getAttribute('dir'),
+              ),
+            ),
+          );
           break;
         case 'contributor':
           var contributor = readMetadataContributor(metadataItemNode);
