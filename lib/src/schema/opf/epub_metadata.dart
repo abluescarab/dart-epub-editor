@@ -8,6 +8,7 @@ import 'epub_metadata_description.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
 import 'epub_metadata_publisher.dart';
+import 'epub_metadata_right.dart';
 import 'epub_metadata_title.dart';
 
 class EpubMetadata {
@@ -25,7 +26,7 @@ class EpubMetadata {
   List<String>? Languages;
   List<String>? Relations;
   List<String>? Coverages;
-  List<String>? Rights;
+  List<EpubMetadataRight>? Rights;
   List<EpubMetadataMeta>? MetaItems;
 
   @override

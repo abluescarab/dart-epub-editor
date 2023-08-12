@@ -18,6 +18,7 @@ import '../schema/opf/epub_metadata_description.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
 import '../schema/opf/epub_metadata_publisher.dart';
+import '../schema/opf/epub_metadata_right.dart';
 import '../schema/opf/epub_metadata_title.dart';
 import '../schema/opf/epub_package.dart';
 import '../schema/opf/epub_spine.dart';
@@ -127,7 +128,7 @@ class PackageReader {
     result.Languages = <String>[];
     result.Relations = <String>[];
     result.Coverages = <String>[];
-    result.Rights = <String>[];
+    result.Rights = <EpubMetadataRight>[];
     result.MetaItems = <EpubMetadataMeta>[];
     metadataNode.children.whereType<XmlElement>().forEach((XmlElement metadataItemNode) {
       var innerText = metadataItemNode.text;
@@ -206,7 +207,16 @@ class PackageReader {
           result.Coverages!.add(innerText);
           break;
         case 'rights':
-          result.Rights!.add(innerText);
+          result.Rights!.add(
+            EpubMetadataRight(
+              Id: metadataItemNode.getAttribute('id'),
+              Right: innerText,
+              LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
+                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Dir: metadataItemNode.getAttribute('dir'),
+              ),
+            ),
+          );
           break;
         case 'meta':
           if (epubVersion == EpubVersion.Epub2) {
