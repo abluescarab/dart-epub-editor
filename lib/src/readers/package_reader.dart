@@ -13,6 +13,7 @@ import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata.dart';
 import '../schema/opf/epub_metadata_contributor.dart';
 import '../schema/opf/epub_metadata_creator.dart';
+import '../schema/opf/epub_metadata_creator_alternate_script.dart';
 import '../schema/opf/epub_metadata_date.dart';
 import '../schema/opf/epub_metadata_description.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
@@ -129,7 +130,24 @@ class PackageReader {
     result.Relations = <String>[];
     result.Coverages = <String>[];
     result.Rights = <EpubMetadataRight>[];
-    result.MetaItems = <EpubMetadataMeta>[];
+
+    result.MetaItems = metadataNode.children.whereType<XmlElement>().where(
+      (XmlElement metadataItemNode) {
+        return (metadataItemNode.name.local.toLowerCase() == 'meta');
+      },
+    ).map(
+      (XmlElement metadataMetaNode) {
+        switch (epubVersion) {
+          case EpubVersion.Epub3:
+            return readMetadataMetaVersion3(metadataMetaNode);
+
+          case EpubVersion.Epub2:
+          default:
+            return readMetadataMetaVersion2(metadataMetaNode);
+        }
+      },
+    ).toList();
+
     metadataNode.children.whereType<XmlElement>().forEach((XmlElement metadataItemNode) {
       var innerText = metadataItemNode.text;
       switch (metadataItemNode.name.local.toLowerCase()) {
@@ -147,6 +165,54 @@ class PackageReader {
           break;
         case 'creator':
           var creator = readMetadataCreator(metadataItemNode);
+
+          if (epubVersion == EpubVersion.Epub3) {
+            final Iterable<EpubMetadataMeta> associatedMetaItems = result.MetaItems!.where(
+              (EpubMetadataMeta meta) {
+                meta.Refines = meta.Refines?.trim();
+
+                if (meta.Refines != null && !['', '#'].contains(meta.Refines) && (meta.Refines == '#${creator.Id}')) return true;
+
+                return false;
+              },
+            );
+
+            creator.Role = associatedMetaItems
+                .firstWhereOrNull(
+                  (EpubMetadataMeta meta) => (meta.Property == 'role'),
+                )
+                ?.Content;
+
+            creator.FileAs = associatedMetaItems
+                .firstWhereOrNull(
+                  (EpubMetadataMeta meta) => (meta.Property == 'file-as'),
+                )
+                ?.Content;
+
+            creator.AlternateScripts = (associatedMetaItems
+                .where(
+              (EpubMetadataMeta meta) => (meta.Property == 'alternate-script'),
+            )
+                .map(
+              (EpubMetadataMeta meta) {
+                final EpubLanguageRelatedAttributes languageRelatedAttributes = EpubLanguageRelatedAttributes()
+                  ..XmlLang = meta.Attributes?['xml:lang']
+                  ..Dir = meta.Attributes?['dir'];
+
+                return EpubMetadataCreatorAlternateScript()
+                  ..name = meta.Content // Name in another language.
+                  ..LanguageRelatedAttributes = languageRelatedAttributes;
+              },
+            ).toList());
+
+            creator.DisplaySeq = associatedMetaItems
+                .firstWhereOrNull(
+                  (EpubMetadataMeta meta) => (meta.Property == 'display-seq'),
+                )
+                ?.Content;
+            ;
+          }
+
           result.Creators!.add(creator);
           break;
         case 'subject':
@@ -218,7 +284,7 @@ class PackageReader {
             ),
           );
           break;
-        case 'meta':
+        /*case 'meta':
           if (epubVersion == EpubVersion.Epub2) {
             var meta = readMetadataMetaVersion2(metadataItemNode);
             result.MetaItems!.add(meta);
@@ -226,7 +292,7 @@ class PackageReader {
             var meta = readMetadataMetaVersion3(metadataItemNode);
             result.MetaItems!.add(meta);
           }
-          break;
+          break;*/
       }
     });
     return result;
@@ -267,11 +333,11 @@ class PackageReader {
     metadataCreatorNode.attributes.forEach((XmlAttribute metadataCreatorNodeAttribute) {
       var attributeValue = metadataCreatorNodeAttribute.value;
       switch (metadataCreatorNodeAttribute.name.local.toLowerCase()) {
+        case 'id':
+          result.Id = attributeValue;
+          break;
         case 'xml:lang':
           languageRelatedAttributes.XmlLang = attributeValue;
-          break;
-        case 'dir':
-          languageRelatedAttributes.Dir = attributeValue;
           break;
         case 'role':
           result.Role = attributeValue;
@@ -433,4 +499,6 @@ class PackageReader {
     });
     return result;
   }
+
+  _getMetaItemsAssociatedWith() {}
 }
