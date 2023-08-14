@@ -27,7 +27,8 @@ class EpubMetadataCreator {
   bool operator ==(other) {
     var otherAs = other as EpubMetadataCreator?;
     if (otherAs == null) return false;
-    return (Creator == otherAs.Creator &&
+    return (Id == otherAs.Id &&
+        Creator == otherAs.Creator &&
         FileAs == otherAs.FileAs &&
         Role == otherAs.Role &&
         DisplaySeq == otherAs.DisplaySeq &&

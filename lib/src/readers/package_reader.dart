@@ -164,32 +164,40 @@ class PackageReader {
           );
           break;
         case 'creator':
-          var creator = readMetadataCreator(metadataItemNode);
+        case 'contributor':
+          final String tagName = metadataItemNode.name.local.toLowerCase();
+          var creatorOrContributor;
+
+          if (tagName == 'creator') {
+            creatorOrContributor = readMetadataCreator(metadataItemNode);
+          } else {
+            creatorOrContributor = readMetadataContributor(metadataItemNode);
+          }
 
           if (epubVersion == EpubVersion.Epub3) {
             final Iterable<EpubMetadataMeta> associatedMetaItems = result.MetaItems!.where(
               (EpubMetadataMeta meta) {
                 meta.Refines = meta.Refines?.trim();
 
-                if (meta.Refines != null && !['', '#'].contains(meta.Refines) && (meta.Refines == '#${creator.Id}')) return true;
+                if (meta.Refines != null && !['', '#'].contains(meta.Refines) && (meta.Refines == '#${creatorOrContributor.Id}')) return true;
 
                 return false;
               },
             );
 
-            creator.Role = associatedMetaItems
+            creatorOrContributor.Role = associatedMetaItems
                 .firstWhereOrNull(
                   (EpubMetadataMeta meta) => (meta.Property == 'role'),
                 )
                 ?.Content;
 
-            creator.FileAs = associatedMetaItems
+            creatorOrContributor.FileAs = associatedMetaItems
                 .firstWhereOrNull(
                   (EpubMetadataMeta meta) => (meta.Property == 'file-as'),
                 )
                 ?.Content;
 
-            creator.AlternateScripts = (associatedMetaItems
+            creatorOrContributor.AlternateScripts = (associatedMetaItems
                 .where(
               (EpubMetadataMeta meta) => (meta.Property == 'alternate-script'),
             )
@@ -205,7 +213,7 @@ class PackageReader {
               },
             ).toList());
 
-            creator.DisplaySeq = associatedMetaItems
+            creatorOrContributor.DisplaySeq = associatedMetaItems
                 .firstWhereOrNull(
                   (EpubMetadataMeta meta) => (meta.Property == 'display-seq'),
                 )
@@ -213,7 +221,10 @@ class PackageReader {
             ;
           }
 
-          result.Creators!.add(creator);
+          if (tagName == 'creator')
+            result.Creators!.add(creatorOrContributor);
+          else
+            result.Contributors!.add(creatorOrContributor);
           break;
         case 'subject':
           result.Subjects!.add(innerText);
@@ -242,10 +253,7 @@ class PackageReader {
             ),
           );
           break;
-        case 'contributor':
-          var contributor = readMetadataContributor(metadataItemNode);
-          result.Contributors!.add(contributor);
-          break;
+
         case 'date':
           var date = readMetadataDate(metadataItemNode);
           result.Dates!.add(date);
@@ -304,11 +312,11 @@ class PackageReader {
     metadataContributorNode.attributes.forEach((XmlAttribute metadataContributorNodeAttribute) {
       var attributeValue = metadataContributorNodeAttribute.value;
       switch (metadataContributorNodeAttribute.name.local.toLowerCase()) {
+        case 'id':
+          result.Id = attributeValue;
+          break;
         case 'xml:lang':
           languageRelatedAttributes.XmlLang = attributeValue;
-          break;
-        case 'dir':
-          languageRelatedAttributes.Dir = attributeValue;
           break;
         case 'role':
           result.Role = attributeValue;
