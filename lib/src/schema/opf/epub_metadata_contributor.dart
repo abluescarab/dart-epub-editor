@@ -9,7 +9,7 @@ class EpubMetadataContributor {
   String? Contributor;
   String? FileAs;
   String? Role;
-  String? DisplaySeq;
+  int? DisplaySeq;
 
   /// meta[property="alternate-script"] (v3.0).
   List<EpubMetadataCreatorAlternateScript>? AlternateScripts;

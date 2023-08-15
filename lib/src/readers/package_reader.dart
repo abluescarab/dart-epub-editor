@@ -179,7 +179,7 @@ class PackageReader {
               (EpubMetadataMeta meta) {
                 meta.Refines = meta.Refines?.trim();
 
-                if (meta.Refines != null && !['', '#'].contains(meta.Refines) && (meta.Refines == '#${creatorOrContributor.Id}')) return true;
+                if (creatorOrContributor.Id != null && (meta.Refines == '#${creatorOrContributor.Id}')) return true;
 
                 return false;
               },
@@ -206,18 +206,20 @@ class PackageReader {
                 final EpubLanguageRelatedAttributes languageRelatedAttributes = EpubLanguageRelatedAttributes()
                   ..XmlLang = meta.Attributes?['xml:lang']
                   ..Dir = meta.Attributes?['dir'];
-
-                return EpubMetadataCreatorAlternateScript()
+                final EpubMetadataCreatorAlternateScript alternateScript = EpubMetadataCreatorAlternateScript()
                   ..name = meta.Content // Name in another language.
                   ..LanguageRelatedAttributes = languageRelatedAttributes;
+
+                return alternateScript;
               },
             ).toList());
 
-            creatorOrContributor.DisplaySeq = associatedMetaItems
-                .firstWhereOrNull(
-                  (EpubMetadataMeta meta) => (meta.Property == 'display-seq'),
-                )
-                ?.Content;
+            creatorOrContributor.DisplaySeq = int.tryParse(associatedMetaItems
+                    .firstWhereOrNull(
+                      (EpubMetadataMeta meta) => (meta.Property == 'display-seq'),
+                    )
+                    ?.Content ??
+                '');
             ;
           }
 
