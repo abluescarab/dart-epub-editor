@@ -157,7 +157,7 @@ class PackageReader {
               Id: metadataItemNode.getAttribute('id'),
               Title: innerText,
               LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
-                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Lang: metadataItemNode.getAttribute('lang'),
                 Dir: metadataItemNode.getAttribute('dir'),
               ),
             ),
@@ -204,7 +204,7 @@ class PackageReader {
                 .map(
               (EpubMetadataMeta meta) {
                 final EpubLanguageRelatedAttributes languageRelatedAttributes = EpubLanguageRelatedAttributes()
-                  ..XmlLang = meta.Attributes?['xml:lang']
+                  ..Lang = meta.Attributes?['lang']
                   ..Dir = meta.Attributes?['dir'];
                 final EpubMetadataCreatorAlternateScript alternateScript = EpubMetadataCreatorAlternateScript()
                   ..name = meta.Content // Name in another language.
@@ -237,7 +237,7 @@ class PackageReader {
               Id: metadataItemNode.getAttribute('id'),
               Description: innerText,
               LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
-                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Lang: metadataItemNode.getAttribute('lang'),
                 Dir: metadataItemNode.getAttribute('dir'),
               ),
             ),
@@ -249,7 +249,7 @@ class PackageReader {
               Id: metadataItemNode.getAttribute('id'),
               Publisher: innerText,
               LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
-                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Lang: metadataItemNode.getAttribute('lang'),
                 Dir: metadataItemNode.getAttribute('dir'),
               ),
             ),
@@ -288,7 +288,7 @@ class PackageReader {
               Id: metadataItemNode.getAttribute('id'),
               Right: innerText,
               LanguageRelatedAttributes: EpubLanguageRelatedAttributes(
-                XmlLang: metadataItemNode.getAttribute('xml:lang'),
+                Lang: metadataItemNode.getAttribute('lang'),
                 Dir: metadataItemNode.getAttribute('dir'),
               ),
             ),
@@ -317,8 +317,8 @@ class PackageReader {
         case 'id':
           result.Id = attributeValue;
           break;
-        case 'xml:lang':
-          languageRelatedAttributes.XmlLang = attributeValue;
+        case 'lang':
+          languageRelatedAttributes.Lang = attributeValue;
           break;
         case 'role':
           result.Role = attributeValue;
@@ -329,7 +329,7 @@ class PackageReader {
       }
     });
 
-    if (languageRelatedAttributes.XmlLang != null || languageRelatedAttributes.Dir != null) {
+    if (languageRelatedAttributes.Lang != null || languageRelatedAttributes.Dir != null) {
       result.LanguageRelatedAttributes = languageRelatedAttributes;
     }
 
@@ -346,8 +346,8 @@ class PackageReader {
         case 'id':
           result.Id = attributeValue;
           break;
-        case 'xml:lang':
-          languageRelatedAttributes.XmlLang = attributeValue;
+        case 'lang':
+          languageRelatedAttributes.Lang = attributeValue;
           break;
         case 'role':
           result.Role = attributeValue;
@@ -358,7 +358,7 @@ class PackageReader {
       }
     });
 
-    if (languageRelatedAttributes.XmlLang != null || languageRelatedAttributes.Dir != null) {
+    if (languageRelatedAttributes.Lang != null || languageRelatedAttributes.Dir != null) {
       result.LanguageRelatedAttributes = languageRelatedAttributes;
     }
 
@@ -454,7 +454,7 @@ class PackageReader {
     }
 
     result.LanguageRelatedAttributes = EpubLanguageRelatedAttributes(
-      XmlLang: packageNode.getAttribute('xml:lang'),
+      Lang: packageNode.getAttribute('lang'),
       Dir: packageNode.getAttribute('dir'),
     );
 

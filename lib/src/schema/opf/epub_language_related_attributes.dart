@@ -1,6 +1,6 @@
 class EpubLanguageRelatedAttributes {
   /// https://www.w3.org/TR/epub-33/#attrdef-xml-lang
-  String? XmlLang;
+  String? Lang;
 
   /// Paragraph direction/Global base direction. (v3.0)
   ///
@@ -9,7 +9,7 @@ class EpubLanguageRelatedAttributes {
   String? Dir;
 
   EpubLanguageRelatedAttributes({
-    this.XmlLang,
+    this.Lang,
     this.Dir,
   });
 
@@ -19,6 +19,6 @@ class EpubLanguageRelatedAttributes {
 
     if (otherAs == null) return false;
 
-    return ((XmlLang == otherAs.XmlLang) && (Dir == otherAs.Dir));
+    return ((Lang == otherAs.Lang) && (Dir == otherAs.Dir));
   }
 }
