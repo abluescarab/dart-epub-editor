@@ -9,6 +9,7 @@ import '../entities/epub_schema.dart';
 import '../readers/book_cover_reader.dart';
 import '../readers/chapter_reader.dart';
 import '../schema/opf/epub_metadata_title.dart';
+import 'epub_byte_content_file_ref.dart';
 import 'epub_chapter_ref.dart';
 import 'epub_content_ref.dart';
 
@@ -58,7 +59,7 @@ class EpubBookRef {
     return ChapterReader.getChapters(this);
   }
 
-  Future<Image?> readCover() async {
+  Future<EpubByteContentFileRef?> readCover() async {
     return await BookCoverReader.readBookCover(this);
   }
 }

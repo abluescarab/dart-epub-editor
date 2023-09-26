@@ -3,6 +3,7 @@ import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
 import '../../epubx.dart' show EpubMetadataTitle;
+import '../ref_entities/epub_byte_content_file_ref.dart';
 import 'epub_chapter.dart';
 import 'epub_content.dart';
 import 'epub_schema.dart';
@@ -13,7 +14,7 @@ class EpubBook {
   List<String?>? AuthorList;
   EpubSchema? Schema;
   EpubContent? Content;
-  Image? CoverImage;
+  EpubByteContentFileRef? CoverImage;
   List<EpubChapter>? Chapters;
 
   @override
@@ -23,7 +24,7 @@ class EpubBook {
       Author.hashCode,
       Schema.hashCode,
       Content.hashCode,
-      ...CoverImage?.getBytes().map((byte) => byte.hashCode) ?? [0],
+      ...CoverImage?.getContentStream().map((byte) => byte.hashCode) ?? [0],
       ...AuthorList?.map((author) => author.hashCode) ?? [0],
       ...Chapters?.map((chapter) => chapter.hashCode) ?? [0],
     ];
@@ -42,7 +43,7 @@ class EpubBook {
         Schema == other.Schema &&
         Content == other.Content &&
         collections.listsEqual(
-            CoverImage!.getBytes(), other.CoverImage!.getBytes()) &&
+            CoverImage!.getContentStream(), other.CoverImage!.getContentStream()) &&
         collections.listsEqual(Chapters, other.Chapters);
   }
 }

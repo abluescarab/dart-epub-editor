@@ -137,14 +137,16 @@ class PackageReader {
       },
     ).map(
       (XmlElement metadataMetaNode) {
-        switch (epubVersion) {
+        return readMetadataMeta(metadataMetaNode);
+
+        /*switch (epubVersion) {
           case EpubVersion.Epub3:
-            return readMetadataMetaVersion3(metadataMetaNode);
+            return readMetadataMeta(metadataMetaNode);
 
           case EpubVersion.Epub2:
           default:
             return readMetadataMetaVersion2(metadataMetaNode);
-        }
+        }*/
       },
     ).toList();
 
@@ -394,7 +396,7 @@ class PackageReader {
     return result;
   }
 
-  static EpubMetadataMeta readMetadataMetaVersion2(XmlElement metadataMetaNode) {
+  /*static EpubMetadataMeta readMetadataMetaVersion2(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
       var attributeValue = metadataMetaNodeAttribute.value;
@@ -408,17 +410,24 @@ class PackageReader {
       }
     });
     return result;
-  }
+  }*/
 
-  static EpubMetadataMeta readMetadataMetaVersion3(XmlElement metadataMetaNode) {
+  /// [readMetadata MetaVersion2] and [readMetadata MetaVersion3] have been merged for backward compatibility.
+  static EpubMetadataMeta readMetadataMeta(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
-    result.Attributes = {};
+    var languageRelatedAttributes = EpubLanguageRelatedAttributes();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
       var attributeValue = metadataMetaNodeAttribute.value;
       result.Attributes![metadataMetaNodeAttribute.name.local.toLowerCase()] = attributeValue;
       switch (metadataMetaNodeAttribute.name.local.toLowerCase()) {
         case 'id':
           result.Id = attributeValue;
+          break;
+        case 'name':
+          result.Name = attributeValue;
+          break;
+        case 'content':
+          result.Content = attributeValue;
           break;
         case 'refines':
           result.Refines = attributeValue;
@@ -429,8 +438,16 @@ class PackageReader {
         case 'scheme':
           result.Scheme = attributeValue;
           break;
+        case 'lang':
+        case 'xml:lang':
+          languageRelatedAttributes.Lang = attributeValue;
+          break;
+        case 'dir':
+          languageRelatedAttributes.Dir = attributeValue;
+          break;
       }
     });
+    result.LanguageRelatedAttributes = languageRelatedAttributes;
     result.Content = metadataMetaNode.text;
     return result;
   }
