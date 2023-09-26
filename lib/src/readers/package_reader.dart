@@ -415,6 +415,9 @@ class PackageReader {
   /// [readMetadata MetaVersion2] and [readMetadata MetaVersion3] have been merged for backward compatibility.
   static EpubMetadataMeta readMetadataMeta(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
+
+    result.Attributes = {};
+    
     var languageRelatedAttributes = EpubLanguageRelatedAttributes();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
       var attributeValue = metadataMetaNodeAttribute.value;
