@@ -191,13 +191,13 @@ class PackageReader {
                 .firstWhereOrNull(
                   (EpubMetadataMeta meta) => (meta.Property == 'role'),
                 )
-                ?.Content;
+                ?.TextContent;
 
             creatorOrContributor.FileAs = associatedMetaItems
                 .firstWhereOrNull(
                   (EpubMetadataMeta meta) => (meta.Property == 'file-as'),
                 )
-                ?.Content;
+                ?.TextContent;
 
             creatorOrContributor.AlternateScripts = (associatedMetaItems
                 .where(
@@ -209,7 +209,7 @@ class PackageReader {
                   ..Lang = meta.Attributes?['lang']
                   ..Dir = meta.Attributes?['dir'];
                 final EpubMetadataCreatorAlternateScript alternateScript = EpubMetadataCreatorAlternateScript()
-                  ..name = meta.Content // Name in another language.
+                  ..name = meta.TextContent // Name in another language.
                   ..LanguageRelatedAttributes = languageRelatedAttributes;
 
                 return alternateScript;
@@ -220,7 +220,7 @@ class PackageReader {
                     .firstWhereOrNull(
                       (EpubMetadataMeta meta) => (meta.Property == 'display-seq'),
                     )
-                    ?.Content ??
+                    ?.TextContent ??
                 '');
             ;
           }
@@ -415,14 +415,17 @@ class PackageReader {
   /// [readMetadata MetaVersion2] and [readMetadata MetaVersion3] have been merged for backward compatibility.
   static EpubMetadataMeta readMetadataMeta(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
+    var languageRelatedAttributes = EpubLanguageRelatedAttributes();
 
     result.Attributes = {};
 
-    var languageRelatedAttributes = EpubLanguageRelatedAttributes();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
+      var attributeName = metadataMetaNodeAttribute.name.local.toLowerCase();
       var attributeValue = metadataMetaNodeAttribute.value;
-      result.Attributes![metadataMetaNodeAttribute.name.local.toLowerCase()] = attributeValue;
-      switch (metadataMetaNodeAttribute.name.local.toLowerCase()) {
+
+      result.Attributes![attributeName] = attributeValue;
+
+      switch (attributeName) {
         case 'id':
           result.Id = attributeValue;
           break;
@@ -450,8 +453,10 @@ class PackageReader {
           break;
       }
     });
+
     result.LanguageRelatedAttributes = languageRelatedAttributes;
-    result.Content = metadataMetaNode.text;
+    result.TextContent = metadataMetaNode.text;
+
     return result;
   }
 

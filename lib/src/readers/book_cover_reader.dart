@@ -21,6 +21,9 @@ class BookCoverReader {
         },
       );
 
+      /*print('Manifest item (cover)');
+      print('Properties: ${coverImageItem?.Properties}|MediaType: ${coverImageItem?.MediaType}|Href: ${coverImageItem?.Href}');*/
+
       if (coverImageItem != null) {
         var epubByteContentFileRef = bookRef.Content?.Images?[coverImageItem.Href];
 
@@ -34,8 +37,13 @@ class BookCoverReader {
     if (metaItems == null || metaItems.length == 0) return null;
 
     var coverMetaItem = metaItems.firstWhereOrNull((EpubMetadataMeta metaItem) => metaItem.Name != null && metaItem.Name!.toLowerCase() == 'cover');
+
     if (coverMetaItem == null) return null;
-    if (coverMetaItem.Content == null || [null, ''].contains(coverMetaItem.Content)) {
+
+    /*print('Meta item (cover)');
+    print('name: ${coverMetaItem.Name}|property: ${coverMetaItem.Property}|content: ${coverMetaItem.Content}');*/
+
+    if ([null, '', ' '].contains(coverMetaItem.Content)) {
       throw Exception('Incorrect EPUB metadata: cover item content is missing.');
     }
 
@@ -51,10 +59,6 @@ class BookCoverReader {
     }
 
     EpubByteContentFileRef? coverImageContentFileRef = bookRef.Content!.Images![coverManifestItem.Href];
-
-    /*var coverImageContent =
-        await coverImageContentFileRef!.readContentAsBytes();
-    var retval = images.decodeImage(coverImageContent);*/
 
     return coverImageContentFileRef;
   }

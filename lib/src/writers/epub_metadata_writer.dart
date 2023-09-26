@@ -77,8 +77,8 @@ class EpubMetadataWriter {
                 if (metaitem.Name != null) {
                   builder.attribute('name', metaitem.Name!);
                 }
-                if (metaitem.Content != null) {
-                  builder.attribute('content', metaitem.Content!);
+                if (metaitem.TextContent != null) {
+                  builder.attribute('content', metaitem.TextContent!);
                 }
               } else if (version == EpubVersion.Epub3) {
                 if (metaitem.Id != null) {

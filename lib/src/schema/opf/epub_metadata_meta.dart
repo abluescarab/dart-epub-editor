@@ -5,6 +5,7 @@ import 'epub_language_related_attributes.dart';
 class EpubMetadataMeta {
   String? Name;
   String? Content;
+  String? TextContent;
   String? Id;
   String? Refines;
   String? Property;
@@ -16,6 +17,7 @@ class EpubMetadataMeta {
   int get hashCode => hashObjects([
         Name.hashCode,
         Content.hashCode,
+        TextContent.hashCode,
         Id.hashCode,
         Refines.hashCode,
         Property.hashCode,
@@ -29,6 +31,7 @@ class EpubMetadataMeta {
     if (otherAs == null) return false;
     return Name == otherAs.Name &&
         Content == otherAs.Content &&
+        TextContent == otherAs.TextContent &&
         Id == otherAs.Id &&
         Refines == otherAs.Refines &&
         Property == otherAs.Property &&
