@@ -14,19 +14,19 @@ class BookCoverReader {
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
-    if (manifest == null || manifest.Items == null || manifest.Items!.length == 0) return null;
+    if (manifest?.Items != null && manifest!.Items!.length > 0) {
+      var coverImageItem = manifest.Items!.firstWhereOrNull(
+        (EpubManifestItem epubManifestItem) {
+          return (epubManifestItem.Properties == 'cover-image');
+        },
+      );
 
-    var coverImageItem = manifest.Items!.firstWhereOrNull(
-      (EpubManifestItem epubManifestItem) {
-        return (epubManifestItem.Properties == 'cover-image');
-      },
-    );
+      if (coverImageItem != null) {
+        var epubByteContentFileRef = bookRef.Content?.Images?[coverImageItem.Href];
 
-    if (coverImageItem == null) return null;
-
-    var epubByteContentFileRef = bookRef.Content?.Images?[coverImageItem.Href];
-
-    if (epubByteContentFileRef != null) return epubByteContentFileRef;
+        if (epubByteContentFileRef != null) return epubByteContentFileRef;
+      }
+    }
 
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.

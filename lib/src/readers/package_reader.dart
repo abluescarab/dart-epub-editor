@@ -417,7 +417,7 @@ class PackageReader {
     var result = EpubMetadataMeta();
 
     result.Attributes = {};
-    
+
     var languageRelatedAttributes = EpubLanguageRelatedAttributes();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
       var attributeValue = metadataMetaNodeAttribute.value;
