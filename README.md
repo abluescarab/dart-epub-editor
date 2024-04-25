@@ -17,7 +17,7 @@ Add the package to the ```dependencies``` section of your pubspec.yaml
 dependencies:
   epubxposed: 
     git:
-      url: https://github.com/abluescarab/epubxposed.git
+      url: https://github.com/abluescarab/dart-epubxposed.git
       ref: dev
 ```
 
