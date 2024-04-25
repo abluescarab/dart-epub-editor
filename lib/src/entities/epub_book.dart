@@ -2,7 +2,7 @@ import 'package:image/image.dart';
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
-import '../../epubx.dart' show EpubMetadataTitle;
+import '../../epub_editor.dart' show EpubMetadataTitle;
 import '../ref_entities/epub_byte_content_file_ref.dart';
 import 'epub_chapter.dart';
 import 'epub_content.dart';

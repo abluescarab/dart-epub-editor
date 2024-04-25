@@ -1,4 +1,4 @@
-import 'package:epubx/src/schema/opf/epub_guide.dart';
+import 'package:epub_editor/src/schema/opf/epub_guide.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 
 class EpubGuideWriter {

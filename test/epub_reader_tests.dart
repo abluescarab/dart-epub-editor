@@ -4,7 +4,7 @@ import 'dart:io' as io;
 
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
-import 'package:epubx/epubx.dart';
+import 'package:epub_editor/epub_editor.dart';
 
 main() async {
   String fileName = "stevenson-a-childs-garden-of-verses-illustrations.epub";

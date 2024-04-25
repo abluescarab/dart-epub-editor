@@ -1,4 +1,4 @@
-import '../../../epubx.dart' show EpubLanguageRelatedAttributes;
+import '../../../epub_editor.dart' show EpubLanguageRelatedAttributes;
 
 /// Represents a description of the EPUB book.
 ///
