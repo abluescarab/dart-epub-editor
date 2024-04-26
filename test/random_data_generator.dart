@@ -28,14 +28,14 @@ class RandomString {
 
   RandomString(this.rng) {}
 
-  static const ASCII_START = 33;
-  static const ASCII_END = 126;
-  static const NUMERIC_START = 48;
-  static const NUMERIC_END = 57;
-  static const LOWER_ALPHA_START = 97;
-  static const LOWER_ALPHA_END = 122;
-  static const UPPER_ALPHA_START = 65;
-  static const UPPER_ALPHA_END = 90;
+  static const asciiStart = 33;
+  static const asciiEnd = 126;
+  static const numericStart = 48;
+  static const numericEnd = 57;
+  static const lowerAlphaStart = 97;
+  static const lowerAlphaEnd = 122;
+  static const upperAlphaStart = 65;
+  static const upperAlphaEnd = 90;
 
   /// Generates a random integer where [from] <= [to].
   int randomBetween(int from, int to) {
@@ -46,23 +46,23 @@ class RandomString {
   /// Generates a random string of [length] with characters
   /// between ascii [from] to [to].
   /// Defaults to characters of ascii '!' to '~'.
-  String randomString(int length, {int from: ASCII_START, int to: ASCII_END}) {
+  String randomString(int length, {int from: asciiStart, int to: asciiEnd}) {
     return new String.fromCharCodes(
         new List.generate(length, (index) => randomBetween(from, to)));
   }
 
   /// Generates a random string of [length] with only numeric characters.
   String randomNumeric(int length) =>
-      randomString(length, from: NUMERIC_START, to: NUMERIC_END);
+      randomString(length, from: numericStart, to: numericEnd);
 
   /// Generates a random string of [length] with only alpha characters.
   String randomAlpha(int length) {
     var lowerAlphaLength = randomBetween(0, length);
     var upperAlphaLength = length - lowerAlphaLength;
     var lowerAlpha = randomString(lowerAlphaLength,
-        from: LOWER_ALPHA_START, to: LOWER_ALPHA_END);
+        from: lowerAlphaStart, to: lowerAlphaEnd);
     var upperAlpha = randomString(upperAlphaLength,
-        from: UPPER_ALPHA_START, to: UPPER_ALPHA_END);
+        from: upperAlphaStart, to: upperAlphaEnd);
     return randomMerge(lowerAlpha, upperAlpha);
   }
 
