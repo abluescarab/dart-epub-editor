@@ -15,7 +15,7 @@ main() async {
 
   EpubNavigationLabel testNavigationLabel;
   setUp(() async {
-    testNavigationLabel = new EpubNavigationLabel()..Text = reference.Text;
+    testNavigationLabel = new EpubNavigationLabel()..text = reference.text;
   });
   tearDown(() async {
     testNavigationLabel = null;
@@ -27,7 +27,7 @@ main() async {
       });
 
       test("is false when Text changes", () async {
-        testNavigationLabel.Text = generator.randomString();
+        testNavigationLabel.text = generator.randomString();
         expect(testNavigationLabel, isNot(reference));
       });
     });
@@ -38,7 +38,7 @@ main() async {
       });
 
       test("is false when Metadata changes", () async {
-        testNavigationLabel.Text = generator.randomString();
+        testNavigationLabel.text = generator.randomString();
         expect(testNavigationLabel.hashCode, isNot(reference.hashCode));
       });
     });

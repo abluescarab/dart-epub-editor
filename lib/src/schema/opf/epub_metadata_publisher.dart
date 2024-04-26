@@ -4,15 +4,15 @@ import '../../../epub_editor.dart' show EpubLanguageRelatedAttributes;
 ///
 /// https://os.vers.one/EpubReader/reference/VersOne.Epub.Schema.EpubMetadataPublisher.html
 class EpubMetadataPublisher {
-  String? Id;
+  String? id;
   /// The text content of this publisher.
-  String Publisher;
-  EpubLanguageRelatedAttributes LanguageRelatedAttributes;
+  String publisher;
+  EpubLanguageRelatedAttributes languageRelatedAttributes;
 
   EpubMetadataPublisher({
-    required this.Id,
-    required this.Publisher,
-    required this.LanguageRelatedAttributes,
+    required this.id,
+    required this.publisher,
+    required this.languageRelatedAttributes,
   });
 
   @override
@@ -21,6 +21,6 @@ class EpubMetadataPublisher {
 
     if (otherAs == null) return false;
 
-    return ((Id == otherAs.Id) && (Publisher == otherAs.Publisher) && (LanguageRelatedAttributes == otherAs.LanguageRelatedAttributes));
+    return ((id == otherAs.id) && (publisher == otherAs.publisher) && (languageRelatedAttributes == otherAs.languageRelatedAttributes));
   }
 }

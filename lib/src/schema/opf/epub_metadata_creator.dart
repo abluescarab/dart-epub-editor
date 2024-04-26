@@ -5,33 +5,33 @@ import '../../../epub_editor.dart';
 import 'epub_metadata_creator_alternate_script.dart';
 
 class EpubMetadataCreator {
-  String? Id;
-  String? Creator;
-  String? FileAs;
-  String? Role;
-  int? DisplaySeq;
+  String? id;
+  String? creator;
+  String? fileAs;
+  String? role;
+  int? displaySeq;
 
   /// meta[property="alternate-script"] (v3.0).
-  List<EpubMetadataCreatorAlternateScript>? AlternateScripts;
-  EpubLanguageRelatedAttributes? LanguageRelatedAttributes;
+  List<EpubMetadataCreatorAlternateScript>? alternateScripts;
+  EpubLanguageRelatedAttributes? languageRelatedAttributes;
 
   @override
   int get hashCode => hash4(
-        Id.hashCode,
-        Creator.hashCode,
-        FileAs.hashCode,
-        Role.hashCode,
+        id.hashCode,
+        creator.hashCode,
+        fileAs.hashCode,
+        role.hashCode,
       );
 
   @override
   bool operator ==(other) {
     var otherAs = other as EpubMetadataCreator?;
     if (otherAs == null) return false;
-    return (Id == otherAs.Id &&
-        Creator == otherAs.Creator &&
-        FileAs == otherAs.FileAs &&
-        Role == otherAs.Role &&
-        DisplaySeq == otherAs.DisplaySeq &&
-        listsEqual(AlternateScripts, otherAs.AlternateScripts));
+    return (id == otherAs.id &&
+        creator == otherAs.creator &&
+        fileAs == otherAs.fileAs &&
+        role == otherAs.role &&
+        displaySeq == otherAs.displaySeq &&
+        listsEqual(alternateScripts, otherAs.alternateScripts));
   }
 }

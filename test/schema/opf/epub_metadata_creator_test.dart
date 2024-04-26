@@ -5,16 +5,16 @@ import 'package:test/test.dart';
 
 main() async {
   var reference = new EpubMetadataCreator()
-    ..Creator = "orthros"
-    ..FileAs = "Large"
-    ..Role = "Creator";
+    ..creator = "orthros"
+    ..fileAs = "Large"
+    ..role = "Creator";
 
   EpubMetadataCreator testMetadataCreator;
   setUp(() async {
     testMetadataCreator = new EpubMetadataCreator()
-      ..Creator = reference.Creator
-      ..FileAs = reference.FileAs
-      ..Role = reference.Role;
+      ..creator = reference.creator
+      ..fileAs = reference.fileAs
+      ..role = reference.role;
   });
   tearDown(() async {
     testMetadataCreator = null;
@@ -27,15 +27,15 @@ main() async {
       });
 
       test("is false when Creator changes", () async {
-        testMetadataCreator.Creator = "NotOrthros";
+        testMetadataCreator.creator = "NotOrthros";
         expect(testMetadataCreator, isNot(reference));
       });
       test("is false when FileAs changes", () async {
-        testMetadataCreator.FileAs = "Small";
+        testMetadataCreator.fileAs = "Small";
         expect(testMetadataCreator, isNot(reference));
       });
       test("is false when Role changes", () async {
-        testMetadataCreator.Role = "Copier";
+        testMetadataCreator.role = "Copier";
         expect(testMetadataCreator, isNot(reference));
       });
     });
@@ -46,15 +46,15 @@ main() async {
       });
 
       test("is false when Creator changes", () async {
-        testMetadataCreator.Creator = "NotOrthros";
+        testMetadataCreator.creator = "NotOrthros";
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });
       test("is false when FileAs changes", () async {
-        testMetadataCreator.FileAs = "Small";
+        testMetadataCreator.fileAs = "Small";
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });
       test("is false when Role changes", () async {
-        testMetadataCreator.Role = "Copier";
+        testMetadataCreator.role = "Copier";
         expect(testMetadataCreator.hashCode, isNot(reference.hashCode));
       });
     });

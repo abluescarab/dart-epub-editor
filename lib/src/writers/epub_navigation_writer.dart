@@ -18,9 +18,9 @@ class EpubNavigationWriter {
     }, nest: () {
       builder.namespace(_namespace);
 
-      writeNavigationHead(builder, navigation.Head!);
-      writeNavigationDocTitle(builder, navigation.DocTitle!);
-      writeNavigationMap(builder, navigation.NavMap!);
+      writeNavigationHead(builder, navigation.head!);
+      writeNavigationDocTitle(builder, navigation.docTitle!);
+      writeNavigationMap(builder, navigation.navMap!);
     });
 
     return builder.buildDocument().toXmlString(pretty: false);
@@ -29,7 +29,7 @@ class EpubNavigationWriter {
   static void writeNavigationDocTitle(
       XmlBuilder builder, EpubNavigationDocTitle title) {
     builder.element('docTitle', nest: () {
-      title.Titles!.forEach((element) {
+      title.titles!.forEach((element) {
         builder.text(element);
       });
     });
@@ -37,31 +37,31 @@ class EpubNavigationWriter {
 
   static void writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
     builder.element('head', nest: () {
-      head.Metadata!.forEach((item) => builder.element('meta',
-          attributes: {'content': item.Content!, 'name': item.Name!}));
+      head.metadata!.forEach((item) => builder.element('meta',
+          attributes: {'content': item.content!, 'name': item.name!}));
     });
   }
 
   static void writeNavigationMap(XmlBuilder builder, EpubNavigationMap map) {
     builder.element('navMap', nest: () {
-      map.Points!.forEach((item) => writeNavigationPoint(builder, item));
+      map.points!.forEach((item) => writeNavigationPoint(builder, item));
     });
   }
 
   static void writeNavigationPoint(
       XmlBuilder builder, EpubNavigationPoint point) {
     builder.element('navPoint', attributes: {
-      'id': point.Id!,
-      'playOrder': point.PlayOrder!,
+      'id': point.id!,
+      'playOrder': point.playOrder!,
     }, nest: () {
-      point.NavigationLabels!.forEach((element) {
+      point.navigationLabels!.forEach((element) {
         builder.element('navLabel', nest: () {
           builder.element('text', nest: () {
-            builder.text(element.Text!);
+            builder.text(element.text!);
           });
         });
       });
-      builder.element('content', attributes: {'src': point.Content!.Source!});
+      builder.element('content', attributes: {'src': point.content!.source!});
     });
   }
 }

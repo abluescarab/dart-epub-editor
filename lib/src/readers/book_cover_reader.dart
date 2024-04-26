@@ -8,24 +8,24 @@ import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata_meta.dart';
 
 class BookCoverReader {
-  //images.Image
+  //images.image
   static Future<EpubByteContentFileRef?> readBookCover(EpubBookRef bookRef) async {
-    var manifest = bookRef.Schema!.Package!.Manifest;
+    var manifest = bookRef.schema!.package!.manifest;
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
-    if (manifest?.Items != null && manifest!.Items!.length > 0) {
-      var coverImageItem = manifest.Items!.firstWhereOrNull(
+    if (manifest?.items != null && manifest!.items!.length > 0) {
+      var coverImageItem = manifest.items!.firstWhereOrNull(
         (EpubManifestItem epubManifestItem) {
-          return (epubManifestItem.Properties == 'cover-image');
+          return (epubManifestItem.properties == 'cover-image');
         },
       );
 
       /*print('Manifest item (cover)');
-      print('Properties: ${coverImageItem?.Properties}|MediaType: ${coverImageItem?.MediaType}|Href: ${coverImageItem?.Href}');*/
+      print('Properties: ${coverImageItem?.properties}|MediaType: ${coverImageItem?.mediaType}|Href: ${coverImageItem?.href}');*/
 
       if (coverImageItem != null) {
-        var epubByteContentFileRef = bookRef.Content?.Images?[coverImageItem.Href];
+        var epubByteContentFileRef = bookRef.content?.images?[coverImageItem.href];
 
         if (epubByteContentFileRef != null) return epubByteContentFileRef;
       }
@@ -33,32 +33,32 @@ class BookCoverReader {
 
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.
-    var metaItems = bookRef.Schema!.Package!.Metadata!.MetaItems;
+    var metaItems = bookRef.schema!.package!.metadata!.metaItems;
     if (metaItems == null || metaItems.length == 0) return null;
 
-    var coverMetaItem = metaItems.firstWhereOrNull((EpubMetadataMeta metaItem) => metaItem.Name != null && metaItem.Name!.toLowerCase() == 'cover');
+    var coverMetaItem = metaItems.firstWhereOrNull((EpubMetadataMeta metaItem) => metaItem.name != null && metaItem.name!.toLowerCase() == 'cover');
 
     if (coverMetaItem == null) return null;
 
     /*print('Meta item (cover)');
-    print('name: ${coverMetaItem.Name}|property: ${coverMetaItem.Property}|content: ${coverMetaItem.Content}');*/
+    print('name: ${coverMetaItem.name}|property: ${coverMetaItem.property}|content: ${coverMetaItem.content}');*/
 
-    if ([null, '', ' '].contains(coverMetaItem.Content)) {
+    if ([null, '', ' '].contains(coverMetaItem.content)) {
       throw Exception('Incorrect EPUB metadata: cover item content is missing.');
     }
 
-    var coverManifestItem = bookRef.Schema!.Package!.Manifest!.Items!
-        .firstWhereOrNull((EpubManifestItem manifestItem) => manifestItem.Id!.toLowerCase() == coverMetaItem.Content!.toLowerCase());
+    var coverManifestItem = bookRef.schema!.package!.manifest!.items!
+        .firstWhereOrNull((EpubManifestItem manifestItem) => manifestItem.id!.toLowerCase() == coverMetaItem.content!.toLowerCase());
     if (coverManifestItem == null) {
-      throw Exception('Incorrect EPUB manifest: item with ID = \"${coverMetaItem.Content}\" is missing.');
+      throw Exception('Incorrect EPUB manifest: item with ID = \"${coverMetaItem.content}\" is missing.');
     }
 
     // EpubByteContentFileRef? coverImageContentFileRef;
-    if (!bookRef.Content!.Images!.containsKey(coverManifestItem.Href)) {
-      throw Exception('Incorrect EPUB manifest: item with href = \"${coverManifestItem.Href}\" is missing.');
+    if (!bookRef.content!.images!.containsKey(coverManifestItem.href)) {
+      throw Exception('Incorrect EPUB manifest: item with href = \"${coverManifestItem.href}\" is missing.');
     }
 
-    EpubByteContentFileRef? coverImageContentFileRef = bookRef.Content!.Images![coverManifestItem.Href];
+    EpubByteContentFileRef? coverImageContentFileRef = bookRef.content!.images![coverManifestItem.href];
 
     return coverImageContentFileRef;
   }

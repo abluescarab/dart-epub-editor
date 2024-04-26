@@ -1,16 +1,16 @@
 class EpubLanguageRelatedAttributes {
   /// https://www.w3.org/TR/epub-33/#attrdef-xml-lang
-  String? Lang;
+  String? lang;
 
   /// Paragraph direction/Global base direction. (v3.0)
   ///
   /// Reading systems will assume the value "auto" when EPUB creators omit the attribute or use an invalid value.
   /// https://www.w3.org/TR/epub-33/#attrdef-dir
-  String? Dir;
+  String? dir;
 
   EpubLanguageRelatedAttributes({
-    this.Lang,
-    this.Dir,
+    this.lang,
+    this.dir,
   });
 
   @override
@@ -19,6 +19,6 @@ class EpubLanguageRelatedAttributes {
 
     if (otherAs == null) return false;
 
-    return ((Lang == otherAs.Lang) && (Dir == otherAs.Dir));
+    return ((lang == otherAs.lang) && (dir == otherAs.dir));
   }
 }

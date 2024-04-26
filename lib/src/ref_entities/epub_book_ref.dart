@@ -17,11 +17,11 @@ class EpubBookRef {
   Archive? _epubArchive;
 
   /// Main title.
-  EpubMetadataTitle? Title;
-  String? Author;
-  List<String?>? AuthorList;
-  EpubSchema? Schema;
-  EpubContentRef? Content;
+  EpubMetadataTitle? title;
+  String? author;
+  List<String?>? authorList;
+  EpubSchema? schema;
+  EpubContentRef? content;
   EpubBookRef(Archive epubArchive) {
     _epubArchive = epubArchive;
   }
@@ -29,11 +29,11 @@ class EpubBookRef {
   @override
   int get hashCode {
     var objects = [
-      Title.hashCode,
-      Author.hashCode,
-      Schema.hashCode,
-      Content.hashCode,
-      ...AuthorList?.map((author) => author.hashCode) ?? [0],
+      title.hashCode,
+      author.hashCode,
+      schema.hashCode,
+      content.hashCode,
+      ...authorList?.map((author) => author.hashCode) ?? [0],
     ];
     return hashObjects(objects);
   }
@@ -44,14 +44,14 @@ class EpubBookRef {
       return false;
     }
 
-    return Title == other.Title &&
-        Author == other.Author &&
-        Schema == other.Schema &&
-        Content == other.Content &&
-        collections.listsEqual(AuthorList, other.AuthorList);
+    return title == other.title &&
+        author == other.author &&
+        schema == other.schema &&
+        content == other.content &&
+        collections.listsEqual(authorList, other.authorList);
   }
 
-  Archive? EpubArchive() {
+  Archive? epubArchive() {
     return _epubArchive;
   }
 

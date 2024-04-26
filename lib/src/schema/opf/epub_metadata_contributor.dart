@@ -5,33 +5,33 @@ import '../../../epub_editor.dart';
 import 'epub_metadata_creator_alternate_script.dart';
 
 class EpubMetadataContributor {
-  String? Id;
-  String? Contributor;
-  String? FileAs;
-  String? Role;
-  int? DisplaySeq;
+  String? id;
+  String? contributor;
+  String? fileAs;
+  String? role;
+  int? displaySeq;
 
   /// meta[property="alternate-script"] (v3.0).
-  List<EpubMetadataCreatorAlternateScript>? AlternateScripts;
-  EpubLanguageRelatedAttributes? LanguageRelatedAttributes;
+  List<EpubMetadataCreatorAlternateScript>? alternateScripts;
+  EpubLanguageRelatedAttributes? languageRelatedAttributes;
 
   @override
   int get hashCode => hash4(
-        Id.hashCode,
-        Contributor.hashCode,
-        FileAs.hashCode,
-        Role.hashCode,
+        id.hashCode,
+        contributor.hashCode,
+        fileAs.hashCode,
+        role.hashCode,
       );
 
   @override
   bool operator ==(other) {
     var otherAs = other as EpubMetadataContributor?;
     if (otherAs == null) return false;
-    return (Id == otherAs.Id &&
-        Contributor == otherAs.Contributor &&
-        FileAs == otherAs.FileAs &&
-        Role == otherAs.Role &&
-        DisplaySeq == otherAs.DisplaySeq &&
-        listsEqual(AlternateScripts, otherAs.AlternateScripts));
+    return (id == otherAs.id &&
+        contributor == otherAs.contributor &&
+        fileAs == otherAs.fileAs &&
+        role == otherAs.role &&
+        displaySeq == otherAs.displaySeq &&
+        listsEqual(alternateScripts, otherAs.alternateScripts));
   }
 }
