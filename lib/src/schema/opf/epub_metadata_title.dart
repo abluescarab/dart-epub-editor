@@ -20,6 +20,8 @@ class EpubMetadataTitle {
 
     if (otherAs == null) return false;
 
-    return ((id == otherAs.id) && (title == otherAs.title) && (languageRelatedAttributes == otherAs.languageRelatedAttributes));
+    return ((id == otherAs.id) &&
+        (title == otherAs.title) &&
+        (languageRelatedAttributes == otherAs.languageRelatedAttributes));
   }
 }

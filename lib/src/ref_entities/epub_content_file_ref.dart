@@ -38,7 +38,8 @@ abstract class EpubContentFileRef {
   ArchiveFile getContentFileEntry() {
     var contentFilePath = ZipPathUtils.combine(
         epubBookRef.schema!.contentDirectoryPath, fileName);
-    var contentFileEntry = epubBookRef.epubArchive()!
+    var contentFileEntry = epubBookRef
+        .epubArchive()!
         .files
         .firstWhereOrNull((ArchiveFile x) => x.name == contentFilePath);
     if (contentFileEntry == null) {

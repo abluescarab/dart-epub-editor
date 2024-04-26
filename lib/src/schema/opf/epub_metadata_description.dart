@@ -5,6 +5,7 @@ import '../../../epub_editor.dart' show EpubLanguageRelatedAttributes;
 /// https://os.vers.one/EpubReader/reference/VersOne.Epub.Schema.EpubMetadataDescription.html
 class EpubMetadataDescription {
   String? id;
+
   /// The text content of this description.
   String description;
   EpubLanguageRelatedAttributes languageRelatedAttributes;
@@ -21,6 +22,8 @@ class EpubMetadataDescription {
 
     if (otherAs == null) return false;
 
-    return ((id == otherAs.id) && (description == otherAs.description) && (languageRelatedAttributes == otherAs.languageRelatedAttributes));
+    return ((id == otherAs.id) &&
+        (description == otherAs.description) &&
+        (languageRelatedAttributes == otherAs.languageRelatedAttributes));
   }
 }

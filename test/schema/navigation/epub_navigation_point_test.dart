@@ -32,8 +32,8 @@ main() async {
       });
 
       test("is false when ChildNavigationPoints changes", () async {
-        testNavigationPoint.childNavigationPoints.add(
-            generator.randomEpubNavigationPoint());
+        testNavigationPoint.childNavigationPoints
+            .add(generator.randomEpubNavigationPoint());
         expect(testNavigationPoint, isNot(reference));
       });
       test("is false when Class changes", () async {
@@ -53,8 +53,8 @@ main() async {
         expect(testNavigationPoint, isNot(reference));
       });
       test("is false when NavigationLabels changes", () async {
-        testNavigationPoint.navigationLabels.add(
-            generator.randomEpubNavigationLabel());
+        testNavigationPoint.navigationLabels
+            .add(generator.randomEpubNavigationLabel());
         expect(testNavigationPoint, isNot(reference));
       });
     });
@@ -65,8 +65,8 @@ main() async {
       });
 
       test("is false when ChildNavigationPoints changes", () async {
-        testNavigationPoint.childNavigationPoints.add(
-            generator.randomEpubNavigationPoint());
+        testNavigationPoint.childNavigationPoints
+            .add(generator.randomEpubNavigationPoint());
         expect(testNavigationPoint.hashCode, isNot(reference.hashCode));
       });
       test("is false when Class changes", () async {
@@ -86,8 +86,8 @@ main() async {
         expect(testNavigationPoint.hashCode, isNot(reference.hashCode));
       });
       test("is false when NavigationLabels changes", () async {
-        testNavigationPoint.navigationLabels.add(
-            generator.randomEpubNavigationLabel());
+        testNavigationPoint.navigationLabels
+            .add(generator.randomEpubNavigationLabel());
         expect(testNavigationPoint.hashCode, isNot(reference.hashCode));
       });
     });
