@@ -2,7 +2,8 @@ name: epub_editor
 description: Epub Parser for Dart. Epub package fork. Suitable for use on the Server, the Web, or in Flutter
 homepage: https://github.com/abluescarab/dart-epub-editor
 issue_tracker: https://github.com/abluescarab/dart-epub-editor/issues
-version: 1.2.0+5
+# TODO: remove build number after finishing
+version: 1.2.0+6
 
 environment:
   sdk: '>=2.17.0 <4.0.0'
