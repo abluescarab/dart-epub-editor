@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:archive/archive.dart';
-import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
+import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
@@ -16,7 +16,7 @@ class EpubBookRef {
   Archive? _epubArchive;
 
   /// Main title.
-  EpubMetadataString? title;
+  EpubMetadataTranslatedString? title;
   String? author;
   List<String?>? authorList;
   EpubSchema? schema;

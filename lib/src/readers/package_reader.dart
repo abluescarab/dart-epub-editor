@@ -4,6 +4,7 @@ import 'package:archive/archive.dart';
 import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
+import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
 import 'package:epub_editor/src/utils/value_or_inner_text.dart';
 import 'package:xml/xml.dart';
 
@@ -25,11 +26,11 @@ import '../schema/opf/epub_spine_item_ref.dart';
 import '../schema/opf/epub_version.dart';
 
 class PackageReader {
-  static EpubMetadataString _createMetadataString(
+  static EpubMetadataTranslatedString _createMetadataString(
     XmlElement metadataItemNode,
     String text,
   ) {
-    return EpubMetadataString(
+    return EpubMetadataTranslatedString(
       id: metadataItemNode.getAttribute('id'),
       value: text,
       languageRelatedAttributes: EpubLanguageRelatedAttributes(
@@ -135,21 +136,21 @@ class PackageReader {
   static EpubMetadata readMetadata(
       XmlElement metadataNode, EpubVersion? epubVersion) {
     var result = EpubMetadata();
-    result.titles = <EpubMetadataString>[];
-    result.descriptions = <EpubMetadataString>[];
+    result.titles = <EpubMetadataTranslatedString>[];
+    result.descriptions = <EpubMetadataTranslatedString>[];
     result.creators = <EpubMetadataCreator>[];
-    result.subjects = <EpubMetadataString>[];
-    result.publishers = <EpubMetadataString>[];
+    result.subjects = <EpubMetadataTranslatedString>[];
+    result.publishers = <EpubMetadataTranslatedString>[];
     result.contributors = <EpubMetadataContributor>[];
     result.dates = <EpubMetadataDate>[];
-    result.types = <String>[];
-    result.formats = <String>[];
+    result.types = <EpubMetadataString>[];
+    result.formats = <EpubMetadataString>[];
     result.identifiers = <EpubMetadataIdentifier>[];
-    result.sources = <String>[];
-    result.languages = <String>[];
-    result.relations = <EpubMetadataString>[];
-    result.coverages = <EpubMetadataString>[];
-    result.rights = <EpubMetadataString>[];
+    result.sources = <EpubMetadataString>[];
+    result.languages = <EpubMetadataString>[];
+    result.relations = <EpubMetadataTranslatedString>[];
+    result.coverages = <EpubMetadataTranslatedString>[];
+    result.rights = <EpubMetadataTranslatedString>[];
 
     result.metaItems = metadataNode.children.whereType<XmlElement>().where(
       (XmlElement metadataItemNode) {
@@ -272,20 +273,40 @@ class PackageReader {
           result.dates!.add(date);
           break;
         case 'type':
-          result.types!.add(innerText);
+          result.types!.add(
+            EpubMetadataString(
+              id: metadataItemNode.getAttribute('id'),
+              value: innerText,
+            ),
+          );
           break;
         case 'format':
-          result.formats!.add(innerText);
+          result.formats!.add(
+            EpubMetadataString(
+              id: metadataItemNode.getAttribute('id'),
+              value: innerText,
+            ),
+          );
           break;
         case 'identifier':
           var identifier = readMetadataIdentifier(metadataItemNode);
           result.identifiers!.add(identifier);
           break;
         case 'source':
-          result.sources!.add(innerText);
+          result.sources!.add(
+            EpubMetadataString(
+              id: metadataItemNode.getAttribute('id'),
+              value: innerText,
+            ),
+          );
           break;
         case 'language':
-          result.languages!.add(innerText);
+          result.languages!.add(
+            EpubMetadataString(
+              id: metadataItemNode.getAttribute('id'),
+              value: innerText,
+            ),
+          );
           break;
         case 'relation':
           result.relations!.add(
@@ -344,7 +365,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.contributor = valueOrInnerText( metadataContributorNode);
+    result.contributor = valueOrInnerText(metadataContributorNode);
     return result;
   }
 

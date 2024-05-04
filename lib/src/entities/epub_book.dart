@@ -1,4 +1,4 @@
-import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
+import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
@@ -8,7 +8,7 @@ import 'epub_content.dart';
 import 'epub_schema.dart';
 
 class EpubBook {
-  late EpubMetadataString mainTitle;
+  late EpubMetadataTranslatedString mainTitle;
   String? author;
   List<String?>? authorList;
   EpubSchema? schema;

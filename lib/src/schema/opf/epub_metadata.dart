@@ -7,23 +7,24 @@ import 'epub_metadata_date.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
 import 'epub_metadata_string.dart';
+import 'epub_metadata_translated_string.dart';
 
 class EpubMetadata {
-  List<EpubMetadataString>? titles;
+  List<EpubMetadataTranslatedString>? titles;
   List<EpubMetadataCreator>? creators;
-  List<EpubMetadataString>? subjects;
-  List<EpubMetadataString>? descriptions;
-  List<EpubMetadataString>? publishers;
+  List<EpubMetadataTranslatedString>? subjects;
+  List<EpubMetadataTranslatedString>? descriptions;
+  List<EpubMetadataTranslatedString>? publishers;
   List<EpubMetadataContributor>? contributors;
   List<EpubMetadataDate>? dates;
-  List<String>? types;
-  List<String>? formats;
+  List<EpubMetadataString>? types;
+  List<EpubMetadataString>? formats;
   List<EpubMetadataIdentifier>? identifiers;
-  List<String>? sources;
-  List<String>? languages;
-  List<EpubMetadataString>? relations;
-  List<EpubMetadataString>? coverages;
-  List<EpubMetadataString>? rights;
+  List<EpubMetadataString>? sources;
+  List<EpubMetadataString>? languages;
+  List<EpubMetadataTranslatedString>? relations;
+  List<EpubMetadataTranslatedString>? coverages;
+  List<EpubMetadataTranslatedString>? rights;
   List<EpubMetadataMeta>? metaItems;
 
   @override

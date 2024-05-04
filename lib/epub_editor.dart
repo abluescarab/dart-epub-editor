@@ -50,6 +50,7 @@ export 'src/schema/opf/epub_metadata_date.dart';
 export 'src/schema/opf/epub_metadata_identifier.dart';
 export 'src/schema/opf/epub_metadata_meta.dart';
 export 'src/schema/opf/epub_metadata_string.dart';
+export 'src/schema/opf/epub_metadata_translated_string.dart';
 export 'src/schema/opf/epub_package.dart';
 export 'src/schema/opf/epub_spine.dart';
 export 'src/schema/opf/epub_spine_item_ref.dart';
