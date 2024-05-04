@@ -181,7 +181,7 @@ class NavigationReader {
       result.docTitle = EpubNavigationDocTitle();
       result.docTitle!.titles = package.metadata!.titles
           ?.map(
-            (titleElement) => titleElement.title,
+            (titleElement) => titleElement.value,
           )
           .toList();
 //      result.docTitle.titles.add(headNode.findAllElements("title").firstWhere((element) =>  element != null, orElse: () => null).text.trim());

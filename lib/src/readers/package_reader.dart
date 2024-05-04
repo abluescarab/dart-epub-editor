@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:archive/archive.dart';
 import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
 import 'package:xml/xml.dart';
 
 import '../schema/opf/epub_guide.dart';
@@ -15,18 +16,28 @@ import '../schema/opf/epub_metadata_contributor.dart';
 import '../schema/opf/epub_metadata_creator.dart';
 import '../schema/opf/epub_metadata_creator_alternate_script.dart';
 import '../schema/opf/epub_metadata_date.dart';
-import '../schema/opf/epub_metadata_description.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
-import '../schema/opf/epub_metadata_publisher.dart';
-import '../schema/opf/epub_metadata_right.dart';
-import '../schema/opf/epub_metadata_title.dart';
 import '../schema/opf/epub_package.dart';
 import '../schema/opf/epub_spine.dart';
 import '../schema/opf/epub_spine_item_ref.dart';
 import '../schema/opf/epub_version.dart';
 
 class PackageReader {
+  static EpubMetadataString _createMetadataString(
+    XmlElement metadataItemNode,
+    String innerText,
+  ) {
+    return EpubMetadataString(
+      id: metadataItemNode.getAttribute('id'),
+      value: innerText,
+      languageRelatedAttributes: EpubLanguageRelatedAttributes(
+        lang: metadataItemNode.getAttribute('lang'),
+        dir: metadataItemNode.getAttribute('dir'),
+      ),
+    );
+  }
+
   static EpubGuide readGuide(XmlElement guideNode) {
     var result = EpubGuide();
     result.items = <EpubGuideReference>[];
@@ -123,11 +134,11 @@ class PackageReader {
   static EpubMetadata readMetadata(
       XmlElement metadataNode, EpubVersion? epubVersion) {
     var result = EpubMetadata();
-    result.titles = <EpubMetadataTitle>[];
-    result.descriptions = <EpubMetadataDescription>[];
+    result.titles = <EpubMetadataString>[];
+    result.descriptions = <EpubMetadataString>[];
     result.creators = <EpubMetadataCreator>[];
-    result.subjects = <String>[];
-    result.publishers = <EpubMetadataPublisher>[];
+    result.subjects = <EpubMetadataString>[];
+    result.publishers = <EpubMetadataString>[];
     result.contributors = <EpubMetadataContributor>[];
     result.dates = <EpubMetadataDate>[];
     result.types = <String>[];
@@ -135,9 +146,9 @@ class PackageReader {
     result.identifiers = <EpubMetadataIdentifier>[];
     result.sources = <String>[];
     result.languages = <String>[];
-    result.relations = <String>[];
-    result.coverages = <String>[];
-    result.rights = <EpubMetadataRight>[];
+    result.relations = <EpubMetadataString>[];
+    result.coverages = <EpubMetadataString>[];
+    result.rights = <EpubMetadataString>[];
 
     result.metaItems = metadataNode.children.whereType<XmlElement>().where(
       (XmlElement metadataItemNode) {
@@ -165,9 +176,9 @@ class PackageReader {
       switch (metadataItemNode.name.local.toLowerCase()) {
         case 'title':
           result.titles!.add(
-            EpubMetadataTitle(
+            EpubMetadataString(
               id: metadataItemNode.getAttribute('id'),
-              title: innerText,
+              value: innerText,
               languageRelatedAttributes: EpubLanguageRelatedAttributes(
                 lang: metadataItemNode.getAttribute('lang'),
                 dir: metadataItemNode.getAttribute('dir'),
@@ -187,8 +198,7 @@ class PackageReader {
           }
 
           if (epubVersion == EpubVersion.epub3) {
-            final associatedMetaItems =
-                result.metaItems!.where(
+            final associatedMetaItems = result.metaItems!.where(
               (EpubMetadataMeta meta) {
                 meta.refines = meta.refines?.trim();
 
@@ -223,10 +233,9 @@ class PackageReader {
                     EpubLanguageRelatedAttributes()
                       ..lang = meta.attributes?['lang']
                       ..dir = meta.attributes?['dir'];
-                final alternateScript =
-                    EpubMetadataCreatorAlternateScript()
-                      ..name = meta.textContent // Name in another language.
-                      ..languageRelatedAttributes = languageRelatedAttributes;
+                final alternateScript = EpubMetadataCreatorAlternateScript()
+                  ..name = meta.textContent // Name in another language.
+                  ..languageRelatedAttributes = languageRelatedAttributes;
 
                 return alternateScript;
               },
@@ -249,30 +258,18 @@ class PackageReader {
           }
           break;
         case 'subject':
-          result.subjects!.add(innerText);
+          result.subjects!.add(
+            _createMetadataString(metadataItemNode, innerText),
+          );
           break;
         case 'description':
           result.descriptions!.add(
-            EpubMetadataDescription(
-              id: metadataItemNode.getAttribute('id'),
-              description: innerText,
-              languageRelatedAttributes: EpubLanguageRelatedAttributes(
-                lang: metadataItemNode.getAttribute('lang'),
-                dir: metadataItemNode.getAttribute('dir'),
-              ),
-            ),
+            _createMetadataString(metadataItemNode, innerText),
           );
           break;
         case 'publisher':
           result.publishers!.add(
-            EpubMetadataPublisher(
-              id: metadataItemNode.getAttribute('id'),
-              publisher: innerText,
-              languageRelatedAttributes: EpubLanguageRelatedAttributes(
-                lang: metadataItemNode.getAttribute('lang'),
-                dir: metadataItemNode.getAttribute('dir'),
-              ),
-            ),
+            _createMetadataString(metadataItemNode, innerText),
           );
           break;
 
@@ -297,21 +294,18 @@ class PackageReader {
           result.languages!.add(innerText);
           break;
         case 'relation':
-          result.relations!.add(innerText);
+          result.relations!.add(
+            _createMetadataString(metadataItemNode, innerText),
+          );
           break;
         case 'coverage':
-          result.coverages!.add(innerText);
+          result.coverages!.add(
+            _createMetadataString(metadataItemNode, innerText),
+          );
           break;
         case 'rights':
           result.rights!.add(
-            EpubMetadataRight(
-              id: metadataItemNode.getAttribute('id'),
-              right: innerText,
-              languageRelatedAttributes: EpubLanguageRelatedAttributes(
-                lang: metadataItemNode.getAttribute('lang'),
-                dir: metadataItemNode.getAttribute('dir'),
-              ),
-            ),
+            _createMetadataString(metadataItemNode, innerText),
           );
           break;
         /*case 'meta':

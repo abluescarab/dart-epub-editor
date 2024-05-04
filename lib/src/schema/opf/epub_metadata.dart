@@ -4,19 +4,16 @@ import 'package:quiver/core.dart';
 import 'epub_metadata_contributor.dart';
 import 'epub_metadata_creator.dart';
 import 'epub_metadata_date.dart';
-import 'epub_metadata_description.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
-import 'epub_metadata_publisher.dart';
-import 'epub_metadata_right.dart';
-import 'epub_metadata_title.dart';
+import 'epub_metadata_string.dart';
 
 class EpubMetadata {
-  List<EpubMetadataTitle>? titles;
+  List<EpubMetadataString>? titles;
   List<EpubMetadataCreator>? creators;
-  List<String>? subjects;
-  List<EpubMetadataDescription>? descriptions;
-  List<EpubMetadataPublisher>? publishers;
+  List<EpubMetadataString>? subjects;
+  List<EpubMetadataString>? descriptions;
+  List<EpubMetadataString>? publishers;
   List<EpubMetadataContributor>? contributors;
   List<EpubMetadataDate>? dates;
   List<String>? types;
@@ -24,9 +21,9 @@ class EpubMetadata {
   List<EpubMetadataIdentifier>? identifiers;
   List<String>? sources;
   List<String>? languages;
-  List<String>? relations;
-  List<String>? coverages;
-  List<EpubMetadataRight>? rights;
+  List<EpubMetadataString>? relations;
+  List<EpubMetadataString>? coverages;
+  List<EpubMetadataString>? rights;
   List<EpubMetadataMeta>? metaItems;
 
   @override
