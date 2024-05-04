@@ -22,7 +22,7 @@ export 'src/ref_entities/epub_content_file_ref.dart';
 export 'src/ref_entities/epub_content_ref.dart';
 export 'src/ref_entities/epub_text_content_file_ref.dart';
 // navigation
-export 'src/schema/navigation/epub_metadata.dart';
+export 'src/schema/navigation/epub_navigation_content.dart';
 export 'src/schema/navigation/epub_navigation.dart';
 export 'src/schema/navigation/epub_navigation_doc_author.dart';
 export 'src/schema/navigation/epub_navigation_doc_title.dart';

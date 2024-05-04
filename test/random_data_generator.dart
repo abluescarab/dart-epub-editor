@@ -1,7 +1,7 @@
 import 'dart:math' show Random;
 
 import 'package:epub_editor/epub.dart';
-import 'package:epub_editor/src/schema/navigation/epub_metadata.dart';
+import 'package:epub_editor/src/schema/navigation/epub_navigation_content.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_author.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_title.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_head.dart';

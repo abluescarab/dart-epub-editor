@@ -1,7 +1,7 @@
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
-import 'epub_metadata.dart';
+import 'epub_navigation_content.dart';
 import 'epub_navigation_label.dart';
 
 class EpubNavigationPoint {

@@ -7,7 +7,7 @@ import 'package:epub_editor/src/schema/opf/epub_version.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:path/path.dart' as path;
 
-import '../schema/navigation/epub_metadata.dart';
+import '../schema/navigation/epub_navigation_content.dart';
 import '../schema/navigation/epub_navigation.dart';
 import '../schema/navigation/epub_navigation_doc_author.dart';
 import '../schema/navigation/epub_navigation_doc_title.dart';
