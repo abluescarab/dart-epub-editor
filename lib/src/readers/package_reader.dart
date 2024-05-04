@@ -4,6 +4,7 @@ import 'package:archive/archive.dart';
 import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
+import 'package:epub_editor/src/utils/value_or_inner_text.dart';
 import 'package:xml/xml.dart';
 
 import '../schema/opf/epub_guide.dart';
@@ -26,11 +27,11 @@ import '../schema/opf/epub_version.dart';
 class PackageReader {
   static EpubMetadataString _createMetadataString(
     XmlElement metadataItemNode,
-    String innerText,
+    String text,
   ) {
     return EpubMetadataString(
       id: metadataItemNode.getAttribute('id'),
-      value: innerText,
+      value: text,
       languageRelatedAttributes: EpubLanguageRelatedAttributes(
         lang: metadataItemNode.getAttribute('lang'),
         dir: metadataItemNode.getAttribute('dir'),
@@ -48,7 +49,7 @@ class PackageReader {
         var guideReference = EpubGuideReference();
         guideReferenceNode.attributes
             .forEach((XmlAttribute guideReferenceNodeAttribute) {
-          var attributeValue = guideReferenceNodeAttribute.value;
+          var attributeValue = valueOrInnerText(guideReferenceNodeAttribute);
           switch (guideReferenceNodeAttribute.name.local.toLowerCase()) {
             case 'type':
               guideReference.type = attributeValue;
@@ -83,7 +84,7 @@ class PackageReader {
         var manifestItem = EpubManifestItem();
         manifestItemNode.attributes
             .forEach((XmlAttribute manifestItemNodeAttribute) {
-          var attributeValue = manifestItemNodeAttribute.value;
+          var attributeValue = valueOrInnerText(manifestItemNodeAttribute);
           switch (manifestItemNodeAttribute.name.local.toLowerCase()) {
             case 'id':
               manifestItem.id = attributeValue;
@@ -172,7 +173,7 @@ class PackageReader {
     metadataNode.children
         .whereType<XmlElement>()
         .forEach((XmlElement metadataItemNode) {
-      var innerText = metadataItemNode.text;
+      var innerText = valueOrInnerText(metadataItemNode);
       switch (metadataItemNode.name.local.toLowerCase()) {
         case 'title':
           result.titles!.add(
@@ -321,7 +322,7 @@ class PackageReader {
     var result = EpubMetadataContributor();
     metadataContributorNode.attributes
         .forEach((XmlAttribute metadataContributorNodeAttribute) {
-      var attributeValue = metadataContributorNodeAttribute.value;
+      var attributeValue = valueOrInnerText(metadataContributorNodeAttribute);
       switch (metadataContributorNodeAttribute.name.local.toLowerCase()) {
         case 'id':
           result.id = attributeValue;
@@ -343,7 +344,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.contributor = metadataContributorNode.value;
+    result.contributor = valueOrInnerText( metadataContributorNode);
     return result;
   }
 
@@ -353,7 +354,7 @@ class PackageReader {
     var result = EpubMetadataCreator();
     metadataCreatorNode.attributes
         .forEach((XmlAttribute metadataCreatorNodeAttribute) {
-      var attributeValue = metadataCreatorNodeAttribute.value;
+      var attributeValue = valueOrInnerText(metadataCreatorNodeAttribute);
       switch (metadataCreatorNodeAttribute.name.local.toLowerCase()) {
         case 'id':
           result.id = attributeValue;
@@ -375,7 +376,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.creator = metadataCreatorNode.value;
+    result.creator = valueOrInnerText(metadataCreatorNode);
 
     return result;
   }
@@ -387,7 +388,7 @@ class PackageReader {
     if (eventAttribute != null && eventAttribute.isNotEmpty) {
       result.event = eventAttribute;
     }
-    result.date = metadataDateNode.value;
+    result.date = valueOrInnerText(metadataDateNode);
     return result;
   }
 
@@ -396,7 +397,7 @@ class PackageReader {
     var result = EpubMetadataIdentifier();
     metadataIdentifierNode.attributes
         .forEach((XmlAttribute metadataIdentifierNodeAttribute) {
-      var attributeValue = metadataIdentifierNodeAttribute.value;
+      var attributeValue = valueOrInnerText(metadataIdentifierNodeAttribute);
       switch (metadataIdentifierNodeAttribute.name.local.toLowerCase()) {
         case 'id':
           result.id = attributeValue;
@@ -406,14 +407,14 @@ class PackageReader {
           break;
       }
     });
-    result.identifier = metadataIdentifierNode.value;
+    result.identifier = valueOrInnerText(metadataIdentifierNode);
     return result;
   }
 
   /*static EpubMetadataMeta readMetadataMetaVersion2(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
     metadataMetaNode.attributes.forEach((XmlAttribute metadataMetaNodeAttribute) {
-      var attributeValue = metadataMetaNodeAttribute.value;
+      var attributeValue = metadataMetaNodeAttribute.text;
       switch (metadataMetaNodeAttribute.name.local.toLowerCase()) {
         case 'name':
           result.name = attributeValue;
@@ -436,7 +437,7 @@ class PackageReader {
     metadataMetaNode.attributes
         .forEach((XmlAttribute metadataMetaNodeAttribute) {
       var attributeName = metadataMetaNodeAttribute.name.local.toLowerCase();
-      var attributeValue = metadataMetaNodeAttribute.value;
+      var attributeValue = valueOrInnerText(metadataMetaNodeAttribute);
 
       result.attributes![attributeName] = attributeValue;
 
@@ -470,7 +471,7 @@ class PackageReader {
     });
 
     result.languageRelatedAttributes = languageRelatedAttributes;
-    result.textContent = metadataMetaNode.value;
+    result.textContent = valueOrInnerText(metadataMetaNode);
 
     return result;
   }
