@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:image/image.dart' as images;
 import '../ref_entities/epub_book_ref.dart';
 import '../ref_entities/epub_byte_content_file_ref.dart';
 import '../schema/opf/epub_manifest_item.dart';
@@ -15,7 +14,7 @@ class BookCoverReader {
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
-    if (manifest?.items != null && manifest!.items!.length > 0) {
+    if (manifest?.items != null && manifest!.items!.isNotEmpty) {
       var coverImageItem = manifest.items!.firstWhereOrNull(
         (EpubManifestItem epubManifestItem) {
           return (epubManifestItem.properties == 'cover-image');
@@ -36,7 +35,7 @@ class BookCoverReader {
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.
     var metaItems = bookRef.schema!.package!.metadata!.metaItems;
-    if (metaItems == null || metaItems.length == 0) return null;
+    if (metaItems == null || metaItems.isEmpty) return null;
 
     var coverMetaItem = metaItems.firstWhereOrNull(
         (EpubMetadataMeta metaItem) =>
@@ -67,7 +66,7 @@ class BookCoverReader {
           'Incorrect EPUB manifest: item with href = \"${coverManifestItem.href}\" is missing.');
     }
 
-    EpubByteContentFileRef? coverImageContentFileRef =
+    var coverImageContentFileRef =
         bookRef.content!.images![coverManifestItem.href];
 
     return coverImageContentFileRef;

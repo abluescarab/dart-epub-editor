@@ -161,7 +161,7 @@ class PackageReader {
     metadataNode.children
         .whereType<XmlElement>()
         .forEach((XmlElement metadataItemNode) {
-      var innerText = metadataItemNode.text;
+      var innerText = metadataItemNode.value!;
       switch (metadataItemNode.name.local.toLowerCase()) {
         case 'title':
           result.titles!.add(
@@ -177,7 +177,7 @@ class PackageReader {
           break;
         case 'creator':
         case 'contributor':
-          final String tagName = metadataItemNode.name.local.toLowerCase();
+          final tagName = metadataItemNode.name.local.toLowerCase();
           var creatorOrContributor;
 
           if (tagName == 'creator') {
@@ -187,14 +187,15 @@ class PackageReader {
           }
 
           if (epubVersion == EpubVersion.epub3) {
-            final Iterable<EpubMetadataMeta> associatedMetaItems =
+            final associatedMetaItems =
                 result.metaItems!.where(
               (EpubMetadataMeta meta) {
                 meta.refines = meta.refines?.trim();
 
                 if (creatorOrContributor.id != null &&
-                    (meta.refines == '#${creatorOrContributor.id}'))
+                    (meta.refines == '#${creatorOrContributor.id}')) {
                   return true;
+                }
 
                 return false;
               },
@@ -218,11 +219,11 @@ class PackageReader {
             )
                 .map(
               (EpubMetadataMeta meta) {
-                final EpubLanguageRelatedAttributes languageRelatedAttributes =
+                final languageRelatedAttributes =
                     EpubLanguageRelatedAttributes()
                       ..lang = meta.attributes?['lang']
                       ..dir = meta.attributes?['dir'];
-                final EpubMetadataCreatorAlternateScript alternateScript =
+                final alternateScript =
                     EpubMetadataCreatorAlternateScript()
                       ..name = meta.textContent // Name in another language.
                       ..languageRelatedAttributes = languageRelatedAttributes;
@@ -241,10 +242,11 @@ class PackageReader {
             ;
           }
 
-          if (tagName == 'creator')
+          if (tagName == 'creator') {
             result.creators!.add(creatorOrContributor);
-          else
+          } else {
             result.contributors!.add(creatorOrContributor);
+          }
           break;
         case 'subject':
           result.subjects!.add(innerText);
@@ -354,7 +356,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.contributor = metadataContributorNode.text;
+    result.contributor = metadataContributorNode.value;
     return result;
   }
 
@@ -386,7 +388,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.creator = metadataCreatorNode.text;
+    result.creator = metadataCreatorNode.value;
 
     return result;
   }
@@ -398,7 +400,7 @@ class PackageReader {
     if (eventAttribute != null && eventAttribute.isNotEmpty) {
       result.event = eventAttribute;
     }
-    result.date = metadataDateNode.text;
+    result.date = metadataDateNode.value;
     return result;
   }
 
@@ -417,7 +419,7 @@ class PackageReader {
           break;
       }
     });
-    result.identifier = metadataIdentifierNode.text;
+    result.identifier = metadataIdentifierNode.value;
     return result;
   }
 
@@ -481,7 +483,7 @@ class PackageReader {
     });
 
     result.languageRelatedAttributes = languageRelatedAttributes;
-    result.textContent = metadataMetaNode.text;
+    result.textContent = metadataMetaNode.value;
 
     return result;
   }
@@ -578,6 +580,4 @@ class PackageReader {
     });
     return result;
   }
-
-  _getMetaItemsAssociatedWith() {}
 }

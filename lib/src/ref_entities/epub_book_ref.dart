@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:archive/archive.dart';
-import 'package:image/image.dart';
 import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 

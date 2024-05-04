@@ -269,8 +269,9 @@ class NavigationReader {
   }
 
   static String extractContentPath(String _tocFileEntryPath, String ref) {
-    if (!_tocFileEntryPath.endsWith('/'))
+    if (!_tocFileEntryPath.endsWith('/')) {
       _tocFileEntryPath = _tocFileEntryPath + '/';
+    }
     var r = _tocFileEntryPath + ref;
     r = r.replaceAll('/\./', '/');
     r = r.replaceAll(RegExp(r'/[^/]+/\.\./'), '/');
@@ -286,7 +287,7 @@ class NavigationReader {
         .whereType<xml.XmlElement>()
         .forEach((xml.XmlElement textNode) {
       if (textNode.name.local.toLowerCase() == 'text') {
-        result.authors!.add(textNode.text);
+        result.authors!.add(textNode.value!);
       }
     });
     return result;
@@ -300,7 +301,7 @@ class NavigationReader {
         .whereType<xml.XmlElement>()
         .forEach((xml.XmlElement textNode) {
       if (textNode.name.local.toLowerCase() == 'text') {
-        result.titles!.add(textNode.text);
+        result.titles!.add(textNode.value!);
       }
     });
     return result;
@@ -357,7 +358,7 @@ class NavigationReader {
           'Incorrect EPUB navigation label: label text element is missing.');
     }
 
-    result.text = navigationLabelTextNode.text;
+    result.text = navigationLabelTextNode.value;
 
     return result;
   }
@@ -365,7 +366,7 @@ class NavigationReader {
   static EpubNavigationLabel readNavigationLabelV3(
       xml.XmlElement navigationLabelNode) {
     var result = EpubNavigationLabel();
-    result.text = navigationLabelNode.text.trim();
+    result.text = navigationLabelNode.value?.trim();
     return result;
   }
 

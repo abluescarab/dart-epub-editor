@@ -2,7 +2,6 @@ import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
 import '../../../epub_editor.dart';
-import 'epub_metadata_creator_alternate_script.dart';
 
 class EpubMetadataCreator {
   String? id;
