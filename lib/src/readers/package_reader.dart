@@ -176,14 +176,7 @@ class PackageReader {
       switch (metadataItemNode.name.local.toLowerCase()) {
         case 'title':
           result.titles!.add(
-            EpubMetadataString(
-              id: metadataItemNode.getAttribute('id'),
-              value: innerText,
-              languageRelatedAttributes: EpubLanguageRelatedAttributes(
-                lang: metadataItemNode.getAttribute('lang'),
-                dir: metadataItemNode.getAttribute('dir'),
-              ),
-            ),
+            _createMetadataString(metadataItemNode, innerText),
           );
           break;
         case 'creator':
