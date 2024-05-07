@@ -11,24 +11,6 @@ class EpubMetadataWriter {
     builder.element('metadata',
         namespaces: {_opf_namespace: 'opf', _dc_namespace: 'dc'}, nest: () {
       meta!
-        ..titles?.forEach((item) =>
-            builder.element('title', nest: item, namespace: _dc_namespace))
-        ..creators?.forEach((item) =>
-            builder.element('creator', namespace: _dc_namespace, nest: () {
-              if (item.role != null) {
-                builder.attribute('role', item.role!,
-                    namespace: _opf_namespace);
-              }
-              if (item.fileAs != null) {
-                builder.attribute('file-as', item.fileAs!,
-                    namespace: _opf_namespace);
-              }
-              builder.text(item.creator!);
-            }))
-        ..subjects?.forEach((item) =>
-            builder.element('subject', namespace: _dc_namespace, nest: item))
-        ..publishers?.forEach((item) =>
-            builder.element('publisher', namespace: _dc_namespace, nest: item))
         ..contributors?.forEach((item) =>
             builder.element('contributor', namespace: _dc_namespace, nest: () {
               if (item.role != null) {
@@ -41,6 +23,20 @@ class EpubMetadataWriter {
               }
               builder.text(item.contributor!);
             }))
+        ..coverages?.forEach((item) =>
+            builder.element('coverage', namespace: _dc_namespace, nest: item))
+        ..creators?.forEach((item) =>
+            builder.element('creator', namespace: _dc_namespace, nest: () {
+              if (item.role != null) {
+                builder.attribute('role', item.role!,
+                    namespace: _opf_namespace);
+              }
+              if (item.fileAs != null) {
+                builder.attribute('file-as', item.fileAs!,
+                    namespace: _opf_namespace);
+              }
+              builder.text(item.creator!);
+            }))
         ..dates?.forEach((date) =>
             builder.element('date', namespace: _dc_namespace, nest: () {
               if (date.event != null) {
@@ -49,8 +45,6 @@ class EpubMetadataWriter {
               }
               builder.text(date.date!);
             }))
-        ..types?.forEach((type) =>
-            builder.element('type', namespace: _dc_namespace, nest: type))
         ..formats?.forEach((format) =>
             builder.element('format', namespace: _dc_namespace, nest: format))
         ..identifiers?.forEach((id) =>
@@ -62,17 +56,12 @@ class EpubMetadataWriter {
               }
               builder.text(id.identifier!);
             }))
-        ..sources?.forEach((item) =>
-            builder.element('source', namespace: _dc_namespace, nest: item))
         ..languages?.forEach((item) =>
             builder.element('language', namespace: _dc_namespace, nest: item))
-        ..relations?.forEach((item) =>
-            builder.element('relation', namespace: _dc_namespace, nest: item))
-        ..coverages?.forEach((item) =>
-            builder.element('coverage', namespace: _dc_namespace, nest: item))
-        ..rights?.forEach((item) =>
-            builder.element('rights', namespace: _dc_namespace, nest: item))
-        ..metaItems?.forEach((metaitem) => builder.element('meta', nest: () {
+        ..metaItems?.forEach(
+          (metaitem) => builder.element(
+            'meta',
+            nest: () {
               if (version == EpubVersion.epub2) {
                 if (metaitem.name != null) {
                   builder.attribute('name', metaitem.name!);
@@ -94,7 +83,23 @@ class EpubMetadataWriter {
                   builder.attribute('scheme', metaitem.scheme!);
                 }
               }
-            }));
+            },
+          ),
+        )
+        ..publishers?.forEach((item) =>
+            builder.element('publisher', namespace: _dc_namespace, nest: item))
+        ..relations?.forEach((item) =>
+            builder.element('relation', namespace: _dc_namespace, nest: item))
+        ..rights?.forEach((item) =>
+            builder.element('rights', namespace: _dc_namespace, nest: item))
+        ..sources?.forEach((item) =>
+            builder.element('source', namespace: _dc_namespace, nest: item))
+        ..subjects?.forEach((item) =>
+            builder.element('subject', namespace: _dc_namespace, nest: item))
+        ..titles?.forEach((item) =>
+            builder.element('title', nest: item, namespace: _dc_namespace))
+        ..types?.forEach((type) =>
+            builder.element('type', namespace: _dc_namespace, nest: type));
 
       if (meta.publishers != null) {
         builder.element('description',
