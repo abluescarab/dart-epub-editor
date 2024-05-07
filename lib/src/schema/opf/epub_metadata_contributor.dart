@@ -5,7 +5,7 @@ import '../../../epub_editor.dart';
 
 class EpubMetadataContributor {
   String? id;
-  String? contributor;
+  String? name;
   String? fileAs;
   String? role;
   int? displaySeq;
@@ -17,7 +17,7 @@ class EpubMetadataContributor {
   @override
   int get hashCode => hash4(
         id.hashCode,
-        contributor.hashCode,
+        name.hashCode,
         fileAs.hashCode,
         role.hashCode,
       );
@@ -27,7 +27,7 @@ class EpubMetadataContributor {
     var otherAs = other as EpubMetadataContributor?;
     if (otherAs == null) return false;
     return (id == otherAs.id &&
-        contributor == otherAs.contributor &&
+        name == otherAs.name &&
         fileAs == otherAs.fileAs &&
         role == otherAs.role &&
         displaySeq == otherAs.displaySeq &&

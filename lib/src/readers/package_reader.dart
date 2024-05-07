@@ -15,7 +15,6 @@ import '../schema/opf/epub_manifest.dart';
 import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata.dart';
 import '../schema/opf/epub_metadata_contributor.dart';
-import '../schema/opf/epub_metadata_creator.dart';
 import '../schema/opf/epub_metadata_creator_alternate_script.dart';
 import '../schema/opf/epub_metadata_date.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
@@ -138,7 +137,7 @@ class PackageReader {
     var result = EpubMetadata();
     result.titles = <EpubMetadataTranslatedString>[];
     result.descriptions = <EpubMetadataTranslatedString>[];
-    result.creators = <EpubMetadataCreator>[];
+    result.creators = <EpubMetadataContributor>[];
     result.subjects = <EpubMetadataTranslatedString>[];
     result.publishers = <EpubMetadataTranslatedString>[];
     result.contributors = <EpubMetadataContributor>[];
@@ -365,14 +364,14 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.contributor = valueOrInnerText(metadataContributorNode);
+    result.name = valueOrInnerText(metadataContributorNode);
     return result;
   }
 
-  static EpubMetadataCreator readMetadataCreator(
+  static EpubMetadataContributor readMetadataCreator(
       XmlElement metadataCreatorNode) {
     final languageRelatedAttributes = EpubLanguageRelatedAttributes();
-    var result = EpubMetadataCreator();
+    var result = EpubMetadataContributor();
     metadataCreatorNode.attributes
         .forEach((XmlAttribute metadataCreatorNodeAttribute) {
       var attributeValue = valueOrInnerText(metadataCreatorNodeAttribute);
@@ -397,7 +396,7 @@ class PackageReader {
       result.languageRelatedAttributes = languageRelatedAttributes;
     }
 
-    result.creator = valueOrInnerText(metadataCreatorNode);
+    result.name = valueOrInnerText(metadataCreatorNode);
 
     return result;
   }

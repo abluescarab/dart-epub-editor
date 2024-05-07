@@ -2,7 +2,6 @@ import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
 import 'epub_metadata_contributor.dart';
-import 'epub_metadata_creator.dart';
 import 'epub_metadata_date.dart';
 import 'epub_metadata_identifier.dart';
 import 'epub_metadata_meta.dart';
@@ -12,7 +11,7 @@ import 'epub_metadata_translated_string.dart';
 class EpubMetadata {
   List<EpubMetadataContributor>? contributors;
   List<EpubMetadataTranslatedString>? coverages;
-  List<EpubMetadataCreator>? creators;
+  List<EpubMetadataContributor>? creators;
   List<EpubMetadataDate>? dates;
   List<EpubMetadataTranslatedString>? descriptions;
   List<EpubMetadataString>? formats;

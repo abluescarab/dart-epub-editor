@@ -1,8 +1,6 @@
 import 'package:epub_editor/epub_editor.dart';
 import 'package:quiver/core.dart';
 
-import 'epub_metadata_string.dart';
-
 class EpubMetadataTranslatedString extends EpubMetadataString {
   EpubMetadataTranslatedString({
     required super.id,
