@@ -7,7 +7,7 @@ class EpubMetadataString {
   });
 
   String? id;
-  String value;
+  String? value;
 
   @override
   int get hashCode => hash2(id, value);
