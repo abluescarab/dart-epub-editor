@@ -1,6 +1,12 @@
 import 'package:quiver/core.dart';
 
 class EpubMetadataDate {
+  EpubMetadataDate({
+    this.id,
+    this.date,
+    this.event,
+  });
+
   String? id;
   String? date;
   String? event;

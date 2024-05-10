@@ -3,6 +3,18 @@ import 'package:quiver/core.dart';
 import 'epub_language_related_attributes.dart';
 
 class EpubMetadataMeta {
+  EpubMetadataMeta({
+    this.name,
+    this.content,
+    this.textContent,
+    this.id,
+    this.refines,
+    this.property,
+    this.scheme,
+    this.languageRelatedAttributes,
+    this.attributes,
+  });
+
   String? name;
   String? content;
   String? textContent;

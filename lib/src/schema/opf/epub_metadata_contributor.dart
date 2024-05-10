@@ -1,9 +1,18 @@
 import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
-import '../../../epub_editor.dart';
+import 'epub_language_related_attributes.dart';
+import 'epub_metadata_creator_alternate_script.dart';
 
 class EpubMetadataContributor {
+  EpubMetadataContributor({
+    this.id,
+    this.name,
+    this.fileAs,
+    this.role,
+    this.displaySeq,
+  });
+
   String? id;
   String? name;
   String? fileAs;

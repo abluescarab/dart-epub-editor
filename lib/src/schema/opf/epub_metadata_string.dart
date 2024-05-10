@@ -2,8 +2,8 @@ import 'package:quiver/core.dart';
 
 class EpubMetadataString {
   EpubMetadataString({
-    required this.id,
-    required this.value,
+    this.id,
+    this.value,
   });
 
   String? id;

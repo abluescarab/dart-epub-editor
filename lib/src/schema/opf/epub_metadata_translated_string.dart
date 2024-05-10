@@ -1,14 +1,17 @@
-import 'package:epub_editor/epub_editor.dart';
 import 'package:quiver/core.dart';
 
-class EpubMetadataTranslatedString extends EpubMetadataString {
+import 'epub_language_related_attributes.dart';
+
+class EpubMetadataTranslatedString {
   EpubMetadataTranslatedString({
-    required super.id,
-    required super.value,
-    required this.languageRelatedAttributes,
+    this.id,
+    this.value,
+    this.languageRelatedAttributes,
   });
 
-  EpubLanguageRelatedAttributes languageRelatedAttributes;
+  String? id;
+  String? value;
+  EpubLanguageRelatedAttributes? languageRelatedAttributes;
 
   @override
   int get hashCode => hash3(id, value, languageRelatedAttributes);

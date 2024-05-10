@@ -1,4 +1,9 @@
 class EpubLanguageRelatedAttributes {
+  EpubLanguageRelatedAttributes({
+    this.lang,
+    this.dir,
+  });
+
   /// https://www.w3.org/TR/epub-33/#attrdef-xml-lang
   String? lang;
 
@@ -7,11 +12,6 @@ class EpubLanguageRelatedAttributes {
   /// Reading systems will assume the value "auto" when EPUB creators omit the attribute or use an invalid value.
   /// https://www.w3.org/TR/epub-33/#attrdef-dir
   String? dir;
-
-  EpubLanguageRelatedAttributes({
-    this.lang,
-    this.dir,
-  });
 
   @override
   bool operator ==(other) {
