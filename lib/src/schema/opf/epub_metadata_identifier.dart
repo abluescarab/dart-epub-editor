@@ -1,13 +1,14 @@
 import 'package:quiver/core.dart';
 
-class EpubMetadataIdentifier {
+import 'epub_metadata_field.dart';
+
+class EpubMetadataIdentifier extends EpubMetadataField {
   EpubMetadataIdentifier({
-    this.id,
+    super.id,
     this.scheme,
     this.identifier,
   });
 
-  String? id;
   String? scheme;
   String? identifier;
 

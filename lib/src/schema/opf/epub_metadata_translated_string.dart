@@ -1,15 +1,15 @@
 import 'package:quiver/core.dart';
 
 import 'epub_language_related_attributes.dart';
+import 'epub_metadata_field.dart';
 
-class EpubMetadataTranslatedString {
+class EpubMetadataTranslatedString extends EpubMetadataField {
   EpubMetadataTranslatedString({
-    this.id,
+    super.id,
     this.value,
     this.languageRelatedAttributes,
   });
 
-  String? id;
   String? value;
   EpubLanguageRelatedAttributes? languageRelatedAttributes;
 

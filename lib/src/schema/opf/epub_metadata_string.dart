@@ -1,12 +1,13 @@
 import 'package:quiver/core.dart';
 
-class EpubMetadataString {
+import 'epub_metadata_field.dart';
+
+class EpubMetadataString extends EpubMetadataField {
   EpubMetadataString({
-    this.id,
+    super.id,
     this.value,
   });
 
-  String? id;
   String? value;
 
   @override

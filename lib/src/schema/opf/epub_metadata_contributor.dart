@@ -3,17 +3,17 @@ import 'package:quiver/core.dart';
 
 import 'epub_language_related_attributes.dart';
 import 'epub_metadata_creator_alternate_script.dart';
+import 'epub_metadata_field.dart';
 
-class EpubMetadataContributor {
+class EpubMetadataContributor extends EpubMetadataField {
   EpubMetadataContributor({
-    this.id,
+    super.id,
     this.name,
     this.fileAs,
     this.role,
     this.displaySeq,
   });
 
-  String? id;
   String? name;
   String? fileAs;
   String? role;

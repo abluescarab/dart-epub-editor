@@ -1,13 +1,14 @@
 import 'package:quiver/core.dart';
 
 import 'epub_language_related_attributes.dart';
+import 'epub_metadata_field.dart';
 
-class EpubMetadataMeta {
+class EpubMetadataMeta extends EpubMetadataField {
   EpubMetadataMeta({
+    super.id,
     this.name,
     this.content,
     this.textContent,
-    this.id,
     this.refines,
     this.property,
     this.scheme,
@@ -18,7 +19,6 @@ class EpubMetadataMeta {
   String? name;
   String? content;
   String? textContent;
-  String? id;
   String? refines;
   String? property;
   String? scheme;

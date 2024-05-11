@@ -1,13 +1,14 @@
 import 'package:quiver/core.dart';
 
-class EpubMetadataDate {
+import 'epub_metadata_field.dart';
+
+class EpubMetadataDate extends EpubMetadataField {
   EpubMetadataDate({
-    this.id,
+    super.id,
     this.date,
     this.event,
   });
 
-  String? id;
   String? date;
   String? event;
 
