@@ -1,6 +1,5 @@
 import 'package:quiver/core.dart';
 
-import 'epub_language_related_attributes.dart';
 import 'epub_metadata_field.dart';
 
 class EpubMetadataMeta extends EpubMetadataField {
@@ -12,8 +11,9 @@ class EpubMetadataMeta extends EpubMetadataField {
     this.refines,
     this.property,
     this.scheme,
-    this.languageRelatedAttributes,
     this.attributes,
+    this.dir,
+    this.lang,
   });
 
   String? name;
@@ -22,8 +22,9 @@ class EpubMetadataMeta extends EpubMetadataField {
   String? refines;
   String? property;
   String? scheme;
-  EpubLanguageRelatedAttributes? languageRelatedAttributes;
   Map<String, String>? attributes;
+  String? dir;
+  String? lang;
 
   @override
   int get hashCode => hashObjects([
@@ -34,7 +35,8 @@ class EpubMetadataMeta extends EpubMetadataField {
         refines.hashCode,
         property.hashCode,
         scheme.hashCode,
-        languageRelatedAttributes.hashCode,
+        dir.hashCode,
+        lang.hashCode,
       ]);
 
   @override
@@ -48,6 +50,7 @@ class EpubMetadataMeta extends EpubMetadataField {
         refines == otherAs.refines &&
         property == otherAs.property &&
         scheme == otherAs.scheme &&
-        languageRelatedAttributes == otherAs.languageRelatedAttributes;
+        dir == otherAs.dir &&
+        lang == otherAs.lang;
   }
 }

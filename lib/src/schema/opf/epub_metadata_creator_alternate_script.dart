@@ -1,11 +1,23 @@
-import 'epub_language_related_attributes.dart';
+import 'package:quiver/core.dart';
 
 class EpubMetadataCreatorAlternateScript {
   EpubMetadataCreatorAlternateScript({
     this.name,
-    this.languageRelatedAttributes,
+    this.dir,
+    this.lang,
   });
 
   String? name;
-  EpubLanguageRelatedAttributes? languageRelatedAttributes;
+  String? dir;
+  String? lang;
+
+  @override
+  int get hashCode => hash3(name, dir, lang);
+
+  @override
+  bool operator ==(Object other) {
+    var otherAs = other as EpubMetadataCreatorAlternateScript?;
+    if (otherAs == null) return false;
+    return name == otherAs.name && dir == otherAs.dir && lang == otherAs.lang;
+  }
 }

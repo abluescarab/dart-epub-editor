@@ -1,7 +1,6 @@
 import 'package:quiver/core.dart';
 
 import 'epub_guide.dart';
-import 'epub_language_related_attributes.dart';
 import 'epub_manifest.dart';
 import 'epub_metadata.dart';
 import 'epub_spine.dart';
@@ -9,11 +8,12 @@ import 'epub_version.dart';
 
 class EpubPackage {
   EpubVersion? version;
-  EpubLanguageRelatedAttributes? languageRelatedAttributes;
   EpubMetadata? metadata;
   EpubManifest? manifest;
   EpubSpine? spine;
   EpubGuide? guide;
+  String? dir;
+  String? lang;
 
   @override
   int get hashCode => hashObjects([
@@ -21,7 +21,9 @@ class EpubPackage {
         metadata.hashCode,
         manifest.hashCode,
         spine.hashCode,
-        guide.hashCode
+        guide.hashCode,
+        dir.hashCode,
+        lang.hashCode,
       ]);
 
   @override
@@ -35,6 +37,8 @@ class EpubPackage {
         metadata == otherAs.metadata &&
         manifest == otherAs.manifest &&
         spine == otherAs.spine &&
-        guide == otherAs.guide;
+        guide == otherAs.guide &&
+        dir == otherAs.dir &&
+        lang == otherAs.lang;
   }
 }

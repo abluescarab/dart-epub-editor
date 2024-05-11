@@ -10,7 +10,6 @@ import 'package:xml/xml.dart';
 
 import '../schema/opf/epub_guide.dart';
 import '../schema/opf/epub_guide_reference.dart';
-import '../schema/opf/epub_language_related_attributes.dart';
 import '../schema/opf/epub_manifest.dart';
 import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata.dart';
@@ -32,10 +31,8 @@ class PackageReader {
     return EpubMetadataTranslatedString(
       id: metadataItemNode.getAttribute('id'),
       value: text,
-      languageRelatedAttributes: EpubLanguageRelatedAttributes(
-        lang: metadataItemNode.getAttribute('lang'),
-        dir: metadataItemNode.getAttribute('dir'),
-      ),
+      lang: metadataItemNode.getAttribute('lang'),
+      dir: metadataItemNode.getAttribute('dir'),
     );
   }
 
@@ -223,15 +220,10 @@ class PackageReader {
             )
                 .map(
               (EpubMetadataMeta meta) {
-                final languageRelatedAttributes =
-                    EpubLanguageRelatedAttributes()
-                      ..lang = meta.attributes?['lang']
-                      ..dir = meta.attributes?['dir'];
-                final alternateScript = EpubMetadataCreatorAlternateScript()
+                return EpubMetadataCreatorAlternateScript()
                   ..name = meta.textContent // Name in another language.
-                  ..languageRelatedAttributes = languageRelatedAttributes;
-
-                return alternateScript;
+                  ..lang = meta.attributes?['lang']
+                  ..dir = meta.attributes?['dir'];
               },
             ).toList());
 
@@ -338,7 +330,6 @@ class PackageReader {
 
   static EpubMetadataContributor readMetadataContributor(
       XmlElement metadataContributorNode) {
-    final languageRelatedAttributes = EpubLanguageRelatedAttributes();
     var result = EpubMetadataContributor();
     metadataContributorNode.attributes
         .forEach((XmlAttribute metadataContributorNodeAttribute) {
@@ -347,8 +338,11 @@ class PackageReader {
         case 'id':
           result.id = attributeValue;
           break;
+        case 'dir':
+          result.dir = attributeValue;
+          break;
         case 'lang':
-          languageRelatedAttributes.lang = attributeValue;
+          result.lang = attributeValue;
           break;
         case 'role':
           result.role = attributeValue;
@@ -359,18 +353,12 @@ class PackageReader {
       }
     });
 
-    if (languageRelatedAttributes.lang != null ||
-        languageRelatedAttributes.dir != null) {
-      result.languageRelatedAttributes = languageRelatedAttributes;
-    }
-
     result.name = valueOrInnerText(metadataContributorNode);
     return result;
   }
 
   static EpubMetadataContributor readMetadataCreator(
       XmlElement metadataCreatorNode) {
-    final languageRelatedAttributes = EpubLanguageRelatedAttributes();
     var result = EpubMetadataContributor();
     metadataCreatorNode.attributes
         .forEach((XmlAttribute metadataCreatorNodeAttribute) {
@@ -379,8 +367,11 @@ class PackageReader {
         case 'id':
           result.id = attributeValue;
           break;
+        case 'dir':
+          result.dir = attributeValue;
+          break;
         case 'lang':
-          languageRelatedAttributes.lang = attributeValue;
+          result.lang = attributeValue;
           break;
         case 'role':
           result.role = attributeValue;
@@ -390,11 +381,6 @@ class PackageReader {
           break;
       }
     });
-
-    if (languageRelatedAttributes.lang != null ||
-        languageRelatedAttributes.dir != null) {
-      result.languageRelatedAttributes = languageRelatedAttributes;
-    }
 
     result.name = valueOrInnerText(metadataCreatorNode);
 
@@ -450,7 +436,6 @@ class PackageReader {
   /// [readMetadata MetaVersion2] and [readMetadata MetaVersion3] have been merged for backward compatibility.
   static EpubMetadataMeta readMetadataMeta(XmlElement metadataMetaNode) {
     var result = EpubMetadataMeta();
-    var languageRelatedAttributes = EpubLanguageRelatedAttributes();
 
     result.attributes = {};
 
@@ -482,15 +467,14 @@ class PackageReader {
           break;
         case 'lang':
         case 'xml:lang':
-          languageRelatedAttributes.lang = attributeValue;
+          result.lang = attributeValue;
           break;
         case 'dir':
-          languageRelatedAttributes.dir = attributeValue;
+          result.dir = attributeValue;
           break;
       }
     });
 
-    result.languageRelatedAttributes = languageRelatedAttributes;
     result.textContent = valueOrInnerText(metadataMetaNode);
 
     return result;
@@ -519,10 +503,8 @@ class PackageReader {
       throw Exception('Unsupported EPUB version: $epubVersionValue.');
     }
 
-    result.languageRelatedAttributes = EpubLanguageRelatedAttributes(
-      lang: packageNode.getAttribute('lang'),
-      dir: packageNode.getAttribute('dir'),
-    );
+    result.lang = packageNode.getAttribute('lang');
+    result.dir = packageNode.getAttribute('dir');
 
     var metadataNode = packageNode
         .findElements('metadata', namespace: opfNamespace)

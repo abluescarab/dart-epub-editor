@@ -1,7 +1,6 @@
 import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
-import 'epub_language_related_attributes.dart';
 import 'epub_metadata_creator_alternate_script.dart';
 import 'epub_metadata_field.dart';
 
@@ -12,24 +11,32 @@ class EpubMetadataContributor extends EpubMetadataField {
     this.fileAs,
     this.role,
     this.displaySeq,
+    this.dir,
+    this.lang,
+    this.alternateScripts,
   });
 
   String? name;
   String? fileAs;
   String? role;
   int? displaySeq;
+  String? dir;
+  String? lang;
 
   /// meta[property="alternate-script"] (v3.0).
   List<EpubMetadataCreatorAlternateScript>? alternateScripts;
-  EpubLanguageRelatedAttributes? languageRelatedAttributes;
 
   @override
-  int get hashCode => hash4(
+  int get hashCode => hashObjects([
         id.hashCode,
         name.hashCode,
         fileAs.hashCode,
         role.hashCode,
-      );
+        displaySeq.hashCode,
+        dir.hashCode,
+        lang.hashCode,
+        alternateScripts.hashCode,
+      ]);
 
   @override
   bool operator ==(other) {
@@ -40,6 +47,8 @@ class EpubMetadataContributor extends EpubMetadataField {
         fileAs == otherAs.fileAs &&
         role == otherAs.role &&
         displaySeq == otherAs.displaySeq &&
+        dir == otherAs.dir &&
+        lang == otherAs.lang &&
         listsEqual(alternateScripts, otherAs.alternateScripts));
   }
 }

@@ -39,7 +39,6 @@ export 'src/schema/navigation/epub_navigation_target.dart';
 // opf
 export 'src/schema/opf/epub_guide.dart';
 export 'src/schema/opf/epub_guide_reference.dart';
-export 'src/schema/opf/epub_language_related_attributes.dart';
 export 'src/schema/opf/epub_manifest.dart';
 export 'src/schema/opf/epub_manifest_item.dart';
 export 'src/schema/opf/epub_metadata.dart';

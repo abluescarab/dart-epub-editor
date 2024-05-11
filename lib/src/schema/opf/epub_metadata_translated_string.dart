@@ -1,19 +1,20 @@
 import 'package:quiver/core.dart';
 
-import 'epub_language_related_attributes.dart';
 import 'epub_metadata_string.dart';
 
 class EpubMetadataTranslatedString extends EpubMetadataString {
   EpubMetadataTranslatedString({
     super.id,
     super.value,
-    this.languageRelatedAttributes,
+    this.dir,
+    this.lang,
   });
 
-  EpubLanguageRelatedAttributes? languageRelatedAttributes;
+  String? dir;
+  String? lang;
 
   @override
-  int get hashCode => hash3(id, value, languageRelatedAttributes);
+  int get hashCode => hash4(id, value, dir, lang);
 
   @override
   bool operator ==(Object other) {
@@ -25,6 +26,7 @@ class EpubMetadataTranslatedString extends EpubMetadataString {
 
     return id == otherAs.id &&
         value == otherAs.value &&
-        languageRelatedAttributes == otherAs.languageRelatedAttributes;
+        dir == otherAs.dir &&
+        lang == otherAs.lang;
   }
 }
