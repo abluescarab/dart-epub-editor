@@ -1,35 +1,32 @@
 import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
-import 'epub_metadata_creator_alternate_script.dart';
-import 'epub_metadata_field.dart';
+import 'epub_metadata_alternate_script.dart';
+import 'epub_metadata_translated_string.dart';
 
-class EpubMetadataContributor extends EpubMetadataField {
+class EpubMetadataContributor extends EpubMetadataTranslatedString {
   EpubMetadataContributor({
     super.id,
-    this.name,
+    super.value,
     this.fileAs,
     this.role,
     this.displaySeq,
-    this.dir,
-    this.lang,
+    super.dir,
+    super.lang,
     this.alternateScripts,
   });
 
-  String? name;
   String? fileAs;
   String? role;
   int? displaySeq;
-  String? dir;
-  String? lang;
 
   /// meta[property="alternate-script"] (v3.0).
-  List<EpubMetadataCreatorAlternateScript>? alternateScripts;
+  List<EpubMetadataAlternateScript>? alternateScripts;
 
   @override
   int get hashCode => hashObjects([
         id.hashCode,
-        name.hashCode,
+        value.hashCode,
         fileAs.hashCode,
         role.hashCode,
         displaySeq.hashCode,
@@ -43,7 +40,7 @@ class EpubMetadataContributor extends EpubMetadataField {
     var otherAs = other as EpubMetadataContributor?;
     if (otherAs == null) return false;
     return (id == otherAs.id &&
-        name == otherAs.name &&
+        value == otherAs.value &&
         fileAs == otherAs.fileAs &&
         role == otherAs.role &&
         displaySeq == otherAs.displaySeq &&

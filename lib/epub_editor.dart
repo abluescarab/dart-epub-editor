@@ -43,7 +43,7 @@ export 'src/schema/opf/epub_manifest.dart';
 export 'src/schema/opf/epub_manifest_item.dart';
 export 'src/schema/opf/epub_metadata.dart';
 export 'src/schema/opf/epub_metadata_contributor.dart';
-export 'src/schema/opf/epub_metadata_creator_alternate_script.dart';
+export 'src/schema/opf/epub_metadata_alternate_script.dart';
 export 'src/schema/opf/epub_metadata_date.dart';
 export 'src/schema/opf/epub_metadata_field.dart';
 export 'src/schema/opf/epub_metadata_identifier.dart';

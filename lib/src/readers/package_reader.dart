@@ -14,7 +14,7 @@ import '../schema/opf/epub_manifest.dart';
 import '../schema/opf/epub_manifest_item.dart';
 import '../schema/opf/epub_metadata.dart';
 import '../schema/opf/epub_metadata_contributor.dart';
-import '../schema/opf/epub_metadata_creator_alternate_script.dart';
+import '../schema/opf/epub_metadata_alternate_script.dart';
 import '../schema/opf/epub_metadata_date.dart';
 import '../schema/opf/epub_metadata_identifier.dart';
 import '../schema/opf/epub_metadata_meta.dart';
@@ -220,8 +220,8 @@ class PackageReader {
             )
                 .map(
               (EpubMetadataMeta meta) {
-                return EpubMetadataCreatorAlternateScript()
-                  ..name = meta.textContent // Name in another language.
+                return EpubMetadataAlternateScript()
+                  ..value = meta.textContent // Name in another language.
                   ..lang = meta.attributes?['lang']
                   ..dir = meta.attributes?['dir'];
               },
@@ -353,7 +353,7 @@ class PackageReader {
       }
     });
 
-    result.name = valueOrInnerText(metadataContributorNode);
+    result.value = valueOrInnerText(metadataContributorNode);
     return result;
   }
 
@@ -382,7 +382,7 @@ class PackageReader {
       }
     });
 
-    result.name = valueOrInnerText(metadataCreatorNode);
+    result.value = valueOrInnerText(metadataCreatorNode);
 
     return result;
   }

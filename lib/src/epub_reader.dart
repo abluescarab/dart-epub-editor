@@ -52,7 +52,7 @@ class EpubReader {
     bookRef.schema = await SchemaReader.readSchema(epubArchive);
     bookRef.title = bookRef.schema!.package!.metadata!.titles?.first;
     bookRef.authorList = bookRef.schema!.package!.metadata!.creators!
-        .map((EpubMetadataContributor creator) => creator.name)
+        .map((EpubMetadataContributor creator) => creator.value)
         .toList();
     bookRef.author = bookRef.authorList!.join(', ');
     bookRef.content = ContentReader.parseContentMap(bookRef);
