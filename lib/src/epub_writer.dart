@@ -1,11 +1,8 @@
 import 'package:archive/archive.dart';
+import 'package:epub_editor/epub_editor.dart';
 import 'dart:convert' as convert;
 import 'package:epub_editor/src/utils/zip_path_utils.dart';
 import 'package:epub_editor/src/writers/epub_package_writer.dart';
-
-import 'entities/epub_book.dart';
-import 'entities/epub_byte_content_file.dart';
-import 'entities/epub_text_content_file.dart';
 
 class EpubWriter {
   static const _container_file =
@@ -55,5 +52,9 @@ class EpubWriter {
     var arch = _createArchive(book);
 
     return ZipEncoder().encode(arch);
+  }
+
+  static List<int>? writeArchive(EpubBookRef book) {
+    return ZipEncoder().encode(book.archive);
   }
 }

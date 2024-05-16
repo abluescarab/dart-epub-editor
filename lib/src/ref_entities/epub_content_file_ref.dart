@@ -16,6 +16,7 @@ abstract class EpubContentFileRef {
 
   EpubContentType? contentType;
   String? contentMimeType;
+
   EpubContentFileRef(EpubBookRef epubBookRef) {
     this.epubBookRef = epubBookRef;
   }
@@ -38,9 +39,7 @@ abstract class EpubContentFileRef {
   ArchiveFile getContentFileEntry() {
     var contentFilePath = ZipPathUtils.combine(
         epubBookRef.schema!.contentDirectoryPath, fileName);
-    var contentFileEntry = epubBookRef
-        .epubArchive()!
-        .files
+    var contentFileEntry = epubBookRef.archive.files
         .firstWhereOrNull((ArchiveFile x) => x.name == contentFilePath);
     if (contentFileEntry == null) {
       throw Exception(

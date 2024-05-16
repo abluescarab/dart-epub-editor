@@ -13,7 +13,9 @@ import 'epub_chapter_ref.dart';
 import 'epub_content_ref.dart';
 
 class EpubBookRef {
-  Archive? _epubArchive;
+  EpubBookRef(Archive epubArchive) {
+    _epubArchive = epubArchive;
+  }
 
   /// Main title.
   EpubMetadataTranslatedString? title;
@@ -21,9 +23,10 @@ class EpubBookRef {
   List<String?>? authorList;
   EpubSchema? schema;
   EpubContentRef? content;
-  EpubBookRef(Archive epubArchive) {
-    _epubArchive = epubArchive;
-  }
+
+  late Archive _epubArchive;
+
+  Archive get archive => _epubArchive;
 
   @override
   int get hashCode {
@@ -48,10 +51,6 @@ class EpubBookRef {
         schema == other.schema &&
         content == other.content &&
         collections.listsEqual(authorList, other.authorList);
-  }
-
-  Archive? epubArchive() {
-    return _epubArchive;
   }
 
   Future<List<EpubChapterRef>> getChapters() async {
