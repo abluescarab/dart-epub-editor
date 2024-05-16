@@ -2,23 +2,26 @@ import 'package:quiver/collection.dart';
 import 'package:quiver/core.dart';
 
 import 'epub_metadata_alternate_script.dart';
-import 'epub_metadata_translated_string.dart';
+import 'epub_metadata_field.dart';
 
-class EpubMetadataContributor extends EpubMetadataTranslatedString {
+class EpubMetadataContributor extends EpubMetadataField {
   EpubMetadataContributor({
     super.id,
-    super.value,
+    this.value,
     this.fileAs,
     this.role,
     this.displaySeq,
-    super.dir,
-    super.lang,
+    this.dir,
+    this.lang,
     this.alternateScripts,
   });
 
+  String? value;
   String? fileAs;
   String? role;
   int? displaySeq;
+  String? dir;
+  String? lang;
 
   /// meta[property="alternate-script"] (v3.0).
   List<EpubMetadataAlternateScript>? alternateScripts;
