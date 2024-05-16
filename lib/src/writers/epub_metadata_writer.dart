@@ -21,7 +21,7 @@ class EpubMetadataWriter {
                 builder.attribute('file-as', item.fileAs!,
                     namespace: _opf_namespace);
               }
-              builder.text(item.value!);
+              builder.text(item.name!);
             }))
         ..coverages?.forEach((item) =>
             builder.element('coverage', namespace: _dc_namespace, nest: item))
@@ -35,7 +35,7 @@ class EpubMetadataWriter {
                 builder.attribute('file-as', item.fileAs!,
                     namespace: _opf_namespace);
               }
-              builder.text(item.value!);
+              builder.text(item.name!);
             }))
         ..dates?.forEach((date) =>
             builder.element('date', namespace: _dc_namespace, nest: () {

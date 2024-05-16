@@ -7,7 +7,7 @@ import 'epub_metadata_field.dart';
 class EpubMetadataContributor extends EpubMetadataField {
   EpubMetadataContributor({
     super.id,
-    this.value,
+    this.name,
     this.fileAs,
     this.role,
     this.displaySeq,
@@ -16,7 +16,7 @@ class EpubMetadataContributor extends EpubMetadataField {
     this.alternateScripts,
   });
 
-  String? value;
+  String? name;
   String? fileAs;
   String? role;
   int? displaySeq;
@@ -29,7 +29,7 @@ class EpubMetadataContributor extends EpubMetadataField {
   @override
   int get hashCode => hashObjects([
         id.hashCode,
-        value.hashCode,
+        name.hashCode,
         fileAs.hashCode,
         role.hashCode,
         displaySeq.hashCode,
@@ -43,7 +43,7 @@ class EpubMetadataContributor extends EpubMetadataField {
     var otherAs = other as EpubMetadataContributor?;
     if (otherAs == null) return false;
     return (id == otherAs.id &&
-        value == otherAs.value &&
+        name == otherAs.name &&
         fileAs == otherAs.fileAs &&
         role == otherAs.role &&
         displaySeq == otherAs.displaySeq &&

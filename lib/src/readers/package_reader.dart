@@ -353,7 +353,7 @@ class PackageReader {
       }
     });
 
-    result.value = valueOrInnerText(metadataContributorNode);
+    result.name = valueOrInnerText(metadataContributorNode);
     return result;
   }
 
@@ -382,7 +382,7 @@ class PackageReader {
       }
     });
 
-    result.value = valueOrInnerText(metadataCreatorNode);
+    result.name = valueOrInnerText(metadataCreatorNode);
 
     return result;
   }
