@@ -9,7 +9,6 @@ import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 class EpubMetadataWriter {
   static const _dc_namespace = 'http://purl.org/dc/elements/1.1/';
   static const _opf_namespace = 'http://www.idpf.org/2007/opf';
-  static const _xml_namespace = 'http://www.w3.org/1999/xhtml';
 
   static void _writeId(XmlBuilder builder, EpubMetadataField item) {
     if (item.id != null) {
@@ -47,7 +46,7 @@ class EpubMetadataWriter {
       builder.attribute(
         'xml:lang',
         item.lang!,
-        namespace: _xml_namespace,
+        namespace: 'xml',
       );
     }
 
@@ -73,7 +72,7 @@ class EpubMetadataWriter {
       builder.attribute(
         'lang',
         item.lang!,
-        namespace: _xml_namespace,
+        namespace: 'xml',
       );
     }
 
@@ -88,7 +87,6 @@ class EpubMetadataWriter {
     builder.element('metadata', namespaces: {
       _opf_namespace: 'opf',
       _dc_namespace: 'dc',
-      _xml_namespace: 'xml',
     }, nest: () {
       meta!
         ..contributors?.forEach((item) => builder.element(
