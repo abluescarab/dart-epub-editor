@@ -20,7 +20,10 @@ class EpubPackageWriter {
       builder.namespace(_namespace);
 
       EpubMetadataWriter.writeMetadata(
-          builder, package.metadata, package.version);
+        builder,
+        package.metadata,
+        package.version,
+      );
       EpubManifestWriter.writeManifest(builder, package.manifest);
       EpubSpineWriter.writeSpine(builder, package.spine!);
       EpubGuideWriter.writeGuide(builder, package.guide);

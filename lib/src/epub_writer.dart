@@ -14,11 +14,17 @@ class EpubWriter {
 
     // Add simple metadata
     arch.addFile(ArchiveFile.noCompress(
-        'mimetype', 20, convert.utf8.encode('application/epub+zip')));
+      'mimetype',
+      20,
+      convert.utf8.encode('application/epub+zip'),
+    ));
 
     // Add Container file
-    arch.addFile(ArchiveFile('META-INF/container.xml', _container_file.length,
-        convert.utf8.encode(_container_file)));
+    arch.addFile(ArchiveFile(
+      'META-INF/container.xml',
+      _container_file.length,
+      convert.utf8.encode(_container_file),
+    ));
 
     // Add all content to the archive
     book.content!.allFiles!.forEach((name, file) {
@@ -30,10 +36,12 @@ class EpubWriter {
         content = convert.utf8.encode(file.content!);
       }
 
-      arch.addFile(ArchiveFile(
-          ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
-          content!.length,
-          content));
+      arch.addFile(
+        ArchiveFile(
+            ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
+            content!.length,
+            content),
+      );
     });
 
     // Generate the content.opf file and add it to the Archive
