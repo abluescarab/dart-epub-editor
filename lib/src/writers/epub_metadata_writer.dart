@@ -192,7 +192,7 @@ class EpubMetadataWriter {
         builder.element(
           'description',
           namespace: _dc_namespace,
-          nest: meta.publishers.map((e) => e.value),
+          nest: meta.publishers!.map((e) => e.value),
         );
       }
     });
