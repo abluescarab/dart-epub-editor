@@ -2,7 +2,6 @@ import 'package:archive/archive.dart';
 import 'package:epub_editor/epub_editor.dart';
 import 'dart:convert' as convert;
 import 'package:epub_editor/src/utils/zip_path_utils.dart';
-import 'package:epub_editor/src/writers/epub_package_writer.dart';
 
 class EpubWriter {
   static const _container_file =

@@ -188,13 +188,13 @@ class EpubMetadataWriter {
               nest: () => _writeString(builder, item),
             ));
 
-      // if (meta.publishers != null) {
-      //   builder.element(
-      //     'description',
-      //     namespace: _dc_namespace,
-      //     nest: meta.publishers,
-      //   );
-      // }
+      if (meta.publishers != null) {
+        builder.element(
+          'description',
+          namespace: _dc_namespace,
+          nest: meta.publishers.map((e) => e.value),
+        );
+      }
     });
   }
 }
