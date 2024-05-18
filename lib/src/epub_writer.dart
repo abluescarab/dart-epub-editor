@@ -38,19 +38,26 @@ class EpubWriter {
 
       arch.addFile(
         ArchiveFile(
-            ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
-            content!.length,
-            content),
+          ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
+          content!.length,
+          content,
+        ),
       );
     });
 
     // Generate the content.opf file and add it to the Archive
     var contentopf = EpubPackageWriter.writeContent(book.schema!.package!);
 
-    arch.addFile(ArchiveFile(
-        ZipPathUtils.combine(book.schema!.contentDirectoryPath, 'content.opf')!,
+    arch.addFile(
+      ArchiveFile(
+        ZipPathUtils.combine(
+          book.schema!.contentDirectoryPath,
+          'content.opf',
+        )!,
         contentopf.length,
-        convert.utf8.encode(contentopf)));
+        convert.utf8.encode(contentopf),
+      ),
+    );
 
     return arch;
   }
