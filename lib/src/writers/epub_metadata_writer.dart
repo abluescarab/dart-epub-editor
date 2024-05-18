@@ -46,7 +46,6 @@ class EpubMetadataWriter {
       builder.attribute(
         'xml:lang',
         item.lang!,
-        namespace: 'xml',
       );
     }
 
@@ -70,9 +69,8 @@ class EpubMetadataWriter {
 
     if (item.lang != null) {
       builder.attribute(
-        'lang',
+        'xml:lang',
         item.lang!,
-        namespace: 'xml',
       );
     }
 
