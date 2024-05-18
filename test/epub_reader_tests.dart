@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import 'package:epub_editor/epub_editor.dart';
 
 main() async {
-  String fileName = "stevenson-a-childs-garden-of-verses-illustrations.epub";
+  String fileName = "Frankenstein.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
   final targetFile = new io.File(fullPath);
@@ -21,11 +21,15 @@ main() async {
     final t = await epubRef.getChapters();
     print("${t.length}");
   });
+
   test("Test Epub Read", () async {
     EpubBook epubRef = await EpubReader.readBook(bytes);
 
-    expect(epubRef.Author, equals("John S. Hittell"));
-    expect(epubRef.Title, equals("Hittel on Gold Mines and Mining"));
+    expect(epubRef.author, equals("Mary Wollstonecraft Shelley"));
+    expect(
+      epubRef.mainTitle.value,
+      equals("Frankenstein; Or, The Modern Prometheus"),
+    );
   });
 
   test("Test can read", () async {

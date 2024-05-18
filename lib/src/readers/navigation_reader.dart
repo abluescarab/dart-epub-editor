@@ -35,6 +35,7 @@ class NavigationReader {
   static Future<EpubNavigation> readNavigation(Archive epubArchive,
       String contentDirectoryPath, EpubPackage package) async {
     final result = EpubNavigation();
+
     if (package.version == EpubVersion.epub2) {
       final tocId = package.spine!.tableOfContents;
       if (tocId == null || tocId.isEmpty) {
@@ -140,26 +141,33 @@ class NavigationReader {
       });
     } else {
       //Version 3
+      final tocManifestItem =
+          package.manifest!.items!.cast<EpubManifestItem?>().firstWhere(
+                (element) => element!.properties == 'nav',
+                orElse: () => null,
+              );
 
-      final tocManifestItem = package.manifest!.items!
-          .cast<EpubManifestItem?>()
-          .firstWhere((element) => element!.properties == 'nav',
-              orElse: () => null);
       if (tocManifestItem == null) {
         throw Exception(
-            'EPUB parsing error: TOC item, not found in EPUB manifest.');
+          'EPUB parsing error: TOC item not found in EPUB manifest.',
+        );
       }
 
       _tocFileEntryPath =
           ZipPathUtils.combine(contentDirectoryPath, tocManifestItem.href);
+
       final tocFileEntry = epubArchive.files.cast<ArchiveFile?>().firstWhere(
-          (ArchiveFile? file) =>
-              file!.name.toLowerCase() == _tocFileEntryPath!.toLowerCase(),
-          orElse: () => null);
+            (ArchiveFile? file) =>
+                file!.name.toLowerCase() == _tocFileEntryPath!.toLowerCase(),
+            orElse: () => null,
+          );
+
       if (tocFileEntry == null) {
         throw Exception(
-            'EPUB parsing error: TOC file $_tocFileEntryPath not found in archive.');
+          'EPUB parsing error: TOC file $_tocFileEntryPath not found in archive.',
+        );
       }
+
       //Get relative toc file path
       _tocFileEntryPath = ((_tocFileEntryPath!.split('/')..removeLast())
                 ..removeAt(0))
@@ -174,6 +182,7 @@ class NavigationReader {
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
+
       if (headNode == null) {
         throw Exception(
             'EPUB parsing error: TOC file does not contain head element.');
@@ -192,13 +201,15 @@ class NavigationReader {
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
+
       if (navNode == null) {
         throw Exception(
             'EPUB parsing error: TOC file does not contain head element.');
       }
-      final navMapNode = navNode.findElements('ol').single;
 
+      final navMapNode = navNode.findElements('ol').single;
       final navMap = readNavigationMapV3(navMapNode);
+
       result.navMap = navMap;
 
       //TODO : Implement pagesLists
@@ -254,11 +265,17 @@ class NavigationReader {
             result.source = attributeValue;
           } else {
             result.source = path.normalize(_tocFileEntryPath! + attributeValue);
+
+            // if running on Windows, path.normalize() replaces / with \
+            if (_tocFileEntryPath!.contains('/')) {
+              result.source = result.source?.replaceAll('\\', '/');
+            }
           }
 
           break;
       }
     });
+
     // element with span, the content will be null;
     // if (result.source == null || result.source!.isEmpty) {
     //   throw Exception(
@@ -393,15 +410,16 @@ class NavigationReader {
           result.navigationLabels!.add(navigationLabel);
           break;
         case 'navtarget':
-          final navigationTarget = readNavigationTarget(navigationListChildNode);
+          final navigationTarget =
+              readNavigationTarget(navigationListChildNode);
           result.navigationTargets!.add(navigationTarget);
           break;
       }
     });
-    // if (result.navigationLabels!.isEmpty) {
-    //   throw Exception(
-    //       'Incorrect EPUB navigation page target: at least one navLabel element is required.');
-    // }
+// if (result.navigationLabels!.isEmpty) {
+//   throw Exception(
+//       'Incorrect EPUB navigation page target: at least one navLabel element is required.');
+// }
     return result;
   }
 
@@ -574,7 +592,8 @@ class NavigationReader {
       switch (navigationPointChildNode.name.local.toLowerCase()) {
         case 'a':
         case 'span':
-          final navigationLabel = readNavigationLabelV3(navigationPointChildNode);
+          final navigationLabel =
+              readNavigationLabelV3(navigationPointChildNode);
           result.navigationLabels!.add(navigationLabel);
           final content = readNavigationContentV3(navigationPointChildNode);
           result.content = content;
@@ -632,7 +651,8 @@ class NavigationReader {
         .forEach((xml.XmlElement navigationTargetChildNode) {
       switch (navigationTargetChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          final navigationLabel = readNavigationLabel(navigationTargetChildNode);
+          final navigationLabel =
+              readNavigationLabel(navigationTargetChildNode);
           result.navigationLabels!.add(navigationLabel);
           break;
         case 'content':

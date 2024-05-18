@@ -344,12 +344,15 @@ class PackageReader {
 
   static EpubMetadataDate readMetadataDate(XmlElement metadataDateNode) {
     final result = EpubMetadataDate();
+    final eventAttribute = metadataDateNode.getAttribute(
+      'event',
+      namespace: metadataDateNode.name.namespaceUri,
+    );
 
-    final eventAttribute = metadataDateNode.getAttribute('event',
-        namespace: metadataDateNode.name.namespaceUri);
     if (eventAttribute != null && eventAttribute.isNotEmpty) {
       result.event = eventAttribute;
     }
+
     result.date = valueOrInnerText(metadataDateNode);
     return result;
   }
@@ -359,18 +362,20 @@ class PackageReader {
   ) {
     final result = EpubMetadataIdentifier();
 
-    metadataIdentifierNode.attributes
-        .forEach((XmlAttribute metadataIdentifierNodeAttribute) {
-      final attributeValue = valueOrInnerText(metadataIdentifierNodeAttribute);
-      switch (metadataIdentifierNodeAttribute.name.local.toLowerCase()) {
-        case 'id':
-          result.id = attributeValue;
-          break;
-        case 'scheme':
-          result.scheme = attributeValue;
-          break;
-      }
-    });
+    metadataIdentifierNode.attributes.forEach(
+      (XmlAttribute metadataIdentifierNodeAttribute) {
+        final attributeValue =
+            valueOrInnerText(metadataIdentifierNodeAttribute);
+        switch (metadataIdentifierNodeAttribute.name.local.toLowerCase()) {
+          case 'id':
+            result.id = attributeValue;
+            break;
+          case 'scheme':
+            result.scheme = attributeValue;
+            break;
+        }
+      },
+    );
 
     result.identifier = valueOrInnerText(metadataIdentifierNode);
     return result;
@@ -398,41 +403,43 @@ class PackageReader {
 
     result.attributes = {};
 
-    metadataMetaNode.attributes
-        .forEach((XmlAttribute metadataMetaNodeAttribute) {
-      final attributeName = metadataMetaNodeAttribute.name.local.toLowerCase();
-      final attributeValue = valueOrInnerText(metadataMetaNodeAttribute);
+    metadataMetaNode.attributes.forEach(
+      (XmlAttribute metadataMetaNodeAttribute) {
+        final attributeName =
+            metadataMetaNodeAttribute.name.local.toLowerCase();
+        final attributeValue = valueOrInnerText(metadataMetaNodeAttribute);
 
-      result.attributes![attributeName] = attributeValue;
+        result.attributes![attributeName] = attributeValue;
 
-      switch (attributeName) {
-        case 'id':
-          result.id = attributeValue;
-          break;
-        case 'name':
-          result.name = attributeValue;
-          break;
-        case 'content':
-          result.content = attributeValue;
-          break;
-        case 'refines':
-          result.refines = attributeValue;
-          break;
-        case 'property':
-          result.property = attributeValue;
-          break;
-        case 'scheme':
-          result.scheme = attributeValue;
-          break;
-        case 'lang':
-        case 'xml:lang':
-          result.lang = attributeValue;
-          break;
-        case 'dir':
-          result.dir = attributeValue;
-          break;
-      }
-    });
+        switch (attributeName) {
+          case 'id':
+            result.id = attributeValue;
+            break;
+          case 'name':
+            result.name = attributeValue;
+            break;
+          case 'content':
+            result.content = attributeValue;
+            break;
+          case 'refines':
+            result.refines = attributeValue;
+            break;
+          case 'property':
+            result.property = attributeValue;
+            break;
+          case 'scheme':
+            result.scheme = attributeValue;
+            break;
+          case 'lang':
+          case 'xml:lang':
+            result.lang = attributeValue;
+            break;
+          case 'dir':
+            result.dir = attributeValue;
+            break;
+        }
+      },
+    );
 
     result.textContent = valueOrInnerText(metadataMetaNode);
 

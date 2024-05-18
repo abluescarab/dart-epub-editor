@@ -12,7 +12,8 @@ class SchemaReader {
   static Future<EpubSchema> readSchema(Archive epubArchive) async {
     final result = EpubSchema();
 
-    final rootFilePath = (await RootFilePathReader.getRootFilePath(epubArchive))!;
+    final rootFilePath =
+        (await RootFilePathReader.getRootFilePath(epubArchive))!;
     final contentDirectoryPath = ZipPathUtils.getDirectoryPath(rootFilePath);
     result.contentDirectoryPath = contentDirectoryPath;
 
