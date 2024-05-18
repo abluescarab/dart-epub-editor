@@ -61,8 +61,4 @@ class EpubWriter {
 
     return ZipEncoder().encode(arch);
   }
-
-  static List<int>? writeArchive(EpubBookRef book) {
-    return ZipEncoder().encode(book.archive);
-  }
 }
