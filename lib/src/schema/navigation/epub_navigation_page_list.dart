@@ -13,7 +13,7 @@ class EpubNavigationPageList {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationPageList?;
+    final otherAs = other as EpubNavigationPageList?;
     if (otherAs == null) return false;
 
     return collections.listsEqual(targets, otherAs.targets);

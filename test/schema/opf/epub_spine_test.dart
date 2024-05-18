@@ -12,7 +12,7 @@ main() async {
   final int length = 10;
   final RandomString randomString = new RandomString(new Random(123788));
 
-  var reference = new EpubSpine()
+  final reference = new EpubSpine()
     ..items = [
       new EpubSpineItemRef()
         ..idRef = randomString.randomAlpha(length)

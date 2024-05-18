@@ -5,7 +5,7 @@ abstract class EpubMetadataField {
 
   @override
   bool operator ==(Object other) {
-    var otherAs = other as EpubMetadataField?;
+    final otherAs = other as EpubMetadataField?;
     if (otherAs == null) return false;
     return id == otherAs.id;
   }

@@ -4,7 +4,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_creator.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubMetadataCreator()
+  final reference = new EpubMetadataCreator()
     ..creator = "orthros"
     ..fileAs = "Large"
     ..role = "Creator";

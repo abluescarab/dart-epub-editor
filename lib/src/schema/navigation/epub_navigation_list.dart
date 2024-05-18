@@ -12,7 +12,7 @@ class EpubNavigationList {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       id.hashCode,
       classAttribute.hashCode,
       ...navigationLabels?.map((label) => label.hashCode) ?? [0],
@@ -23,7 +23,7 @@ class EpubNavigationList {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationList?;
+    final otherAs = other as EpubNavigationList?;
     if (otherAs == null) return false;
 
     if (!(id == otherAs.id && classAttribute == otherAs.classAttribute)) {

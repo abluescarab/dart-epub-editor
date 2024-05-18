@@ -4,7 +4,7 @@ import 'package:epub_editor/epub.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubByteContentFile();
+  final reference = new EpubByteContentFile();
   reference
     ..content = [0, 1, 2, 3]
     ..contentMimeType = "application/test"

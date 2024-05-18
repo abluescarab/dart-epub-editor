@@ -10,7 +10,7 @@ class EpubSpine {
 
   @override
   int get hashCode {
-    var objs = [
+    final objs = [
       tableOfContents.hashCode,
       ltr.hashCode,
       ...items!.map((item) => item.hashCode)
@@ -20,7 +20,7 @@ class EpubSpine {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubSpine?;
+    final otherAs = other as EpubSpine?;
     if (otherAs == null) return false;
 
     if (!collections.listsEqual(items, otherAs.items)) {

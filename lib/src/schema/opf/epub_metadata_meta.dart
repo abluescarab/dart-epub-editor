@@ -41,7 +41,7 @@ class EpubMetadataMeta extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubMetadataMeta?;
+    final otherAs = other as EpubMetadataMeta?;
     if (otherAs == null) return false;
     return name == otherAs.name &&
         content == otherAs.content &&

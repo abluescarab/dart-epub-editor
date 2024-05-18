@@ -21,7 +21,7 @@ import 'readers/schema_reader.dart';
 /// // Extract values of interest.
 /// String title = epub.title;
 /// String author = epub.author;
-/// var metadata = epub.schema.package.metadata;
+/// final metadata = epub.schema.package.metadata;
 /// String genres = metadata.subjects.join(', ');
 /// ```
 class EpubReader {
@@ -46,9 +46,9 @@ class EpubReader {
       loadedBytes = bytes;
     }
 
-    var epubArchive = ZipDecoder().decodeBytes(loadedBytes);
+    final epubArchive = ZipDecoder().decodeBytes(loadedBytes);
 
-    var bookRef = EpubBookRef(epubArchive);
+    final bookRef = EpubBookRef(epubArchive);
     bookRef.schema = await SchemaReader.readSchema(epubArchive);
     bookRef.title = bookRef.schema!.package!.metadata!.titles?.first;
     bookRef.authorList = bookRef.schema!.package!.metadata!.creators!
@@ -61,7 +61,7 @@ class EpubReader {
 
   /// Opens the book asynchronously and reads all of its content into the memory. Does not hold the handle to the EPUB file.
   static Future<EpubBook> readBook(FutureOr<List<int>> bytes) async {
-    var result = EpubBook();
+    final result = EpubBook();
     List<int> loadedBytes;
     if (bytes is Future) {
       loadedBytes = await bytes;
@@ -69,21 +69,21 @@ class EpubReader {
       loadedBytes = bytes;
     }
 
-    var epubBookRef = await openBook(loadedBytes);
+    final epubBookRef = await openBook(loadedBytes);
     result.schema = epubBookRef.schema;
     result.mainTitle = epubBookRef.title!;
     result.authorList = epubBookRef.authorList;
     result.author = epubBookRef.author;
     result.content = await readContent(epubBookRef.content!);
     result.coverImage = await epubBookRef.readCover();
-    var chapterRefs = await epubBookRef.getChapters();
+    final chapterRefs = await epubBookRef.getChapters();
     result.chapters = await readChapters(chapterRefs);
 
     return result;
   }
 
   static Future<EpubContent> readContent(EpubContentRef contentRef) async {
-    var result = EpubContent();
+    final result = EpubContent();
     result.html = await readTextContentFiles(contentRef.html!);
     result.css = await readTextContentFiles(contentRef.css!);
     result.images = await readByteContentFiles(contentRef.images!);
@@ -116,11 +116,11 @@ class EpubReader {
 
   static Future<Map<String, EpubTextContentFile>> readTextContentFiles(
       Map<String, EpubTextContentFileRef> textContentFileRefs) async {
-    var result = <String, EpubTextContentFile>{};
+    final result = <String, EpubTextContentFile>{};
 
     await Future.forEach(textContentFileRefs.keys, (dynamic key) async {
       EpubContentFileRef value = textContentFileRefs[key]!;
-      var textContentFile = EpubTextContentFile();
+      final textContentFile = EpubTextContentFile();
       textContentFile.fileName = value.fileName;
       textContentFile.contentType = value.contentType;
       textContentFile.contentMimeType = value.contentMimeType;
@@ -132,7 +132,7 @@ class EpubReader {
 
   static Future<Map<String, EpubByteContentFile>> readByteContentFiles(
       Map<String, EpubByteContentFileRef> byteContentFileRefs) async {
-    var result = <String, EpubByteContentFile>{};
+    final result = <String, EpubByteContentFile>{};
     await Future.forEach(byteContentFileRefs.keys, (dynamic key) async {
       result[key] = await readByteContentFile(byteContentFileRefs[key]!);
     });
@@ -141,7 +141,7 @@ class EpubReader {
 
   static Future<EpubByteContentFile> readByteContentFile(
       EpubContentFileRef contentFileRef) async {
-    var result = EpubByteContentFile();
+    final result = EpubByteContentFile();
 
     result.fileName = contentFileRef.fileName;
     result.contentType = contentFileRef.contentType;
@@ -153,9 +153,9 @@ class EpubReader {
 
   static Future<List<EpubChapter>> readChapters(
       List<EpubChapterRef> chapterRefs) async {
-    var result = <EpubChapter>[];
+    final result = <EpubChapter>[];
     await Future.forEach(chapterRefs, (EpubChapterRef chapterRef) async {
-      var chapter = EpubChapter();
+      final chapter = EpubChapter();
 
       chapter.title = chapterRef.title;
       chapter.contentFileName = chapterRef.contentFileName;

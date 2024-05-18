@@ -13,7 +13,7 @@ class EpubNavigationMap {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationMap?;
+    final otherAs = other as EpubNavigationMap?;
     if (otherAs == null) return false;
 
     return collections.listsEqual(points, otherAs.points);

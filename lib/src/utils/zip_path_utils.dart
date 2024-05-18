@@ -1,6 +1,6 @@
 class ZipPathUtils {
   static String getDirectoryPath(String filePath) {
-    var lastSlashIndex = filePath.lastIndexOf('/');
+    final lastSlashIndex = filePath.lastIndexOf('/');
     if (lastSlashIndex == -1) {
       return '';
     } else {

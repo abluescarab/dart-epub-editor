@@ -9,7 +9,7 @@ class EpubWriter {
 
   // Creates a Zip Archive of an EpubBook
   static Archive _createArchive(EpubBook book) {
-    var arch = Archive();
+    final arch = Archive();
 
     // Add simple metadata
     arch.addFile(ArchiveFile.noCompress(
@@ -45,7 +45,7 @@ class EpubWriter {
     });
 
     // Generate the content.opf file and add it to the Archive
-    var contentopf = EpubPackageWriter.writeContent(book.schema!.package!);
+    final contentopf = EpubPackageWriter.writeContent(book.schema!.package!);
 
     arch.addFile(
       ArchiveFile(
@@ -63,7 +63,7 @@ class EpubWriter {
 
   // Serializes the EpubBook into a byte array
   static List<int>? writeBook(EpubBook book) {
-    var arch = _createArchive(book);
+    final arch = _createArchive(book);
 
     return ZipEncoder().encode(arch);
   }

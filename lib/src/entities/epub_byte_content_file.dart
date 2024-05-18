@@ -8,7 +8,7 @@ class EpubByteContentFile extends EpubContentFile {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       contentMimeType.hashCode,
       contentType.hashCode,
       fileName.hashCode,

@@ -4,7 +4,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_identifier.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubMetadataIdentifier()
+  final reference = new EpubMetadataIdentifier()
     ..id = "Unique"
     ..identifier = "Identifier"
     ..scheme = "A plot";

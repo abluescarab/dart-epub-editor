@@ -11,7 +11,7 @@ main() async {
   final int length = 10;
   final RandomString randomString = new RandomString(new Random(123788));
 
-  var reference = new EpubSpineItemRef()
+  final reference = new EpubSpineItemRef()
     ..isLinear = true
     ..idRef = randomString.randomAlpha(length);
 

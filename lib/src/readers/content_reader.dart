@@ -8,7 +8,7 @@ import '../schema/opf/epub_manifest_item.dart';
 
 class ContentReader {
   static EpubContentRef parseContentMap(EpubBookRef bookRef) {
-    var result = EpubContentRef();
+    final result = EpubContentRef();
     result.html = <String, EpubTextContentFileRef>{};
     result.css = <String, EpubTextContentFileRef>{};
     result.images = <String, EpubByteContentFileRef>{};
@@ -17,9 +17,9 @@ class ContentReader {
 
     bookRef.schema!.package!.manifest!.items!
         .forEach((EpubManifestItem manifestItem) {
-      var fileName = manifestItem.href;
-      var contentMimeType = manifestItem.mediaType!;
-      var contentType = getContentTypeByContentMimeType(contentMimeType);
+      final fileName = manifestItem.href;
+      final contentMimeType = manifestItem.mediaType!;
+      final contentType = getContentTypeByContentMimeType(contentMimeType);
       switch (contentType) {
         case EpubContentType.xhtml_1_1:
         case EpubContentType.css:
@@ -28,7 +28,7 @@ class ContentReader {
         case EpubContentType.xml:
         case EpubContentType.dtbook:
         case EpubContentType.dtbook_ncx:
-          var epubTextContentFile = EpubTextContentFileRef(bookRef);
+          final epubTextContentFile = EpubTextContentFileRef(bookRef);
           {
             epubTextContentFile.fileName = Uri.decodeFull(fileName!);
             epubTextContentFile.contentMimeType = contentMimeType;
@@ -60,7 +60,7 @@ class ContentReader {
           result.allFiles![fileName] = epubTextContentFile;
           break;
         default:
-          var epubByteContentFile = EpubByteContentFileRef(bookRef);
+          final epubByteContentFile = EpubByteContentFileRef(bookRef);
           {
             epubByteContentFile.fileName = Uri.decodeFull(fileName!);
             epubByteContentFile.contentMimeType = contentMimeType;

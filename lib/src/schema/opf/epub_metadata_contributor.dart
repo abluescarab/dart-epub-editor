@@ -40,7 +40,7 @@ class EpubMetadataContributor extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubMetadataContributor?;
+    final otherAs = other as EpubMetadataContributor?;
     if (otherAs == null) return false;
     return (id == otherAs.id &&
         name == otherAs.name &&

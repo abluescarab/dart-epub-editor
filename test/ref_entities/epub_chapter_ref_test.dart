@@ -7,10 +7,10 @@ import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var arch = new Archive();
-  var bookRef = new EpubBookRef(arch);
-  var contentFileRef = new EpubTextContentFileRef(bookRef);
-  var reference = new EpubChapterRef(contentFileRef);
+  final arch = new Archive();
+  final bookRef = new EpubBookRef(arch);
+  final contentFileRef = new EpubTextContentFileRef(bookRef);
+  final reference = new EpubChapterRef(contentFileRef);
 
   reference
     ..anchor = "anchor"
@@ -21,9 +21,9 @@ main() async {
   EpubBookRef bookRef2;
   EpubChapterRef testChapterRef;
   setUp(() async {
-    var arch2 = new Archive();
+    final arch2 = new Archive();
     bookRef2 = new EpubBookRef(arch2);
-    var contentFileRef2 = new EpubTextContentFileRef(bookRef2);
+    final contentFileRef2 = new EpubTextContentFileRef(bookRef2);
 
     testChapterRef = new EpubChapterRef(contentFileRef2);
     testChapterRef
@@ -54,8 +54,8 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        var subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
-        var chapter = new EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
+        final chapter = new EpubChapterRef(subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
@@ -89,8 +89,8 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        var subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
-        var chapter = new EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
+        final chapter = new EpubChapterRef(subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";

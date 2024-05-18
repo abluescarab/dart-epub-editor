@@ -17,7 +17,7 @@ class EpubManifest {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubManifest?;
+    final otherAs = other as EpubManifest?;
     if (otherAs == null) {
       return false;
     }

@@ -17,7 +17,7 @@ class EpubMetadataIdentifier extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubMetadataIdentifier?;
+    final otherAs = other as EpubMetadataIdentifier?;
     if (otherAs == null) return false;
     return id == otherAs.id &&
         scheme == otherAs.scheme &&

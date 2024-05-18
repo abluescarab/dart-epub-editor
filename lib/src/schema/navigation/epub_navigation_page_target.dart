@@ -16,7 +16,7 @@ class EpubNavigationPageTarget {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       id.hashCode,
       value.hashCode,
       type.hashCode,
@@ -30,7 +30,7 @@ class EpubNavigationPageTarget {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationPageTarget?;
+    final otherAs = other as EpubNavigationPageTarget?;
     if (otherAs == null) {
       return false;
     }

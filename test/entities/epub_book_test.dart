@@ -5,7 +5,7 @@ import 'package:epub_editor/src/entities/epub_schema.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubBook();
+  final reference = new EpubBook();
   reference
     ..author = "orthros"
     ..authorList = ["orthros"]
@@ -37,7 +37,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        var file = new EpubTextContentFile();
+        final file = new EpubTextContentFile();
         file
           ..content = "Hello"
           ..contentMimeType = "application/txt"
@@ -62,7 +62,7 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        var chapter = new EpubChapter();
+        final chapter = new EpubChapter();
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
@@ -76,7 +76,7 @@ main() async {
       });
 
       test("is false when Schema changes", () async {
-        var schema = new EpubSchema();
+        final schema = new EpubSchema();
         schema.contentDirectoryPath = "some/random/path";
         testBook.schema = schema;
         expect(testBook, isNot(reference));
@@ -94,7 +94,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        var file = new EpubTextContentFile();
+        final file = new EpubTextContentFile();
         file
           ..content = "Hello"
           ..contentMimeType = "application/txt"
@@ -119,7 +119,7 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        var chapter = new EpubChapter();
+        final chapter = new EpubChapter();
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
@@ -133,7 +133,7 @@ main() async {
       });
 
       test("is false when Schema changes", () async {
-        var schema = new EpubSchema();
+        final schema = new EpubSchema();
         schema.contentDirectoryPath = "some/random/path";
         testBook.schema = schema;
         expect(testBook.hashCode, isNot(reference.hashCode));

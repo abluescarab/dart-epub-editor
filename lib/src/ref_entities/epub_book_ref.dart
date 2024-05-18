@@ -30,7 +30,7 @@ class EpubBookRef {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       title.hashCode,
       author.hashCode,
       schema.hashCode,

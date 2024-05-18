@@ -9,7 +9,7 @@ main() async {
   Archive arch = new Archive();
   EpubBookRef ref = new EpubBookRef(arch);
 
-  var reference = new EpubByteContentFileRef(ref);
+  final reference = new EpubByteContentFileRef(ref);
   reference
     ..contentMimeType = "application/test"
     ..contentType = EpubContentType.other

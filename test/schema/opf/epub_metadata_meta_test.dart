@@ -4,7 +4,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_meta.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubMetadataMeta()
+  final reference = new EpubMetadataMeta()
     ..content = "some content"
     ..name = "Orthros"
     ..property = "Prop"

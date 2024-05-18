@@ -4,7 +4,7 @@ import 'package:epub_editor/epub.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubContent();
+  final reference = new EpubContent();
 
   EpubContent testContent;
   EpubTextContentFile textContentFile;

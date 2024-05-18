@@ -16,7 +16,7 @@ class EpubMetadataAlternateScript {
 
   @override
   bool operator ==(Object other) {
-    var otherAs = other as EpubMetadataAlternateScript?;
+    final otherAs = other as EpubMetadataAlternateScript?;
     if (otherAs == null) return false;
     return value == otherAs.value && dir == otherAs.dir && lang == otherAs.lang;
   }

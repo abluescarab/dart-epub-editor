@@ -4,7 +4,7 @@ import 'package:epub_editor/src/schema/opf/epub_manifest_item.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubManifestItem()
+  final reference = new EpubManifestItem()
     ..fallback = "Some Fallback"
     ..fallbackStyle = "A Very Stylish Fallback"
     ..href = "Some HREF"

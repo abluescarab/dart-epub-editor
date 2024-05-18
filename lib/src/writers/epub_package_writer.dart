@@ -10,12 +10,12 @@ class EpubPackageWriter {
   static const String _namespace = 'http://www.idpf.org/2007/opf';
 
   static String writeContent(EpubPackage package) {
-    var builder = XmlBuilder();
-    builder.processing('xml', 'version="1.0"');
+    final builder = XmlBuilder();
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
 
     builder.element('package', attributes: {
       'version': package.version == EpubVersion.epub2 ? '2.0' : '3.0',
-      'unique-identifier': 'etextno',
+      'unique-identifier': package.uniqueIdentifier ?? 'etextno',
     }, nest: () {
       builder.namespace(_namespace);
 

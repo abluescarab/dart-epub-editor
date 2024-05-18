@@ -57,21 +57,21 @@ class RandomString {
 
   /// Generates a random string of [length] with only alpha characters.
   String randomAlpha(int length) {
-    var lowerAlphaLength = randomBetween(0, length);
-    var upperAlphaLength = length - lowerAlphaLength;
-    var lowerAlpha = randomString(lowerAlphaLength,
+    final lowerAlphaLength = randomBetween(0, length);
+    final upperAlphaLength = length - lowerAlphaLength;
+    final lowerAlpha = randomString(lowerAlphaLength,
         from: lowerAlphaStart, to: lowerAlphaEnd);
-    var upperAlpha = randomString(upperAlphaLength,
+    final upperAlpha = randomString(upperAlphaLength,
         from: upperAlphaStart, to: upperAlphaEnd);
     return randomMerge(lowerAlpha, upperAlpha);
   }
 
   /// Generates a random string of [length] with alpha-numeric characters.
   String randomAlphaNumeric(int length) {
-    var alphaLength = randomBetween(0, length);
-    var numericLength = length - alphaLength;
-    var alpha = randomAlpha(alphaLength);
-    var numeric = randomNumeric(numericLength);
+    final alphaLength = randomBetween(0, length);
+    final numericLength = length - alphaLength;
+    final alpha = randomAlpha(alphaLength);
+    final numeric = randomNumeric(numericLength);
     return randomMerge(alpha, numeric);
   }
 
@@ -157,7 +157,7 @@ class RandomDataGenerator {
   }
 
   EpubSpine randomEpubSpine() {
-    var reference = new EpubSpine()
+    final reference = new EpubSpine()
       ..items = [randomEpubSpineItemRef()]
       ..tableOfContents = _randomString.randomAlpha(_length);
     return reference;
@@ -170,7 +170,7 @@ class RandomDataGenerator {
   }
 
   EpubManifest randomEpubManifest() {
-    var reference = new EpubManifest();
+    final reference = new EpubManifest();
     reference.items = [randomEpubManifestItem()];
     return reference;
   }
@@ -187,7 +187,7 @@ class RandomDataGenerator {
   }
 
   EpubGuide randomEpubGuide() {
-    var reference = new EpubGuide();
+    final reference = new EpubGuide();
     reference.items = [randomEpubGuideReference()];
     return reference;
   }
@@ -200,7 +200,7 @@ class RandomDataGenerator {
   }
 
   EpubMetadata randomEpubMetadata() {
-    var reference = new EpubMetadata()
+    final reference = new EpubMetadata()
       ..contributors = [randomEpubMetadataContributor()]
       ..coverages = [_randomString.randomAlpha(_length)]
       ..creators = [randomEpubMetadataCreator()]

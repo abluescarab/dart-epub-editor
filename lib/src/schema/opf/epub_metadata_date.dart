@@ -17,7 +17,7 @@ class EpubMetadataDate extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubMetadataDate?;
+    final otherAs = other as EpubMetadataDate?;
     if (otherAs == null) return false;
     return id == otherAs.id && date == otherAs.date && event == otherAs.event;
   }

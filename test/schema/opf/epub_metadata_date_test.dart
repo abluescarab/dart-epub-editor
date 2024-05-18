@@ -4,7 +4,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_date.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubMetadataDate()
+  final reference = new EpubMetadataDate()
     ..date = "a date"
     ..event = "Some important event";
 

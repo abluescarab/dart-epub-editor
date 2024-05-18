@@ -14,7 +14,7 @@ class EpubNavigationPoint {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       id.hashCode,
       classAttribute.hashCode,
       playOrder.hashCode,
@@ -27,7 +27,7 @@ class EpubNavigationPoint {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationPoint?;
+    final otherAs = other as EpubNavigationPoint?;
     if (otherAs == null) {
       return false;
     }

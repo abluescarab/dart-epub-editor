@@ -7,6 +7,7 @@ import 'epub_spine.dart';
 import 'epub_version.dart';
 
 class EpubPackage {
+  String? uniqueIdentifier;
   EpubVersion? version;
   EpubMetadata? metadata;
   EpubManifest? manifest;
@@ -28,7 +29,7 @@ class EpubPackage {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubPackage?;
+    final otherAs = other as EpubPackage?;
     if (otherAs == null) {
       return false;
     }

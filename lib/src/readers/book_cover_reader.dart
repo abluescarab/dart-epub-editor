@@ -10,12 +10,12 @@ class BookCoverReader {
   //images.image
   static Future<EpubByteContentFileRef?> readBookCover(
       EpubBookRef bookRef) async {
-    var manifest = bookRef.schema!.package!.manifest;
+    final manifest = bookRef.schema!.package!.manifest;
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
     if (manifest?.items != null && manifest!.items!.isNotEmpty) {
-      var coverImageItem = manifest.items!.firstWhereOrNull(
+      final coverImageItem = manifest.items!.firstWhereOrNull(
         (EpubManifestItem epubManifestItem) {
           return (epubManifestItem.properties == 'cover-image');
         },
@@ -25,7 +25,7 @@ class BookCoverReader {
       print('Properties: ${coverImageItem?.properties}|MediaType: ${coverImageItem?.mediaType}|Href: ${coverImageItem?.href}');*/
 
       if (coverImageItem != null) {
-        var epubByteContentFileRef =
+        final epubByteContentFileRef =
             bookRef.content?.images?[coverImageItem.href];
 
         if (epubByteContentFileRef != null) return epubByteContentFileRef;
@@ -34,10 +34,10 @@ class BookCoverReader {
 
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.
-    var metaItems = bookRef.schema!.package!.metadata!.metaItems;
+    final metaItems = bookRef.schema!.package!.metadata!.metaItems;
     if (metaItems == null || metaItems.isEmpty) return null;
 
-    var coverMetaItem = metaItems.firstWhereOrNull(
+    final coverMetaItem = metaItems.firstWhereOrNull(
         (EpubMetadataMeta metaItem) =>
             metaItem.name != null && metaItem.name!.toLowerCase() == 'cover');
 
@@ -51,7 +51,7 @@ class BookCoverReader {
           'Incorrect EPUB metadata: cover item content is missing.');
     }
 
-    var coverManifestItem = bookRef.schema!.package!.manifest!.items!
+    final coverManifestItem = bookRef.schema!.package!.manifest!.items!
         .firstWhereOrNull((EpubManifestItem manifestItem) =>
             manifestItem.id!.toLowerCase() ==
             coverMetaItem.content!.toLowerCase());
@@ -66,7 +66,7 @@ class BookCoverReader {
           'Incorrect EPUB manifest: item with href = \"${coverManifestItem.href}\" is missing.');
     }
 
-    var coverImageContentFileRef =
+    final coverImageContentFileRef =
         bookRef.content!.images![coverManifestItem.href];
 
     return coverImageContentFileRef;

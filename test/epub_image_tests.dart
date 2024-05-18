@@ -11,7 +11,7 @@ main() async {
   String fileName = "MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
-  var targetFile = new io.File(fullPath);
+  final targetFile = new io.File(fullPath);
   if (!(await targetFile.exists())) {
     throw new Exception("Specified epub file not found: ${fullPath}");
   }

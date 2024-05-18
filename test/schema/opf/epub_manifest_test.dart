@@ -5,7 +5,7 @@ import 'package:epub_editor/src/schema/opf/epub_manifest_item.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubManifest();
+  final reference = new EpubManifest();
   reference.items = [
     new EpubManifestItem()
       ..fallback = "Some Fallback"

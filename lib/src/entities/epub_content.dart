@@ -22,7 +22,7 @@ class EpubContent {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       ...html!.keys.map((key) => key.hashCode),
       ...html!.values.map((value) => value.hashCode),
       ...css!.keys.map((key) => key.hashCode),

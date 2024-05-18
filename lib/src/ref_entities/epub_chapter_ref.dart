@@ -19,7 +19,7 @@ class EpubChapterRef {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       title.hashCode,
       contentFileName.hashCode,
       anchor.hashCode,

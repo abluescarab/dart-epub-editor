@@ -14,7 +14,7 @@ main() async {
   final RandomDataGenerator generator =
       new RandomDataGenerator(new Random(123778), length);
 
-  var reference = generator.randomEpubPackage()..version = EpubVersion.epub3;
+  final reference = generator.randomEpubPackage()..version = EpubVersion.epub3;
 
   EpubPackage testPackage;
   setUp(() async {

@@ -4,7 +4,7 @@ import 'package:epub_editor/epub.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubChapter();
+  final reference = new EpubChapter();
   reference
     ..anchor = "anchor"
     ..contentFileName = "orthros"
@@ -47,7 +47,7 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        var chapter = new EpubChapter();
+        final chapter = new EpubChapter();
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
@@ -86,7 +86,7 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        var chapter = new EpubChapter();
+        final chapter = new EpubChapter();
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";

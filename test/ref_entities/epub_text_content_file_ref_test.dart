@@ -6,10 +6,10 @@ import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var arch = new Archive();
-  var epubRef = new EpubBookRef(arch);
+  final arch = new Archive();
+  final epubRef = new EpubBookRef(arch);
 
-  var reference = new EpubTextContentFileRef(epubRef);
+  final reference = new EpubTextContentFileRef(epubRef);
   reference
     ..contentMimeType = "application/test"
     ..contentType = EpubContentType.other
@@ -17,8 +17,8 @@ main() async {
   EpubTextContentFileRef testFile;
 
   setUp(() async {
-    var arch2 = new Archive();
-    var epubRef2 = new EpubBookRef(arch2);
+    final arch2 = new Archive();
+    final epubRef2 = new EpubBookRef(arch2);
 
     testFile = new EpubTextContentFileRef(epubRef2);
     testFile

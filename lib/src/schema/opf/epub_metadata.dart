@@ -28,7 +28,7 @@ class EpubMetadata {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       ...contributors!.map((contributor) => contributor.hashCode),
       ...coverages!.map((coverage) => coverage.hashCode),
       ...creators!.map((creator) => creator.hashCode),
@@ -52,7 +52,7 @@ class EpubMetadata {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubMetadata?;
+    final otherAs = other as EpubMetadata?;
     if (otherAs == null) return false;
 
     if (!collections.listsEqual(contributors, otherAs.contributors) ||

@@ -10,7 +10,7 @@ main() async {
   String fileName = "stevenson-a-childs-garden-of-verses-illustrations.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
-  var targetFile = new io.File(fullPath);
+  final targetFile = new io.File(fullPath);
   if (!(await targetFile.exists())) {
     throw new Exception("Specified epub file not found: ${fullPath}");
   }
@@ -18,7 +18,7 @@ main() async {
   List<int> bytes = await targetFile.readAsBytes();
   test("Test Epub Ref", () async {
     EpubBookRef epubRef = await EpubReader.openBook(bytes);
-    var t = await epubRef.getChapters();
+    final t = await epubRef.getChapters();
     print("${t.length}");
   });
   test("Test Epub Read", () async {
@@ -52,8 +52,8 @@ main() async {
   });
 
   test("Test can open", () async {
-    var baseName = path.join(io.Directory.current.path, "test", "res", "std");
-    var baseDir = new io.Directory(baseName);
+    final baseName = path.join(io.Directory.current.path, "test", "res", "std");
+    final baseDir = new io.Directory(baseName);
     if (!(await baseDir.exists())) {
       throw new Exception("Base path does not exist: ${baseName}");
     }
@@ -62,9 +62,9 @@ main() async {
         .list(recursive: false, followLinks: false)
         .forEach((io.FileSystemEntity fe) async {
       try {
-        var tf = new io.File(fe.path);
-        var bytes = await tf.readAsBytes();
-        var ref = await EpubReader.openBook(bytes);
+        final tf = new io.File(fe.path);
+        final bytes = await tf.readAsBytes();
+        final ref = await EpubReader.openBook(bytes);
         expect(ref, isNotNull);
       } catch (e) {
         print("File: ${fe.path}, Exception: ${e}");

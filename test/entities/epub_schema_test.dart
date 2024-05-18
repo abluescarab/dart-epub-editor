@@ -9,7 +9,7 @@ import 'package:epub_editor/src/schema/opf/epub_version.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubSchema();
+  final reference = new EpubSchema();
   reference
     ..package = new EpubPackage()
     ..navigation = new EpubNavigation()
@@ -35,7 +35,7 @@ main() async {
       });
 
       test("is false when Package changes", () async {
-        var package = new EpubPackage()
+        final package = new EpubPackage()
           ..guide = new Epu.guide()
           ..version = EpubVersion.epub3;
 
@@ -63,7 +63,7 @@ main() async {
       });
 
       test("is false when Package changes", () async {
-        var package = new EpubPackage()
+        final package = new EpubPackage()
           ..guide = new Epu.guide()
           ..version = EpubVersion.epub3;
 

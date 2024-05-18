@@ -10,7 +10,7 @@ class EpubGuideReference {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubGuideReference?;
+    final otherAs = other as EpubGuideReference?;
     if (otherAs == null) {
       return false;
     }

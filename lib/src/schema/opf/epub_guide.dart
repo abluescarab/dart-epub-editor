@@ -12,14 +12,14 @@ class EpubGuide {
 
   @override
   int get hashCode {
-    var objects = [];
+    final objects = [];
     objects.addAll(items!.map((item) => item.hashCode));
     return hashObjects(objects);
   }
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubGuide?;
+    final otherAs = other as EpubGuide?;
     if (otherAs == null) {
       return false;
     }

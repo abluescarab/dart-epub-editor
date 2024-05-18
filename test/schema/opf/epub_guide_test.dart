@@ -11,7 +11,7 @@ main() async {
   RandomDataGenerator generator =
       new RandomDataGenerator(new Random(123445), 10);
 
-  var reference = generator.randomEpubGuide();
+  final reference = generator.randomEpubGuide();
 
   EpubGuide testGuide;
   setUp(() async {

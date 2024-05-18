@@ -9,7 +9,7 @@ class EpubNavigationWriter {
   static const String _namespace = 'http://www.daisy.org/z3986/2005/ncx/';
 
   static String writeNavigation(EpubNavigation navigation) {
-    var builder = XmlBuilder();
+    final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0"');
 
     builder.element('ncx', attributes: {

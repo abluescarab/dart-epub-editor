@@ -8,15 +8,15 @@ import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
 main() async {
-  var reference = new EpubContentRef();
+  final reference = new EpubContentRef();
 
   EpubContentRef testContent;
   EpubTextContentFileRef textContentFile;
   EpubByteContentFileRef byteContentFile;
 
   setUp(() async {
-    var arch = new Archive();
-    var refBook = new EpubBookRef(arch);
+    final arch = new Archive();
+    final refBook = new EpubBookRef(arch);
 
     testContent = new EpubContentRef();
 

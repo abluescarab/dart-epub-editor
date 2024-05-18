@@ -9,7 +9,7 @@ import 'package:test/test.dart';
 
 main() async {
   Archive arch = new Archive();
-  var reference = new EpubBookRef(arch);
+  final reference = new EpubBookRef(arch);
   reference
     ..author = "orthros"
     ..authorList = ["orthros"]
@@ -35,7 +35,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        var file = new EpubTextContentFileRef(testBookRef);
+        final file = new EpubTextContentFileRef(testBookRef);
         file
           ..contentMimeType = "application/txt"
           ..contentType = EpubContentType.other
@@ -60,7 +60,7 @@ main() async {
       });
 
       test("is false when Schema changes", () async {
-        var schema = new EpubSchema();
+        final schema = new EpubSchema();
         schema.contentDirectoryPath = "some/random/path";
         testBookRef.schema = schema;
         expect(testBookRef, isNot(reference));
@@ -78,7 +78,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        var file = new EpubTextContentFileRef(testBookRef);
+        final file = new EpubTextContentFileRef(testBookRef);
         file
           ..contentMimeType = "application/txt"
           ..contentType = EpubContentType.other
@@ -102,7 +102,7 @@ main() async {
         expect(testBookRef.hashCode, isNot(reference.hashCode));
       });
       test("is false when Schema changes", () async {
-        var schema = new EpubSchema();
+        final schema = new EpubSchema();
         schema.contentDirectoryPath = "some/random/path";
         testBookRef.schema = schema;
         expect(testBookRef.hashCode, isNot(reference.hashCode));

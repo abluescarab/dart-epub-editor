@@ -10,7 +10,7 @@ class EpubNavigationHeadMeta {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationHeadMeta?;
+    final otherAs = other as EpubNavigationHeadMeta?;
     if (otherAs == null) {
       return false;
     }

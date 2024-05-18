@@ -18,7 +18,7 @@ main() async {
   final RandomDataGenerator generator =
       new RandomDataGenerator(new Random(123778), length);
 
-  var reference = generator.randomEpubMetadata();
+  final reference = generator.randomEpubMetadata();
   EpubMetadata testMetadata;
   setUp(() async {
     testMetadata = new EpubMetadata()

@@ -18,7 +18,7 @@ class EpubNavigation {
 
   @override
   int get hashCode {
-    var objects = [
+    final objects = [
       head.hashCode,
       docTitle.hashCode,
       navMap.hashCode,
@@ -31,7 +31,7 @@ class EpubNavigation {
 
   @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigation?;
+    final otherAs = other as EpubNavigation?;
     if (otherAs == null) {
       return false;
     }

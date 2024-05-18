@@ -10,7 +10,7 @@ main() async {
   String fileName = "alicesAdventuresUnderGround.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
-  var targetFile = new io.File(fullPath);
+  final targetFile = new io.File(fullPath);
   if (!(await targetFile.exists())) {
     throw new Exception("Specified epub file not found: ${fullPath}");
   }
@@ -20,8 +20,8 @@ main() async {
   test("Book Round Trip", () async {
     EpubBook book = await EpubReader.readBook(bytes);
 
-    var written = await EpubWriter.writeBook(book);
-    var bookRoundTrip = await EpubReader.readBook(written);
+    final written = await EpubWriter.writeBook(book);
+    final bookRoundTrip = await EpubReader.readBook(written);
 
     expect(bookRoundTrip, equals(book));
   });
