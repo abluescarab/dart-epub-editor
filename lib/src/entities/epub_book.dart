@@ -41,8 +41,8 @@ class EpubBook {
         collections.listsEqual(authorList, other.authorList) &&
         schema == other.schema &&
         content == other.content &&
-        collections.listsEqual(coverImage!.getContentStream(),
-            other.coverImage!.getContentStream()) &&
+        collections.listsEqual(coverImage?.getContentStream(),
+            other.coverImage?.getContentStream()) &&
         collections.listsEqual(chapters, other.chapters);
   }
 }
