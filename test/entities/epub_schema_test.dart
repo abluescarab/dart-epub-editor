@@ -20,8 +20,8 @@ main() async {
   EpubSchema? testSchema;
   setUp(() async {
     testSchema = EpubSchema();
-    testSchema
-      !..package = EpubPackage()
+    testSchema!
+      ..package = EpubPackage()
       ..navigation = EpubNavigation()
       ..contentDirectoryPath = "some/random/path";
     testSchema!.package!.version = EpubVersion.epub2;

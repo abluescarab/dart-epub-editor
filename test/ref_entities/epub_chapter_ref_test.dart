@@ -26,8 +26,8 @@ main() async {
     final contentFileRef2 = EpubTextContentFileRef(bookRef2!);
 
     testChapterRef = EpubChapterRef(contentFileRef2);
-    testChapterRef
-      !..anchor = "anchor"
+    testChapterRef!
+      ..anchor = "anchor"
       ..contentFileName = "orthros"
       ..subChapters = []
       ..title = "A New Look at Chapters";

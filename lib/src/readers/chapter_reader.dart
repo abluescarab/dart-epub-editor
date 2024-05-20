@@ -1,4 +1,3 @@
-
 import '../ref_entities/epub_book_ref.dart';
 import '../ref_entities/epub_chapter_ref.dart';
 import '../schema/navigation/epub_navigation_point.dart';

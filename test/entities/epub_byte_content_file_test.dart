@@ -16,8 +16,8 @@ main() async {
 
   setUp(() async {
     testFile = EpubByteContentFile();
-    testFile
-      !..content = [0, 1, 2, 3]
+    testFile!
+      ..content = [0, 1, 2, 3]
       ..contentMimeType = "application/test"
       ..contentType = EpubContentType.other
       ..fileName = "orthrosFile";

@@ -10,9 +10,9 @@ main() async {
   String fileName = "Frankenstein.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
-  final targetFile =  io.File(fullPath);
+  final targetFile = io.File(fullPath);
   if (!(await targetFile.exists())) {
-    throw  Exception("Specified epub file not found: ${fullPath}");
+    throw Exception("Specified epub file not found: ${fullPath}");
   }
 
   List<int> bytes = await targetFile.readAsBytes();

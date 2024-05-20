@@ -23,8 +23,8 @@ main() async {
     EpubBookRef ref2 = EpubBookRef(arch2);
 
     testFileRef = EpubByteContentFileRef(ref2);
-    testFileRef
-      !..contentMimeType = "application/test"
+    testFileRef!
+      ..contentMimeType = "application/test"
       ..contentType = EpubContentType.other
       ..fileName = "orthrosFile";
   });
