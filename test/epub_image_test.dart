@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 import 'package:epub_editor/epub_editor.dart';
 
 main() async {
-  String fileName = "MY VAMPIRE SYSTEM (JKSManga) (Z-Library).epub";
+  String fileName = "Frankenstein.epub";
   String fullPath =
       path.join(io.Directory.current.path, "test", "res", fileName);
   final targetFile = io.File(fullPath);

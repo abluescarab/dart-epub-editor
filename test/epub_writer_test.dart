@@ -5,6 +5,7 @@ import 'dart:io' as io;
 import 'package:epub_editor/src/entities/epub_book.dart';
 import 'package:epub_editor/src/epub_reader.dart';
 import 'package:epub_editor/src/epub_writer.dart';
+import 'package:epub_editor/src/writers/epub_package_writer.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
@@ -18,13 +19,22 @@ main() async {
   }
 
   List<int> bytes = await targetFile.readAsBytes();
+  EpubBook book = await EpubReader.readBook(bytes);
 
-  test("Book Round Trip", () async {
-    EpubBook book = await EpubReader.readBook(bytes);
+  group("Writer tests", () {
+    test("Book Round Trip", () async {
+      final written = await EpubWriter.writeBook(book);
+      final bookRoundTrip = await EpubReader.readBook(written!);
 
-    final written = await EpubWriter.writeBook(book);
-    final bookRoundTrip = await EpubReader.readBook(written!);
+      expect(bookRoundTrip, equals(book));
+    });
 
-    expect(bookRoundTrip, equals(book));
+    group("Epub Package Writer", () {
+      test("write content formats correctly", () {
+        final package = EpubPackageWriter.writeContent(book.schema!.package!);
+        print(package);
+        expect(true, equals(false));
+      });
+    });
   });
 }
