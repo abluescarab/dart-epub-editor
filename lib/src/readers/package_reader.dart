@@ -5,6 +5,7 @@ import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
+import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:epub_editor/src/utils/value_or_inner_text.dart';
 import 'package:xml/xml.dart';
 
@@ -24,6 +25,39 @@ import '../schema/opf/epub_spine_item_ref.dart';
 import '../schema/opf/epub_version.dart';
 
 class PackageReader {
+  static Map<String, String> _readAttributes(
+    List<XmlAttribute> attributes, {
+    List<String>? exclude,
+  }) {
+    Map<String, String> result = {};
+
+    final attrs = exclude == null
+        ? attributes
+        : attributes
+            .where((element) => !exclude.contains(element.qualifiedName));
+
+    attrs.forEach((element) {
+      result[element.qualifiedName] = element.value;
+    });
+
+    return result;
+  }
+
+  static Map<String, String> _readNamespaces(List<XmlAttribute> attributes) {
+    Map<String, String> namespaces = {};
+
+    attributes
+        .where((p0) => p0.qualifiedName.startsWith("xmlns"))
+        .forEach((element) {
+      // skip "opf" and "dc" which are added to the <metadata> element
+      if (element.localName != "opf" && element.localName != "dc") {
+        namespaces[element.localName] = element.value;
+      }
+    });
+
+    return namespaces;
+  }
+
   static EpubGuide readGuide(XmlElement guideNode) {
     final result = EpubGuide();
     result.items = <EpubGuideReference>[];
@@ -344,9 +378,10 @@ class PackageReader {
 
   static EpubMetadataDate readMetadataDate(XmlElement metadataDateNode) {
     final result = EpubMetadataDate();
+
     final eventAttribute = metadataDateNode.getAttribute(
       'event',
-      namespace: metadataDateNode.name.namespaceUri,
+      namespace: Namespaces.opf,
     );
 
     if (eventAttribute != null && eventAttribute.isNotEmpty) {
@@ -404,7 +439,7 @@ class PackageReader {
     result.attributes = {};
 
     metadataMetaNode.attributes.forEach(
-      (XmlAttribute metadataMetaNodeAttribute) {
+      (metadataMetaNodeAttribute) {
         final attributeName =
             metadataMetaNodeAttribute.name.local.toLowerCase();
         final attributeValue = valueOrInnerText(metadataMetaNodeAttribute);
@@ -454,6 +489,10 @@ class PackageReader {
     return EpubMetadataString(
       id: metadataItemNode.getAttribute('id'),
       value: text,
+      attributes: _readAttributes(
+        metadataItemNode.attributes,
+        exclude: ['id'],
+      ),
     );
   }
 
@@ -467,6 +506,10 @@ class PackageReader {
       value: text,
       lang: metadataItemNode.getAttribute('lang'),
       dir: metadataItemNode.getAttribute('dir'),
+      attributes: _readAttributes(
+        metadataItemNode.attributes,
+        exclude: ["id", "lang", "dir"],
+      ),
     );
   }
 
@@ -482,13 +525,14 @@ class PackageReader {
       throw Exception('EPUB parsing error: root file not found in archive.');
     }
 
-    final opfNamespace = 'http://www.idpf.org/2007/opf';
     final packageNode =
         XmlDocument.parse(convert.utf8.decode(rootFileEntry.content))
-            .findElements('package', namespace: opfNamespace)
+            .findElements('package', namespace: Namespaces.opf)
             .firstWhere((XmlElement? elem) => elem != null);
     final result = EpubPackage();
     final epubVersionValue = packageNode.getAttribute('version');
+
+    result.namespaces = _readNamespaces(packageNode.attributes);
 
     if (epubVersionValue == '2.0') {
       result.version = EpubVersion.epub2;
@@ -499,7 +543,7 @@ class PackageReader {
     }
 
     final metadataNode = packageNode
-        .findElements('metadata', namespace: opfNamespace)
+        .findElements('metadata', namespace: Namespaces.opf)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
 
@@ -508,7 +552,7 @@ class PackageReader {
     }
 
     final manifestNode = packageNode
-        .findElements('manifest', namespace: opfNamespace)
+        .findElements('manifest', namespace: Namespaces.opf)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
 
@@ -517,7 +561,7 @@ class PackageReader {
     }
 
     final spineNode = packageNode
-        .findElements('spine', namespace: opfNamespace)
+        .findElements('spine', namespace: Namespaces.opf)
         .cast<XmlElement?>()
         .firstWhere((XmlElement? elem) => elem != null);
 
@@ -526,7 +570,7 @@ class PackageReader {
     }
 
     final guideNode = packageNode
-        .findElements('guide', namespace: opfNamespace)
+        .findElements('guide', namespace: Namespaces.opf)
         .firstWhereOrNull((XmlElement? elem) => elem != null);
 
     result.uniqueIdentifier = packageNode.getAttribute('unique-identifier');
@@ -569,7 +613,7 @@ class PackageReader {
 
         spineItemRef.idRef = idRefAttribute;
         spineItemRef.isLinear =
-            linearAttribute == null || (linearAttribute.toLowerCase() == 'no');
+            linearAttribute == null || (linearAttribute.toLowerCase() == 'yes');
 
         result.items!.add(spineItemRef);
       }

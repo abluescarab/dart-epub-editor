@@ -1,3 +1,4 @@
+import 'package:quiver/collection.dart' as collections;
 import 'package:quiver/core.dart';
 
 import 'epub_guide.dart';
@@ -8,6 +9,7 @@ import 'epub_version.dart';
 
 class EpubPackage {
   String? uniqueIdentifier;
+  Map<String, String>? namespaces;
   EpubVersion? version;
   EpubMetadata? metadata;
   EpubManifest? manifest;
@@ -18,6 +20,8 @@ class EpubPackage {
 
   @override
   int get hashCode => hashObjects([
+        uniqueIdentifier.hashCode,
+        namespaces.hashCode,
         version.hashCode,
         metadata.hashCode,
         manifest.hashCode,
@@ -34,7 +38,9 @@ class EpubPackage {
       return false;
     }
 
-    return version == otherAs.version &&
+    return uniqueIdentifier == otherAs.uniqueIdentifier &&
+        collections.mapsEqual(namespaces, otherAs.namespaces) &&
+        version == otherAs.version &&
         metadata == otherAs.metadata &&
         manifest == otherAs.manifest &&
         spine == otherAs.spine &&

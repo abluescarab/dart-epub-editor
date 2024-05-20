@@ -3,11 +3,10 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_title.dart
 import 'package:epub_editor/src/schema/navigation/epub_navigation_head.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_map.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_point.dart';
+import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 
 class EpubNavigationWriter {
-  static const String _namespace = 'http://www.daisy.org/z3986/2005/ncx/';
-
   static String writeNavigation(EpubNavigation navigation) {
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0"');
@@ -16,7 +15,7 @@ class EpubNavigationWriter {
       'version': '2005-1',
       'lang': 'en',
     }, nest: () {
-      builder.namespace(_namespace);
+      builder.namespace(Namespaces.ncx);
 
       writeNavigationHead(builder, navigation.head!);
       writeNavigationDocTitle(builder, navigation.docTitle!);

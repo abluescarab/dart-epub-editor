@@ -55,25 +55,21 @@ class EpubMetadata {
     final otherAs = other as EpubMetadata?;
     if (otherAs == null) return false;
 
-    if (!collections.listsEqual(contributors, otherAs.contributors) ||
-        !collections.listsEqual(coverages, otherAs.coverages) ||
-        !collections.listsEqual(creators, otherAs.creators) ||
-        !collections.listsEqual(dates, otherAs.dates) ||
-        !collections.listsEqual(descriptions, otherAs.descriptions) ||
-        !collections.listsEqual(formats, otherAs.formats) ||
-        !collections.listsEqual(identifiers, otherAs.identifiers) ||
-        !collections.listsEqual(languages, otherAs.languages) ||
-        !collections.listsEqual(metaItems, otherAs.metaItems) ||
-        !collections.listsEqual(publishers, otherAs.publishers) ||
-        !collections.listsEqual(relations, otherAs.relations) ||
-        !collections.listsEqual(rights, otherAs.rights) ||
-        !collections.listsEqual(sources, otherAs.sources) ||
-        !collections.listsEqual(subjects, otherAs.subjects) ||
-        !collections.listsEqual(titles, otherAs.titles) ||
-        !collections.listsEqual(types, otherAs.types)) {
-      return false;
-    }
-
-    return true;
+    return collections.listsEqual(contributors, otherAs.contributors) &&
+        collections.listsEqual(coverages, otherAs.coverages) &&
+        collections.listsEqual(creators, otherAs.creators) &&
+        collections.listsEqual(dates, otherAs.dates) &&
+        collections.listsEqual(descriptions, otherAs.descriptions) &&
+        collections.listsEqual(formats, otherAs.formats) &&
+        collections.listsEqual(identifiers, otherAs.identifiers) &&
+        collections.listsEqual(languages, otherAs.languages) &&
+        collections.listsEqual(metaItems, otherAs.metaItems) &&
+        collections.listsEqual(publishers, otherAs.publishers) &&
+        collections.listsEqual(relations, otherAs.relations) &&
+        collections.listsEqual(rights, otherAs.rights) &&
+        collections.listsEqual(sources, otherAs.sources) &&
+        collections.listsEqual(subjects, otherAs.subjects) &&
+        collections.listsEqual(titles, otherAs.titles) &&
+        collections.listsEqual(types, otherAs.types);
   }
 }

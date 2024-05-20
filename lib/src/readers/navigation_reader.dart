@@ -5,6 +5,7 @@ import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:epub_editor/src/schema/navigation/epub_navigation_content.dart';
 import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:epub_editor/src/utils/value_or_inner_text.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:path/path.dart' as path;
@@ -48,6 +49,7 @@ class NavigationReader {
                     item!.id!.toLowerCase() == tocId.toLowerCase(),
                 orElse: () => null,
               );
+
       if (tocManifestItem == null) {
         throw Exception(
             'EPUB parsing error: TOC item $tocId not found in EPUB manifest.');
@@ -67,9 +69,8 @@ class NavigationReader {
       final containerDocument =
           xml.XmlDocument.parse(convert.utf8.decode(tocFileEntry.content));
 
-      final ncxNamespace = 'http://www.daisy.org/z3986/2005/ncx/';
       final ncxNode = containerDocument
-          .findAllElements('ncx', namespace: ncxNamespace)
+          .findAllElements('ncx', namespace: Namespaces.ncx)
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
@@ -79,7 +80,7 @@ class NavigationReader {
       }
 
       final headNode = ncxNode
-          .findAllElements('head', namespace: ncxNamespace)
+          .findAllElements('head', namespace: Namespaces.ncx)
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
@@ -91,7 +92,7 @@ class NavigationReader {
       final navigationHead = readNavigationHead(headNode);
       result.head = navigationHead;
       final docTitleNode = ncxNode
-          .findElements('docTitle', namespace: ncxNamespace)
+          .findElements('docTitle', namespace: Namespaces.ncx)
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
@@ -104,14 +105,14 @@ class NavigationReader {
       result.docTitle = navigationDocTitle;
       result.docAuthors = <EpubNavigationDocAuthor>[];
       ncxNode
-          .findElements('docAuthor', namespace: ncxNamespace)
+          .findElements('docAuthor', namespace: Namespaces.ncx)
           .forEach((xml.XmlElement docAuthorNode) {
         final navigationDocAuthor = readNavigationDocAuthor(docAuthorNode);
         result.docAuthors!.add(navigationDocAuthor);
       });
 
       final navMapNode = ncxNode
-          .findElements('navMap', namespace: ncxNamespace)
+          .findElements('navMap', namespace: Namespaces.ncx)
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
@@ -123,7 +124,7 @@ class NavigationReader {
       final navMap = readNavigationMap(navMapNode);
       result.navMap = navMap;
       final pageListNode = ncxNode
-          .findElements('pageList', namespace: ncxNamespace)
+          .findElements('pageList', namespace: Namespaces.ncx)
           .cast<xml.XmlElement?>()
           .firstWhere((xml.XmlElement? elem) => elem != null,
               orElse: () => null);
@@ -134,7 +135,7 @@ class NavigationReader {
 
       result.navLists = <EpubNavigationList>[];
       ncxNode
-          .findElements('navList', namespace: ncxNamespace)
+          .findElements('navList', namespace: Namespaces.ncx)
           .forEach((xml.XmlElement navigationListNode) {
         final navigationList = readNavigationList(navigationListNode);
         result.navLists!.add(navigationList);
@@ -214,7 +215,7 @@ class NavigationReader {
 
       //TODO : Implement pagesLists
 //      xml.XmlElement pageListNode = ncxNode
-//          .findElements("pageList", namespace: ncxNamespace)
+//          .findElements("pageList", namespace: Namespaces.ncx)
 //          .firstWhere((xml.XmlElement elem) => elem != null,
 //          orElse: () => null);
 //      if (pageListNode != null) {

@@ -1,4 +1,4 @@
-import 'package:quiver/core.dart';
+import 'package:quiver/collection.dart';
 
 import 'epub_metadata_field.dart';
 
@@ -8,14 +8,16 @@ class EpubMetadataTranslatedString extends EpubMetadataField {
     this.value,
     this.dir,
     this.lang,
+    this.attributes,
   });
 
   String? value;
   String? dir;
   String? lang;
+  Map<String, String>? attributes;
 
   @override
-  int get hashCode => hash4(id, value, dir, lang);
+  int get hashCode => Object.hash(id.hashCode, value.hashCode, dir.hashCode, lang.hashCode, attributes.hashCode);
 
   @override
   bool operator ==(Object other) {
@@ -28,6 +30,7 @@ class EpubMetadataTranslatedString extends EpubMetadataField {
     return id == otherAs.id &&
         value == otherAs.value &&
         dir == otherAs.dir &&
-        lang == otherAs.lang;
+        lang == otherAs.lang &&
+        mapsEqual(attributes, otherAs.attributes);
   }
 }

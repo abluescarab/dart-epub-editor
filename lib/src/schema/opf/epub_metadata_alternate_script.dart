@@ -12,7 +12,7 @@ class EpubMetadataAlternateScript {
   String? lang;
 
   @override
-  int get hashCode => hash3(value, dir, lang);
+  int get hashCode => hash3(value.hashCode, dir.hashCode, lang.hashCode);
 
   @override
   bool operator ==(Object other) {

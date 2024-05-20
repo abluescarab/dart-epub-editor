@@ -6,7 +6,7 @@ class EpubTextContentFile extends EpubContentFile {
   String? content;
 
   @override
-  int get hashCode => hash4(content, contentMimeType, contentType, fileName);
+  int get hashCode => hash4(content.hashCode, contentMimeType.hashCode, contentType.hashCode, fileName.hashCode);
 
   @override
   bool operator ==(other) {

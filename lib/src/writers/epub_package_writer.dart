@@ -1,5 +1,6 @@
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
 import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:epub_editor/src/writers/epub_guide_writer.dart';
 import 'package:epub_editor/src/writers/epub_manifest_writer.dart';
 import 'package:epub_editor/src/writers/epub_spine_writer.dart';
@@ -7,8 +8,6 @@ import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 import 'epub_metadata_writer.dart';
 
 class EpubPackageWriter {
-  static const String _namespace = 'http://www.idpf.org/2007/opf';
-
   static String writeContent(EpubPackage package) {
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
@@ -17,7 +16,17 @@ class EpubPackageWriter {
       'version': package.version == EpubVersion.epub2 ? '2.0' : '3.0',
       'unique-identifier': package.uniqueIdentifier ?? 'etextno',
     }, nest: () {
-      builder.namespace(_namespace);
+      if (package.namespaces != null) {
+        for (final namespace in package.namespaces!.entries) {
+          try {
+            builder.namespace(namespace.value, namespace.key);
+          } catch (_) {
+            builder.namespace(namespace.value);
+          }
+        }
+      } else {
+        builder.namespace(Namespaces.opf);
+      }
 
       EpubMetadataWriter.writeMetadata(
         builder,
@@ -26,7 +35,10 @@ class EpubPackageWriter {
       );
       EpubManifestWriter.writeManifest(builder, package.manifest);
       EpubSpineWriter.writeSpine(builder, package.spine!);
-      EpubGuideWriter.writeGuide(builder, package.guide);
+
+      if(package.guide != null) {
+        EpubGuideWriter.writeGuide(builder, package.guide);
+      }
     });
 
     return builder.buildDocument().toXmlString(pretty: true);

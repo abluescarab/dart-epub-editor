@@ -58,3 +58,4 @@ export 'src/schema/opf/epub_version.dart';
 export 'src/writers/epub_package_writer.dart'; // export for testing
 // utils
 export 'src/utils/enum_from_string.dart';
+export 'src/utils/namespaces.dart';
