@@ -16,7 +16,7 @@ main(List<String> args) async {
 // COMMON PROPERTIES
 
 // Book's title
-  String? title = epubBook.title;
+  final title = epubBook.mainTitle;
 
 // Book's authors (comma separated list)
   String? author = epubBook.author;
@@ -25,7 +25,7 @@ main(List<String> args) async {
   List<String?>? authors = epubBook.authorList;
 
 // Book's cover image (null if there is no cover)
-  Image? coverImage = epubBook.coverImage;
+  final coverImage = epubBook.coverImage;
 
 // CHAPTERS
 
@@ -93,7 +93,7 @@ main(List<String> args) async {
 
 // Enumerating book's contributors
   package.metadata!.contributors!.forEach((contributor) {
-    String contributorName = contributor.contributor!;
+    String contributorName = contributor.name!;
     String contributorRole = contributor.role!;
   });
 

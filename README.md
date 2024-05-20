@@ -118,7 +118,7 @@ EpubPackage package = epubBook.schema.package;
 
 // Enumerating book's contributors
 package.metadata.contributors.forEach((EpubMetadataContributor contributor){
-  String contributorName = contributor.contributor;
+  String contributorName = contributor.name;
   String contributorRole = contributor.role;
 });
 
