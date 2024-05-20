@@ -1,16 +1,16 @@
 library epubreadertest;
 
 import 'package:archive/archive.dart';
-import 'package:epub_editor/epub.dart';
+import 'package:epub_editor/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final arch = new Archive();
-  final bookRef = new EpubBookRef(arch);
-  final contentFileRef = new EpubTextContentFileRef(bookRef);
-  final reference = new EpubChapterRef(contentFileRef);
+  final arch = Archive();
+  final bookRef = EpubBookRef(arch);
+  final contentFileRef = EpubTextContentFileRef(bookRef);
+  final reference = EpubChapterRef(contentFileRef);
 
   reference
     ..anchor = "anchor"
@@ -18,16 +18,16 @@ main() async {
     ..subChapters = []
     ..title = "A New Look at Chapters";
 
-  EpubBookRef bookRef2;
-  EpubChapterRef testChapterRef;
+  EpubBookRef? bookRef2;
+  EpubChapterRef? testChapterRef;
   setUp(() async {
-    final arch2 = new Archive();
-    bookRef2 = new EpubBookRef(arch2);
-    final contentFileRef2 = new EpubTextContentFileRef(bookRef2);
+    final arch2 = Archive();
+    bookRef2 = EpubBookRef(arch2);
+    final contentFileRef2 = EpubTextContentFileRef(bookRef2!);
 
-    testChapterRef = new EpubChapterRef(contentFileRef2);
+    testChapterRef = EpubChapterRef(contentFileRef2);
     testChapterRef
-      ..anchor = "anchor"
+      !..anchor = "anchor"
       ..contentFileName = "orthros"
       ..subChapters = []
       ..title = "A New Look at Chapters";
@@ -44,27 +44,27 @@ main() async {
       });
 
       test("is false when Anchor changes", () async {
-        testChapterRef.anchor = "NotAnAnchor";
+        testChapterRef!.anchor = "NotAnAnchor";
         expect(testChapterRef, isNot(reference));
       });
 
       test("is false when ContentFileName changes", () async {
-        testChapterRef.contentFileName = "NotOrthros";
+        testChapterRef!.contentFileName = "NotOrthros";
         expect(testChapterRef, isNot(reference));
       });
 
       test("is false when SubChapters changes", () async {
-        final subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
-        final chapter = new EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = EpubTextContentFileRef(bookRef2!);
+        final chapter = EpubChapterRef(subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
-        testChapterRef.subChapters = [chapter];
+        testChapterRef!.subChapters = [chapter];
         expect(testChapterRef, isNot(reference));
       });
 
       test("is false when Title changes", () async {
-        testChapterRef.title = "A Boring Old World";
+        testChapterRef!.title = "A Boring Old World";
         expect(testChapterRef, isNot(reference));
       });
     });
@@ -79,27 +79,27 @@ main() async {
       });
 
       test("is false when Anchor changes", () async {
-        testChapterRef.anchor = "NotAnAnchor";
+        testChapterRef!.anchor = "NotAnAnchor";
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
 
       test("is false when ContentFileName changes", () async {
-        testChapterRef.contentFileName = "NotOrthros";
+        testChapterRef!.contentFileName = "NotOrthros";
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
 
       test("is false when SubChapters changes", () async {
-        final subchapterContentFileRef = new EpubTextContentFileRef(bookRef2);
-        final chapter = new EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = EpubTextContentFileRef(bookRef2!);
+        final chapter = EpubChapterRef(subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
-        testChapterRef.subChapters = [chapter];
+        testChapterRef!.subChapters = [chapter];
         expect(testChapterRef, isNot(reference));
       });
 
       test("is false when Title changes", () async {
-        testChapterRef.title = "A Boring Old World";
+        testChapterRef!.title = "A Boring Old World";
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
       });
     });

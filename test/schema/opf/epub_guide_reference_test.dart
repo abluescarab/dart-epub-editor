@@ -9,15 +9,15 @@ import '../../random_data_generator.dart';
 
 main() async {
   final RandomDataGenerator generator =
-      new RandomDataGenerator(new Random(123778), 10);
+      RandomDataGenerator(Random(123778), 10);
 
   final reference = generator.randomEpubGuideReference();
 
-  EpubGuideReference testGuideReference;
+  EpubGuideReference? testGuideReference;
   setUp(() async {
-    testGuideReference = new EpubGuideReference();
+    testGuideReference = EpubGuideReference();
     testGuideReference
-      ..href = reference.href
+      !..href = reference.href
       ..title = reference.title
       ..type = reference.type;
   });
@@ -31,41 +31,41 @@ main() async {
       });
 
       test("is false when Href changes", () async {
-        testGuideReference.href = "A different href";
+        testGuideReference!.href = "A different href";
 
         expect(testGuideReference, isNot(reference));
       });
 
       test("is false when Title changes", () async {
-        testGuideReference.title = "A different Title";
+        testGuideReference!.title = "A different Title";
         expect(testGuideReference, isNot(reference));
       });
 
       test("is false when Type changes", () async {
-        testGuideReference.type = "Some different type";
+        testGuideReference!.type = "Some different type";
         expect(testGuideReference, isNot(reference));
       });
     });
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testGuideReference.hashCode, equals(reference.hashCode));
+        expect(testGuideReference!.hashCode, equals(reference.hashCode));
       });
 
       test("is false when Href changes", () async {
-        testGuideReference.href = "A different href";
+        testGuideReference!.href = "A different href";
 
-        expect(testGuideReference.hashCode, isNot(reference.hashCode));
+        expect(testGuideReference!.hashCode, isNot(reference.hashCode));
       });
 
       test("is false when Title changes", () async {
-        testGuideReference.title = "A different Title";
-        expect(testGuideReference.hashCode, isNot(reference.hashCode));
+        testGuideReference!.title = "A different Title";
+        expect(testGuideReference!.hashCode, isNot(reference.hashCode));
       });
 
       test("is false when Type changes", () async {
-        testGuideReference.type = "Some different type";
-        expect(testGuideReference.hashCode, isNot(reference.hashCode));
+        testGuideReference!.type = "Some different type";
+        expect(testGuideReference!.hashCode, isNot(reference.hashCode));
       });
     });
   });

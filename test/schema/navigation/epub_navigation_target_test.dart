@@ -9,17 +9,17 @@ import '../../random_data_generator.dart';
 
 main() async {
   final RandomDataGenerator generator =
-      new RandomDataGenerator(new Random(123778), 10);
+      RandomDataGenerator(Random(123778), 10);
 
   final EpubNavigationTarget reference = generator.randomEpubNavigationTarget();
 
-  EpubNavigationTarget testNavigationTarget;
+  EpubNavigationTarget? testNavigationTarget;
   setUp(() async {
-    testNavigationTarget = new EpubNavigationTarget()
+    testNavigationTarget = EpubNavigationTarget()
       ..classAttribute = reference.classAttribute
       ..content = reference.content
       ..id = reference.id
-      ..navigationLabels = List.from(reference.navigationLabels)
+      ..navigationLabels = List.from(reference.navigationLabels!)
       ..playOrder = reference.playOrder
       ..value = reference.value;
   });
@@ -33,63 +33,63 @@ main() async {
       });
 
       test("is false when Class changes", () async {
-        testNavigationTarget.classAttribute = generator.randomString();
+        testNavigationTarget!.classAttribute = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
       test("is false when Content changes", () async {
-        testNavigationTarget.content = generator.randomEpubNavigationContent();
+        testNavigationTarget!.content = generator.randomEpubNavigationContent();
         expect(testNavigationTarget, isNot(reference));
       });
       test("is false when Id changes", () async {
-        testNavigationTarget.id = generator.randomString();
+        testNavigationTarget!.id = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
       test("is false when NavigationLabels changes", () async {
-        testNavigationTarget.navigationLabels = [
+        testNavigationTarget!.navigationLabels = [
           generator.randomEpubNavigationLabel()
         ];
         expect(testNavigationTarget, isNot(reference));
       });
       test("is false when PlayOrder changes", () async {
-        testNavigationTarget.playOrder = generator.randomString();
+        testNavigationTarget!.playOrder = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
       test("is false when Value changes", () async {
-        testNavigationTarget.value = generator.randomString();
+        testNavigationTarget!.value = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
     });
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testNavigationTarget.hashCode, equals(reference.hashCode));
+        expect(testNavigationTarget!.hashCode, equals(reference.hashCode));
       });
 
       test("is false when Class changes", () async {
-        testNavigationTarget.classAttribute = generator.randomString();
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        testNavigationTarget!.classAttribute = generator.randomString();
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
       test("is false when Content changes", () async {
-        testNavigationTarget.content = generator.randomEpubNavigationContent();
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        testNavigationTarget!.content = generator.randomEpubNavigationContent();
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
       test("is false when Id changes", () async {
-        testNavigationTarget.id = generator.randomString();
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        testNavigationTarget!.id = generator.randomString();
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
       test("is false when NavigationLabels changes", () async {
-        testNavigationTarget.navigationLabels = [
+        testNavigationTarget!.navigationLabels = [
           generator.randomEpubNavigationLabel()
         ];
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
       test("is false when PlayOrder changes", () async {
-        testNavigationTarget.playOrder = generator.randomString();
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        testNavigationTarget!.playOrder = generator.randomString();
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
       test("is false when Value changes", () async {
-        testNavigationTarget.value = generator.randomString();
-        expect(testNavigationTarget.hashCode, isNot(reference.hashCode));
+        testNavigationTarget!.value = generator.randomString();
+        expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
     });
   });

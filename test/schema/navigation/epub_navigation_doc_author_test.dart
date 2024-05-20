@@ -8,14 +8,14 @@ import 'package:test/test.dart';
 import '../../random_data_generator.dart';
 
 main() async {
-  final generator = new RandomDataGenerator(new Random(7898), 10);
+  final generator = RandomDataGenerator(Random(7898), 10);
   final EpubNavigationDocAuthor reference =
       generator.randomNavigationDocAuthor();
 
-  EpubNavigationDocAuthor testNavigationDocAuthor;
+  EpubNavigationDocAuthor? testNavigationDocAuthor;
   setUp(() async {
-    testNavigationDocAuthor = new EpubNavigationDocAuthor()
-      ..authors = List.from(reference.authors);
+    testNavigationDocAuthor = EpubNavigationDocAuthor()
+      ..authors = List.from(reference.authors!);
   });
   tearDown(() async {
     testNavigationDocAuthor = null;
@@ -28,19 +28,19 @@ main() async {
       });
 
       test("is false when Authors changes", () async {
-        testNavigationDocAuthor.authors.add(generator.randomString());
+        testNavigationDocAuthor!.authors!.add(generator.randomString());
         expect(testNavigationDocAuthor, isNot(reference));
       });
     });
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testNavigationDocAuthor.hashCode, equals(reference.hashCode));
+        expect(testNavigationDocAuthor!.hashCode, equals(reference.hashCode));
       });
 
       test("is false when Authors changes", () async {
-        testNavigationDocAuthor.authors.add(generator.randomString());
-        expect(testNavigationDocAuthor.hashCode, isNot(reference.hashCode));
+        testNavigationDocAuthor!.authors!.add(generator.randomString());
+        expect(testNavigationDocAuthor!.hashCode, isNot(reference.hashCode));
       });
     });
   });

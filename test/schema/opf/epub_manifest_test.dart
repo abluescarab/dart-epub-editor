@@ -5,9 +5,9 @@ import 'package:epub_editor/src/schema/opf/epub_manifest_item.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final reference = new EpubManifest();
+  final reference = EpubManifest();
   reference.items = [
-    new EpubManifestItem()
+    EpubManifestItem()
       ..fallback = "Some Fallback"
       ..fallbackStyle = "A Very Stylish Fallback"
       ..href = "Some HREF"
@@ -17,9 +17,9 @@ main() async {
       ..requiredNamespace = ".NET Namespace"
   ];
 
-  EpubManifest testManifest;
+  EpubManifest? testManifest;
   setUp(() async {
-    testManifest = new EpubManifest()..items = List.from(reference.items);
+    testManifest = EpubManifest()..items = List.from(reference.items!);
   });
   tearDown(() async {
     testManifest = null;
@@ -31,7 +31,7 @@ main() async {
       });
 
       test("is false when Items changes", () async {
-        testManifest.items.add(new EpubManifestItem()
+        testManifest!.items!.add(EpubManifestItem()
           ..fallback = "Some Different Fallback"
           ..fallbackStyle = "A less than Stylish Fallback"
           ..href = "Some Different HREF"
@@ -46,11 +46,11 @@ main() async {
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testManifest.hashCode, equals(reference.hashCode));
+        expect(testManifest!.hashCode, equals(reference.hashCode));
       });
 
       test("is false when Items changes", () async {
-        testManifest.items.add(new EpubManifestItem()
+        testManifest!.items!.add(EpubManifestItem()
           ..fallback = "Some Different Fallback"
           ..fallbackStyle = "A less than Stylish Fallback"
           ..href = "Some Different HREF"
@@ -58,7 +58,7 @@ main() async {
           ..mediaType = "RealPlayer"
           ..requiredModules = "require()"
           ..requiredNamespace = "Namespace");
-        expect(testManifest.hashCode, isNot(reference.hashCode));
+        expect(testManifest!.hashCode, isNot(reference.hashCode));
       });
     });
   });

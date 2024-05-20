@@ -9,14 +9,14 @@ import '../../random_data_generator.dart';
 
 main() async {
   final RandomDataGenerator generator =
-      new RandomDataGenerator(new Random(123778), 10);
+      RandomDataGenerator(Random(123778), 10);
 
   final EpubNavigationHead reference = generator.randomEpubNavigationHead();
 
-  EpubNavigationHead testGuideReference;
+  EpubNavigationHead? testGuideReference;
   setUp(() async {
-    testGuideReference = new EpubNavigationHead()
-      ..metadata = List.from(reference.metadata);
+    testGuideReference = EpubNavigationHead()
+      ..metadata = List.from(reference.metadata!);
   });
   tearDown(() async {
     testGuideReference = null;
@@ -28,19 +28,19 @@ main() async {
       });
 
       test("is false when Metadata changes", () async {
-        testGuideReference.metadata.add(generator.randomNavigationHeadMeta());
+        testGuideReference!.metadata!.add(generator.randomNavigationHeadMeta());
         expect(testGuideReference, isNot(reference));
       });
     });
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testGuideReference.hashCode, equals(reference.hashCode));
+        expect(testGuideReference!.hashCode, equals(reference.hashCode));
       });
 
       test("is false when Metadata changes", () async {
-        testGuideReference.metadata.add(generator.randomNavigationHeadMeta());
-        expect(testGuideReference.hashCode, isNot(reference.hashCode));
+        testGuideReference!.metadata!.add(generator.randomNavigationHeadMeta());
+        expect(testGuideReference!.hashCode, isNot(reference.hashCode));
       });
     });
   });

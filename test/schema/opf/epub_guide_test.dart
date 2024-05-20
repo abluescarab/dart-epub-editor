@@ -9,13 +9,13 @@ import '../../random_data_generator.dart';
 
 main() async {
   RandomDataGenerator generator =
-      new RandomDataGenerator(new Random(123445), 10);
+      RandomDataGenerator(Random(123445), 10);
 
   final reference = generator.randomEpubGuide();
 
-  EpubGuide testGuide;
+  EpubGuide? testGuide;
   setUp(() async {
-    testGuide = new EpubGuide()..items = List.from(reference.items);
+    testGuide = EpubGuide()..items = List.from(reference.items!);
   });
   tearDown(() async {
     testGuide = null;
@@ -26,18 +26,18 @@ main() async {
         expect(testGuide, equals(reference));
       });
       test("is false when Items changes", () async {
-        testGuide.items.add(generator.randomEpubGuideReference());
+        testGuide!.items!.add(generator.randomEpubGuideReference());
         expect(testGuide, isNot(reference));
       });
     });
 
     group(".hashCode", () {
       test("is true for equivalent objects", () async {
-        expect(testGuide.hashCode, equals(reference.hashCode));
+        expect(testGuide!.hashCode, equals(reference.hashCode));
       });
       test("is false when Items changes", () async {
-        testGuide.items.add(generator.randomEpubGuideReference());
-        expect(testGuide.hashCode, isNot(reference.hashCode));
+        testGuide!.items!.add(generator.randomEpubGuideReference());
+        expect(testGuide!.hashCode, isNot(reference.hashCode));
       });
     });
   });
