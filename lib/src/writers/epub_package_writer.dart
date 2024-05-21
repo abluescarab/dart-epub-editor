@@ -36,7 +36,7 @@ class EpubPackageWriter {
       EpubManifestWriter.writeManifest(builder, package.manifest);
       EpubSpineWriter.writeSpine(builder, package.spine!);
 
-      if(package.guide != null) {
+      if (package.guide != null) {
         EpubGuideWriter.writeGuide(builder, package.guide);
       }
     });

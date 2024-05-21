@@ -201,6 +201,25 @@ class EpubMetadataWriter {
               namespace: Namespaces.dc,
               nest: () => _writeString(builder, item),
             ));
+
+      meta.metaItems?.forEach(
+        (item) => builder.element(
+          'meta',
+          nest: () {
+            _writeId(builder, item);
+
+            if (item.attributes != null) {
+              for (final attribute in item.attributes!.entries) {
+                builder.attribute(attribute.key, attribute.value);
+              }
+            }
+
+            if (item.textContent != null && item.textContent!.isNotEmpty) {
+              builder.text(item.textContent!);
+            }
+          },
+        ),
+      );
     });
   }
 }
