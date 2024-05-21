@@ -17,7 +17,8 @@ class EpubMetadataTranslatedString extends EpubMetadataField {
   Map<String, String>? attributes;
 
   @override
-  int get hashCode => Object.hash(id.hashCode, value.hashCode, dir.hashCode, lang.hashCode, attributes.hashCode);
+  int get hashCode => Object.hash(id.hashCode, value.hashCode, dir.hashCode,
+      lang.hashCode, attributes.hashCode);
 
   @override
   bool operator ==(Object other) {

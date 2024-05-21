@@ -1,13 +1,52 @@
+import 'package:epub_editor/src/schema/opf/epub_guide.dart';
+import 'package:epub_editor/src/schema/opf/epub_manifest.dart';
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
+import 'package:epub_editor/src/schema/opf/epub_spine.dart';
 import 'package:epub_editor/src/schema/opf/epub_version.dart';
 import 'package:epub_editor/src/utils/namespaces.dart';
-import 'package:epub_editor/src/writers/epub_guide_writer.dart';
-import 'package:epub_editor/src/writers/epub_manifest_writer.dart';
-import 'package:epub_editor/src/writers/epub_spine_writer.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 import 'epub_metadata_writer.dart';
 
 class EpubPackageWriter {
+  static void writeManifest(XmlBuilder builder, EpubManifest? manifest) {
+    builder.element('manifest', nest: () {
+      manifest!.items!.forEach((item) {
+        builder.element('item', nest: () {
+          builder
+            ..attribute('id', item.id!)
+            ..attribute('href', item.href!)
+            ..attribute('media-type', item.mediaType!);
+
+          if (item.properties != null) {
+            builder.attribute('properties', item.properties!);
+          }
+        });
+      });
+    });
+  }
+
+  static void writeSpine(XmlBuilder builder, EpubSpine spine) {
+    builder.element('spine', attributes: {'toc': spine.tableOfContents!},
+        nest: () {
+      spine.items!.forEach((spineitem) => builder.element('itemref',
+              attributes: {
+                'idref': spineitem.idRef!,
+                'linear': spineitem.isLinear! ? 'yes' : 'no'
+              }));
+    });
+  }
+
+  static void writeGuide(XmlBuilder builder, EpubGuide? guide) {
+    builder.element('guide', nest: () {
+      guide!.items!.forEach((guideItem) => builder.element('reference',
+              attributes: {
+                'type': guideItem.type!,
+                'title': guideItem.title!,
+                'href': guideItem.href!
+              }));
+    });
+  }
+
   static String writeContent(EpubPackage package) {
     final builder = XmlBuilder();
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
@@ -33,11 +72,12 @@ class EpubPackageWriter {
         package.metadata,
         package.version,
       );
-      EpubManifestWriter.writeManifest(builder, package.manifest);
-      EpubSpineWriter.writeSpine(builder, package.spine!);
+
+      writeManifest(builder, package.manifest);
+      writeSpine(builder, package.spine!);
 
       if (package.guide != null) {
-        EpubGuideWriter.writeGuide(builder, package.guide);
+        writeGuide(builder, package.guide);
       }
     });
 
