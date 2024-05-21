@@ -123,20 +123,23 @@ class EpubMetadataWriter {
               namespace: Namespaces.dc,
               nest: () => _writeContributor(builder, item, version),
             ))
-        ..dates?.forEach((item) =>
-            builder.element('date', namespace: Namespaces.dc, nest: () {
-              _writeId(builder, item);
+        ..dates?.forEach((item) => builder.element(
+              'date',
+              namespace: Namespaces.dc,
+              nest: () {
+                _writeId(builder, item);
 
-              if (item.event != null) {
-                builder.attribute(
-                  'event',
-                  item.event!,
-                  namespace: Namespaces.opf,
-                );
-              }
+                if (version == EpubVersion.epub2 && item.event != null) {
+                  builder.attribute(
+                    'event',
+                    item.event!,
+                    namespace: Namespaces.opf,
+                  );
+                }
 
-              builder.text(item.date!);
-            }))
+                builder.text(item.date!);
+              },
+            ))
         ..descriptions?.forEach((item) => builder.element(
               'description',
               namespace: Namespaces.dc,
@@ -147,20 +150,23 @@ class EpubMetadataWriter {
               namespace: Namespaces.dc,
               nest: () => _writeString(builder, item),
             ))
-        ..identifiers?.forEach((item) =>
-            builder.element('identifier', namespace: Namespaces.dc, nest: () {
-              _writeId(builder, item);
+        ..identifiers?.forEach((item) => builder.element(
+              'identifier',
+              namespace: Namespaces.dc,
+              nest: () {
+                _writeId(builder, item);
 
-              if (item.scheme != null) {
-                builder.attribute(
-                  'scheme',
-                  item.scheme!,
-                  namespace: Namespaces.opf,
-                );
-              }
+                if (version == EpubVersion.epub2 && item.scheme != null) {
+                  builder.attribute(
+                    'scheme',
+                    item.scheme!,
+                    namespace: Namespaces.opf,
+                  );
+                }
 
-              builder.text(item.identifier!);
-            }))
+                builder.text(item.identifier!);
+              },
+            ))
         ..languages?.forEach((item) => builder.element(
               'language',
               namespace: Namespaces.dc,
