@@ -1,29 +1,24 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_guide_reference.dart';
+import 'package:epub_editor/src/schema/opf/epub_guide_reference.dart';
+import 'package:quiver/collection.dart';
 
 class EpubGuide {
+  EpubGuide({
+    this.items,
+  }) {
+    items ??= [];
+  }
+
   List<EpubGuideReference>? items;
 
-  EpubGuide() {
-    items = <EpubGuideReference>[];
-  }
-
   @override
-  int get hashCode {
-    final objects = [];
-    objects.addAll(items!.map((item) => item.hashCode));
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll(items!.map((item) => item.hashCode));
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubGuide?;
-    if (otherAs == null) {
+    if (!(other is EpubGuide)) {
       return false;
     }
 
-    return collections.listsEqual(items, otherAs.items);
+    return listsEqual(items, other.items);
   }
 }

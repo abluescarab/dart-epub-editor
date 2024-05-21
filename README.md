@@ -27,7 +27,7 @@ dependencies:
 //Get the epub into memory somehow
 String fileName = 'sample.epub';
 String fullPath = path.join(io.Directory.current.path, fileName);
-var targetFile = new io.File(fullPath);
+final targetFile = new io.File(fullPath);
 List<int> bytes = await targetFile.readAsBytes();
 
 
@@ -132,8 +132,8 @@ navigation.head.metadata.forEach((EpubNavigationHeadMeta meta){
 });
 
 // Writing Data
-var written = await EpubWriter.writeBook(epubBook);
+final written = await EpubWriter.writeBook(epubBook);
 
 // You can even re-read the book into a new object!
-var bookRoundTrip = await EpubReader.readBook(written);
+final bookRoundTrip = await EpubReader.readBook(written);
 ```

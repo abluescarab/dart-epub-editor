@@ -1,11 +1,21 @@
+import 'dart:convert';
+
 import 'package:archive/archive.dart';
-import 'package:epub_editor/epub_editor.dart';
-import 'dart:convert' as convert;
+import 'package:epub_editor/src/entities/epub_book.dart';
+import 'package:epub_editor/src/entities/epub_byte_content_file.dart';
+import 'package:epub_editor/src/entities/epub_text_content_file.dart';
 import 'package:epub_editor/src/utils/zip_path_utils.dart';
+import 'package:epub_editor/src/writers/epub_package_writer.dart';
 
 class EpubWriter {
-  static const _container_file =
-      '<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>';
+  static const _containerFile = """
+<?xml version="1.0"?>
+  <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>
+""";
 
   // Creates a Zip Archive of an EpubBook
   static Archive _createArchive(EpubBook book) {
@@ -15,14 +25,14 @@ class EpubWriter {
     arch.addFile(ArchiveFile.noCompress(
       'mimetype',
       20,
-      convert.utf8.encode('application/epub+zip'),
+      utf8.encode('application/epub+zip'),
     ));
 
     // Add Container file
     arch.addFile(ArchiveFile(
       'META-INF/container.xml',
-      _container_file.length,
-      convert.utf8.encode(_container_file),
+      _containerFile.length,
+      utf8.encode(_containerFile),
     ));
 
     // Add all content to the archive
@@ -32,7 +42,7 @@ class EpubWriter {
       if (file is EpubByteContentFile) {
         content = file.content;
       } else if (file is EpubTextContentFile) {
-        content = convert.utf8.encode(file.content!);
+        content = utf8.encode(file.content!);
       }
 
       arch.addFile(
@@ -45,16 +55,13 @@ class EpubWriter {
     });
 
     // Generate the content.opf file and add it to the Archive
-    final contentopf = EpubPackageWriter.writeContent(book.schema!.package!);
+    final contentOpf = EpubPackageWriter.writeContent(book.schema!.package!);
 
     arch.addFile(
       ArchiveFile(
-        ZipPathUtils.combine(
-          book.schema!.contentDirectoryPath,
-          'content.opf',
-        )!,
-        contentopf.length,
-        convert.utf8.encode(contentopf),
+        ZipPathUtils.combine(book.schema!.contentDirectoryPath, 'content.opf')!,
+        contentOpf.length,
+        utf8.encode(contentOpf),
       ),
     );
 
@@ -63,8 +70,6 @@ class EpubWriter {
 
   // Serializes the EpubBook into a byte array
   static List<int>? writeBook(EpubBook book) {
-    final arch = _createArchive(book);
-
-    return ZipEncoder().encode(arch);
+    return ZipEncoder().encode(_createArchive(book));
   }
 }

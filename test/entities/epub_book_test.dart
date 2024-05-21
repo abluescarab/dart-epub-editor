@@ -10,33 +10,34 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart'
 import 'package:test/test.dart';
 
 main() async {
-  final reference = EpubBook();
-  reference
-    ..author = "orthros"
-    ..authorList = ["orthros"]
-    ..chapters = [EpubChapter()]
-    ..content = EpubContent()
-    // ..coverImage = Image(width: 100, height: 100)
-    ..schema = EpubSchema()
-    ..mainTitle =
-        EpubMetadataTranslatedString(value: "A Dissertation on Epubs");
+  final reference = EpubBook(
+    author: "orthros",
+    authorList: ["orthros"],
+    chapters: [EpubChapter()],
+    content: EpubContent(),
+    // coverImage = Image(width: 100, height: 100),
+    schema: EpubSchema(),
+    mainTitle: EpubMetadataTranslatedString(value: "A Dissertation on Epubs"),
+  );
 
   EpubBook? testBook;
+
   setUp(() async {
-    testBook = EpubBook();
-    testBook!
-      ..author = "orthros"
-      ..authorList = ["orthros"]
-      ..chapters = [EpubChapter()]
-      ..content = EpubContent()
-      // ..coverImage = Image(width: 100, height: 100)
-      ..schema = EpubSchema()
-      ..mainTitle =
-          EpubMetadataTranslatedString(value: "A Dissertation on Epubs");
+    testBook = EpubBook(
+      author: "orthros",
+      authorList: ["orthros"],
+      chapters: [EpubChapter()],
+      content: EpubContent(),
+      // coverImage = Image(width: 100, height: 100),
+      schema: EpubSchema(),
+      mainTitle: EpubMetadataTranslatedString(value: "A Dissertation on Epubs"),
+    );
   });
+
   tearDown(() async {
     testBook = null;
   });
+
   group("EpubBook", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
@@ -44,12 +45,12 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFile();
-        file
-          ..content = "Hello"
-          ..contentMimeType = "application/txt"
-          ..contentType = EpubContentType.other
-          ..fileName = "orthros.txt";
+        final file = EpubTextContentFile(
+          content: "Hello",
+          contentMimeType: "application/txt",
+          contentType: EpubContentType.other,
+          fileName: "orthros.txt",
+        );
 
         EpubContent content = EpubContent();
         content.allFiles?["hello"] = file;
@@ -69,10 +70,11 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        final chapter = EpubChapter();
-        chapter
-          ..title = "A Brave new Epub"
-          ..contentFileName = "orthros.txt";
+        final chapter = EpubChapter(
+          title: "A Brave new Epub",
+          contentFileName: "orthros.txt",
+        );
+
         testBook!.chapters = [chapter];
         expect(testBook, isNot(reference));
       });
@@ -83,8 +85,7 @@ main() async {
       // });
 
       test("is false when Schema changes", () async {
-        final schema = EpubSchema();
-        schema.contentDirectoryPath = "some/random/path";
+        final schema = EpubSchema(contentDirectoryPath: "some/random/path");
         testBook!.schema = schema;
         expect(testBook, isNot(reference));
       });
@@ -102,12 +103,12 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFile();
-        file
-          ..content = "Hello"
-          ..contentMimeType = "application/txt"
-          ..contentType = EpubContentType.other
-          ..fileName = "orthros.txt";
+        final file = EpubTextContentFile(
+          content: "Hello",
+          contentMimeType: "application/txt",
+          contentType: EpubContentType.other,
+          fileName: "orthros.txt",
+        );
 
         EpubContent content = EpubContent();
         content.allFiles!["hello"] = file;
@@ -127,10 +128,11 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        final chapter = EpubChapter();
-        chapter
-          ..title = "A Brave new Epub"
-          ..contentFileName = "orthros.txt";
+        final chapter = EpubChapter(
+          title: "A Brave new Epub",
+          contentFileName: "orthros.txt",
+        );
+
         testBook!.chapters = [chapter];
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
@@ -141,8 +143,8 @@ main() async {
       // });
 
       test("is false when Schema changes", () async {
-        final schema = EpubSchema();
-        schema.contentDirectoryPath = "some/random/path";
+        final schema = EpubSchema(contentDirectoryPath: "some/random/path");
+        
         testBook!.schema = schema;
         expect(testBook.hashCode, isNot(reference.hashCode));
       });

@@ -3,7 +3,7 @@ description: Epub Parser for Dart. Epub package fork. Suitable for use on the Se
 homepage: https://github.com/abluescarab/dart-epub-editor
 issue_tracker: https://github.com/abluescarab/dart-epub-editor/issues
 # TODO: remove build number after finishing
-version: 1.2.0+13
+version: 1.2.0+14
 
 environment:
   sdk: '>=2.17.0 <4.0.0'

@@ -1,26 +1,24 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_manifest_item.dart';
+import 'package:epub_editor/src/schema/opf/epub_manifest_item.dart';
+import 'package:quiver/collection.dart';
 
 class EpubManifest {
+  EpubManifest({
+    this.items,
+  }) {
+    items ??= [];
+  }
+
   List<EpubManifestItem>? items;
 
-  EpubManifest() {
-    items = <EpubManifestItem>[];
-  }
-
   @override
-  int get hashCode {
-    return hashObjects(items!.map((item) => item.hashCode));
-  }
+  int get hashCode => Object.hashAll(items!.map((item) => item.hashCode));
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubManifest?;
-    if (otherAs == null) {
+    if (!(other is EpubManifest)) {
       return false;
     }
-    return collections.listsEqual(items, otherAs.items);
+
+    return listsEqual(items, other.items);
   }
 }

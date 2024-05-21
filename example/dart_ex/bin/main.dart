@@ -7,7 +7,7 @@ main(List<String> args) async {
   //Get the epub into memory somehow
   String fileName = "alicesAdventuresUnderGround.epub";
   String fullPath = path.join(io.Directory.current.path, fileName);
-  var targetFile = io.File(fullPath);
+  final targetFile = io.File(fullPath);
   List<int> bytes = await targetFile.readAsBytes();
 
 // Opens a book and reads all of its content into the memory
@@ -107,7 +107,7 @@ main(List<String> args) async {
   });
 
   // Write the Book
-  var written = EpubWriter.writeBook(epubBook);
+  final written = EpubWriter.writeBook(epubBook);
   // Read the book into a new object!
-  var newBook = await EpubReader.readBook(written!);
+  final newBook = await EpubReader.readBook(written!);
 }

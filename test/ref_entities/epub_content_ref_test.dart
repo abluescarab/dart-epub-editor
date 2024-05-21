@@ -17,16 +17,16 @@ main() async {
 
   setUp(() async {
     final arch = Archive();
-    final refBook = EpubBookRef(arch);
+    final refBook = EpubBookRef(archive: arch);
 
     testContent = EpubContentRef();
 
-    textContentFile = EpubTextContentFileRef(refBook)
+    textContentFile = EpubTextContentFileRef(epubBookRef: refBook)
       ..contentMimeType = "application/text"
       ..contentType = EpubContentType.other
       ..fileName = "orthros.txt";
 
-    byteContentFile = EpubByteContentFileRef(refBook)
+    byteContentFile = EpubByteContentFileRef(epubBookRef: refBook)
       ..contentMimeType = "application/orthros"
       ..contentType = EpubContentType.other
       ..fileName = "orthros.bin";

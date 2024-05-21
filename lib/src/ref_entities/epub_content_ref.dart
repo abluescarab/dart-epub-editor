@@ -1,28 +1,26 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_byte_content_file_ref.dart';
-import 'epub_content_file_ref.dart';
-import 'epub_text_content_file_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_byte_content_file_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_content_file_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:quiver/collection.dart';
 
 class EpubContentRef {
-  Map<String, EpubTextContentFileRef>? html;
-  Map<String, EpubTextContentFileRef>? css;
-  Map<String, EpubByteContentFileRef>? images;
-  Map<String, EpubByteContentFileRef>? fonts;
-  Map<String, EpubContentFileRef>? allFiles;
+  EpubContentRef({
+    this.html,
+    this.css,
+    this.images,
+    this.fonts,
+    this.allFiles,
+  });
 
-  EpubContentRef() {
-    html = <String, EpubTextContentFileRef>{};
-    css = <String, EpubTextContentFileRef>{};
-    images = <String, EpubByteContentFileRef>{};
-    fonts = <String, EpubByteContentFileRef>{};
-    allFiles = <String, EpubContentFileRef>{};
-  }
+  Map<String, EpubTextContentFileRef>? html = {};
+  Map<String, EpubTextContentFileRef>? css = {};
+  Map<String, EpubByteContentFileRef>? images = {};
+  Map<String, EpubByteContentFileRef>? fonts = {};
+  Map<String, EpubContentFileRef>? allFiles = {};
 
   @override
   int get hashCode {
-    final objects = [
+    return Object.hashAll([
       ...html!.keys.map((key) => key.hashCode),
       ...html!.values.map((value) => value.hashCode),
       ...css!.keys.map((key) => key.hashCode),
@@ -33,9 +31,7 @@ class EpubContentRef {
       ...fonts!.values.map((value) => value.hashCode),
       ...allFiles!.keys.map((key) => key.hashCode),
       ...allFiles!.values.map((value) => value.hashCode)
-    ];
-
-    return hashObjects(objects);
+    ]);
   }
 
   @override
@@ -44,10 +40,10 @@ class EpubContentRef {
       return false;
     }
 
-    return collections.mapsEqual(html, other.html) &&
-        collections.mapsEqual(css, other.css) &&
-        collections.mapsEqual(images, other.images) &&
-        collections.mapsEqual(fonts, other.fonts) &&
-        collections.mapsEqual(allFiles, other.allFiles);
+    return mapsEqual(html, other.html) &&
+        mapsEqual(css, other.css) &&
+        mapsEqual(images, other.images) &&
+        mapsEqual(fonts, other.fonts) &&
+        mapsEqual(allFiles, other.allFiles);
   }
 }

@@ -1,6 +1,5 @@
+import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
 import 'package:quiver/core.dart';
-
-import 'epub_metadata_field.dart';
 
 class EpubMetadataIdentifier extends EpubMetadataField {
   EpubMetadataIdentifier({
@@ -17,10 +16,12 @@ class EpubMetadataIdentifier extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubMetadataIdentifier?;
-    if (otherAs == null) return false;
-    return id == otherAs.id &&
-        scheme == otherAs.scheme &&
-        identifier == otherAs.identifier;
+    if (!(other is EpubMetadataIdentifier)) {
+      return false;
+    }
+
+    return id == other.id &&
+        scheme == other.scheme &&
+        identifier == other.identifier;
   }
 }

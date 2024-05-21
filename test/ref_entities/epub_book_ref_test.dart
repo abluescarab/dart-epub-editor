@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 
 main() async {
   Archive arch = Archive();
-  final reference = EpubBookRef(arch);
+  final reference = EpubBookRef(archive: arch);
   reference
     ..author = "orthros"
     ..authorList = ["orthros"]
@@ -20,7 +20,7 @@ main() async {
 
   EpubBookRef? testBookRef;
   setUp(() async {
-    testBookRef = EpubBookRef(arch);
+    testBookRef = EpubBookRef(archive: arch);
     testBookRef!
       ..author = "orthros"
       ..authorList = ["orthros"]
@@ -37,7 +37,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFileRef(testBookRef!);
+        final file = EpubTextContentFileRef(epubBookRef:  testBookRef!);
         file
           ..contentMimeType = "application/txt"
           ..contentType = EpubContentType.other
@@ -81,7 +81,7 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFileRef(testBookRef!);
+        final file = EpubTextContentFileRef(epubBookRef:  testBookRef!);
         file
           ..contentMimeType = "application/txt"
           ..contentType = EpubContentType.other

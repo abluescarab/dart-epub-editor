@@ -1,6 +1,17 @@
-import 'package:quiver/core.dart';
 
 class EpubManifestItem {
+  EpubManifestItem({
+    this.id,
+    this.href,
+    this.mediaType,
+    this.mediaOverlay,
+    this.requiredNamespace,
+    this.requiredModules,
+    this.fallback,
+    this.fallbackStyle,
+    this.properties,
+  });
+
   String? id;
   String? href;
   String? mediaType;
@@ -12,7 +23,7 @@ class EpubManifestItem {
   String? properties;
 
   @override
-  int get hashCode => hashObjects([
+  int get hashCode => Object.hashAll([
         id.hashCode,
         href.hashCode,
         mediaType.hashCode,
@@ -26,24 +37,24 @@ class EpubManifestItem {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubManifestItem?;
-    if (otherAs == null) {
+    if (!(other is EpubManifestItem)) {
       return false;
     }
 
-    return id == otherAs.id &&
-        href == otherAs.href &&
-        mediaType == otherAs.mediaType &&
-        mediaOverlay == otherAs.mediaOverlay &&
-        requiredNamespace == otherAs.requiredNamespace &&
-        requiredModules == otherAs.requiredModules &&
-        fallback == otherAs.fallback &&
-        fallbackStyle == otherAs.fallbackStyle &&
-        properties == otherAs.properties;
+    return id == other.id &&
+        href == other.href &&
+        mediaType == other.mediaType &&
+        mediaOverlay == other.mediaOverlay &&
+        requiredNamespace == other.requiredNamespace &&
+        requiredModules == other.requiredModules &&
+        fallback == other.fallback &&
+        fallbackStyle == other.fallbackStyle &&
+        properties == other.properties;
   }
 
   @override
   String toString() {
-    return 'Id: $id, Href = $href, MediaType = $mediaType, Properties = $properties, MediaOverlay = $mediaOverlay';
+    return 'Id: $id, Href = $href, MediaType = $mediaType, Properties = '
+        '$properties, MediaOverlay = $mediaOverlay';
   }
 }

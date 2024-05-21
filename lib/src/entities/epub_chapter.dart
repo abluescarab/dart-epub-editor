@@ -1,7 +1,14 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
+import 'package:quiver/collection.dart';
 
 class EpubChapter {
+  EpubChapter({
+    this.title,
+    this.contentFileName,
+    this.anchor,
+    this.htmlContent,
+    this.subChapters,
+  });
+
   String? title;
   String? contentFileName;
   String? anchor;
@@ -9,27 +16,25 @@ class EpubChapter {
   List<EpubChapter>? subChapters;
 
   @override
-  int get hashCode {
-    final objects = [
-      title.hashCode,
-      contentFileName.hashCode,
-      anchor.hashCode,
-      htmlContent.hashCode,
-      ...subChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
-    ];
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll([
+        title.hashCode,
+        contentFileName.hashCode,
+        anchor.hashCode,
+        htmlContent.hashCode,
+        ...subChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
+      ]);
 
   @override
   bool operator ==(other) {
     if (!(other is EpubChapter)) {
       return false;
     }
+
     return title == other.title &&
         contentFileName == other.contentFileName &&
         anchor == other.anchor &&
         htmlContent == other.htmlContent &&
-        collections.listsEqual(subChapters, other.subChapters);
+        listsEqual(subChapters, other.subChapters);
   }
 
   @override

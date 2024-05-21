@@ -1,10 +1,12 @@
-import 'dart:async';
-
-import 'epub_book_ref.dart';
-import 'epub_content_file_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_content_file_ref.dart';
 
 class EpubByteContentFileRef extends EpubContentFileRef {
-  EpubByteContentFileRef(EpubBookRef epubBookRef) : super(epubBookRef);
+  EpubByteContentFileRef({
+    required super.epubBookRef,
+    super.fileName,
+    super.contentType,
+    super.contentMimeType,
+  });
 
   Future<List<int>> readContent() {
     return readContentAsBytes();

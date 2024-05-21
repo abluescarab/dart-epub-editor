@@ -1,6 +1,11 @@
 import 'package:quiver/core.dart';
 
 class EpubSpineItemRef {
+  EpubSpineItemRef({
+    this.idRef,
+    this.isLinear,
+  });
+
   String? idRef;
   bool? isLinear;
 
@@ -9,12 +14,11 @@ class EpubSpineItemRef {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubSpineItemRef?;
-    if (otherAs == null) {
+    if (!(other is EpubSpineItemRef)) {
       return false;
     }
 
-    return idRef == otherAs.idRef && isLinear == otherAs.isLinear;
+    return idRef == other.idRef && isLinear == other.isLinear;
   }
 
   @override

@@ -1,8 +1,6 @@
+import 'package:epub_editor/src/schema/opf/epub_metadata_alternate_script.dart';
+import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
 import 'package:quiver/collection.dart';
-import 'package:quiver/core.dart';
-
-import 'epub_metadata_alternate_script.dart';
-import 'epub_metadata_field.dart';
 
 class EpubMetadataContributor extends EpubMetadataField {
   EpubMetadataContributor({
@@ -27,7 +25,7 @@ class EpubMetadataContributor extends EpubMetadataField {
   List<EpubMetadataAlternateScript>? alternateScripts;
 
   @override
-  int get hashCode => hashObjects([
+  int get hashCode => Object.hashAll([
         id.hashCode,
         name.hashCode,
         fileAs.hashCode,
@@ -35,20 +33,22 @@ class EpubMetadataContributor extends EpubMetadataField {
         displaySeq.hashCode,
         dir.hashCode,
         lang.hashCode,
-        alternateScripts.hashCode,
+        ...?alternateScripts?.map((e) => e.hashCode),
       ]);
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubMetadataContributor?;
-    if (otherAs == null) return false;
-    return (id == otherAs.id &&
-        name == otherAs.name &&
-        fileAs == otherAs.fileAs &&
-        role == otherAs.role &&
-        displaySeq == otherAs.displaySeq &&
-        dir == otherAs.dir &&
-        lang == otherAs.lang &&
-        listsEqual(alternateScripts, otherAs.alternateScripts));
+    if (!(other is EpubMetadataContributor)) {
+      return false;
+    }
+
+    return id == other.id &&
+        name == other.name &&
+        fileAs == other.fileAs &&
+        role == other.role &&
+        displaySeq == other.displaySeq &&
+        dir == other.dir &&
+        lang == other.lang &&
+        listsEqual(alternateScripts, other.alternateScripts);
   }
 }

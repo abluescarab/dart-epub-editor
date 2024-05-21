@@ -1,10 +1,16 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_navigation_content.dart';
-import 'epub_navigation_label.dart';
+import 'package:epub_editor/epub_editor.dart';
+import 'package:quiver/collection.dart';
 
 class EpubNavigationPoint {
+  EpubNavigationPoint({
+    this.id,
+    this.classAttribute,
+    this.playOrder,
+    this.navigationLabels,
+    this.content,
+    this.childNavigationPoints,
+  });
+
   String? id;
   String? classAttribute;
   String? playOrder;
@@ -13,36 +19,27 @@ class EpubNavigationPoint {
   List<EpubNavigationPoint>? childNavigationPoints;
 
   @override
-  int get hashCode {
-    final objects = [
-      id.hashCode,
-      classAttribute.hashCode,
-      playOrder.hashCode,
-      content.hashCode,
-      ...navigationLabels!.map((label) => label.hashCode),
-      ...childNavigationPoints!.map((point) => point.hashCode)
-    ];
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll([
+        id.hashCode,
+        classAttribute.hashCode,
+        playOrder.hashCode,
+        content.hashCode,
+        ...navigationLabels!.map((label) => label.hashCode),
+        ...childNavigationPoints!.map((point) => point.hashCode)
+      ]);
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubNavigationPoint?;
-    if (otherAs == null) {
+    if (!(other is EpubNavigationPoint)) {
       return false;
     }
 
-    if (!collections.listsEqual(navigationLabels, otherAs.navigationLabels)) {
-      return false;
-    }
-
-    if (!collections.listsEqual(
-        childNavigationPoints, otherAs.childNavigationPoints)) return false;
-
-    return id == otherAs.id &&
-        classAttribute == otherAs.classAttribute &&
-        playOrder == otherAs.playOrder &&
-        content == otherAs.content;
+    return id == other.id &&
+        classAttribute == other.classAttribute &&
+        playOrder == other.playOrder &&
+        listsEqual(navigationLabels, other.navigationLabels) &&
+        content == other.content &&
+        listsEqual(childNavigationPoints, other.childNavigationPoints);
   }
 
   @override

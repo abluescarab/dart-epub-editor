@@ -146,8 +146,8 @@ class EpubState extends State<EpubWidget> {
 }
 
 Widget buildEpubWidget(epub.EpubBookRef book) {
-  var chapters = book.getChapters();
-  var cover = book.readCover();
+  final chapters = book.getChapters();
+  final cover = book.readCover();
   return Container(
       child: Column(
     children: <Widget>[

@@ -1,6 +1,5 @@
+import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
 import 'package:quiver/core.dart';
-
-import 'epub_metadata_field.dart';
 
 class EpubMetadataDate extends EpubMetadataField {
   EpubMetadataDate({
@@ -17,8 +16,10 @@ class EpubMetadataDate extends EpubMetadataField {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubMetadataDate?;
-    if (otherAs == null) return false;
-    return id == otherAs.id && date == otherAs.date && event == otherAs.event;
+    if (!(other is EpubMetadataDate)) {
+      return false;
+    }
+
+    return id == other.id && date == other.date && event == other.event;
   }
 }

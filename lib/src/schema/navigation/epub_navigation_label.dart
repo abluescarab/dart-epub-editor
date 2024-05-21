@@ -1,4 +1,9 @@
+
 class EpubNavigationLabel {
+  EpubNavigationLabel({
+    this.text,
+  });
+
   String? text;
 
   @override
@@ -6,9 +11,11 @@ class EpubNavigationLabel {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubNavigationLabel?;
-    if (otherAs == null) return false;
-    return text == otherAs.text;
+    if (!(other is EpubNavigationLabel)) {
+      return false;
+    }
+
+    return text == other.text;
   }
 
   @override

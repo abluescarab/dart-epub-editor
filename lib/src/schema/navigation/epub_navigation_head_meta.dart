@@ -1,6 +1,12 @@
 import 'package:quiver/core.dart';
 
 class EpubNavigationHeadMeta {
+  EpubNavigationHeadMeta({
+    this.name,
+    this.content,
+    this.scheme,
+  });
+
   String? name;
   String? content;
   String? scheme;
@@ -10,13 +16,12 @@ class EpubNavigationHeadMeta {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubNavigationHeadMeta?;
-    if (otherAs == null) {
+    if (!(other is EpubNavigationHeadMeta)) {
       return false;
     }
 
-    return name == otherAs.name &&
-        content == otherAs.content &&
-        scheme == otherAs.scheme;
+    return name == other.name &&
+        content == other.content &&
+        scheme == other.scheme;
   }
 }

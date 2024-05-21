@@ -1,8 +1,15 @@
+import 'package:epub_editor/epub_editor.dart';
+import 'package:epub_editor/src/entities/epub_content_file.dart';
 import 'package:quiver/core.dart';
 
-import 'epub_content_file.dart';
-
 class EpubTextContentFile extends EpubContentFile {
+  EpubTextContentFile({
+    super.fileName,
+    super.contentType,
+    super.contentMimeType,
+    this.content,
+  });
+
   String? content;
 
   @override

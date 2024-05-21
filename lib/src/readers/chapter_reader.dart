@@ -1,25 +1,32 @@
-import '../ref_entities/epub_book_ref.dart';
-import '../ref_entities/epub_chapter_ref.dart';
-import '../schema/navigation/epub_navigation_point.dart';
+import 'package:epub_editor/src/ref_entities/epub_book_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_chapter_ref.dart';
+import 'package:epub_editor/src/schema/navigation/epub_navigation_point.dart';
 
 class ChapterReader {
   static List<EpubChapterRef> getChapters(EpubBookRef bookRef) {
     if (bookRef.schema!.navigation == null) {
-      return <EpubChapterRef>[];
+      return [];
     }
+
     return getChaptersImpl(
-        bookRef, bookRef.schema!.navigation!.navMap!.points!);
+      bookRef,
+      bookRef.schema!.navigation!.navMap!.points!,
+    );
   }
 
   static List<EpubChapterRef> getChaptersImpl(
-      EpubBookRef bookRef, List<EpubNavigationPoint> navigationPoints) {
+    EpubBookRef bookRef,
+    List<EpubNavigationPoint> navigationPoints,
+  ) {
     final result = <EpubChapterRef>[];
 
-    for (var navigationPoint in navigationPoints) {
+    for (final navigationPoint in navigationPoints) {
       String? contentFileName;
       String? anchor;
 
-      if (navigationPoint.content?.source == null) continue;
+      if (navigationPoint.content?.source == null) {
+        continue;
+      }
 
       final contentSourceAnchorCharIndex =
           navigationPoint.content!.source!.indexOf('#');
@@ -38,18 +45,21 @@ class ChapterReader {
 
       if (!bookRef.content!.html!.containsKey(contentFileName)) {
         throw Exception(
-            'Incorrect EPUB manifest: item with href = \"$contentFileName\" is missing.');
+          'Incorrect EPUB manifest: item with href = \"$contentFileName\" is '
+          'missing.',
+        );
       }
 
-      final htmlContentFileRef = bookRef.content!.html![contentFileName];
-      final chapterRef = EpubChapterRef(htmlContentFileRef);
-      chapterRef.contentFileName = contentFileName;
-      chapterRef.anchor = anchor;
-      chapterRef.title = navigationPoint.navigationLabels!.first.text;
-      chapterRef.subChapters =
-          getChaptersImpl(bookRef, navigationPoint.childNavigationPoints!);
-
-      result.add(chapterRef);
+      result.add(EpubChapterRef(
+        epubTextContentFileRef: bookRef.content!.html![contentFileName],
+        contentFileName: contentFileName,
+        anchor: anchor,
+        title: navigationPoint.navigationLabels!.first.text,
+        subChapters: getChaptersImpl(
+          bookRef,
+          navigationPoint.childNavigationPoints!,
+        ),
+      ));
     }
 
     return result;

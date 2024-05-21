@@ -8,9 +8,9 @@ import 'package:test/test.dart';
 
 main() async {
   final arch = Archive();
-  final epubRef = EpubBookRef(arch);
+  final epubRef = EpubBookRef(archive: arch);
 
-  final reference = EpubTextContentFileRef(epubRef);
+  final reference = EpubTextContentFileRef(epubBookRef: epubRef);
   reference
     ..contentMimeType = "application/test"
     ..contentType = EpubContentType.other
@@ -19,9 +19,9 @@ main() async {
 
   setUp(() async {
     final arch2 = Archive();
-    final epubRef2 = EpubBookRef(arch2);
+    final epubRef2 = EpubBookRef(archive: arch2);
 
-    testFile = EpubTextContentFileRef(epubRef2);
+    testFile = EpubTextContentFileRef(epubBookRef: epubRef2);
     testFile!
       ..contentMimeType = "application/test"
       ..contentType = EpubContentType.other

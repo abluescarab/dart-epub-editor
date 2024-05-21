@@ -1,6 +1,12 @@
 import 'package:quiver/core.dart';
 
 class EpubGuideReference {
+  EpubGuideReference({
+    this.type,
+    this.title,
+    this.href,
+  });
+
   String? type;
   String? title;
   String? href;
@@ -10,14 +16,11 @@ class EpubGuideReference {
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubGuideReference?;
-    if (otherAs == null) {
+    if (!(other is EpubGuideReference)) {
       return false;
     }
 
-    return type == otherAs.type &&
-        title == otherAs.title &&
-        href == otherAs.href;
+    return type == other.type && title == other.title && href == other.href;
   }
 
   @override

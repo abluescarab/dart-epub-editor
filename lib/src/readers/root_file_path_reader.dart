@@ -1,35 +1,39 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:archive/archive.dart';
-import 'dart:convert' as convert;
-import 'package:collection/collection.dart' show IterableExtension;
-import 'package:xml/xml.dart' as xml;
+import 'package:collection/collection.dart';
+import 'package:xml/xml.dart';
 
 class RootFilePathReader {
   static Future<String?> getRootFilePath(Archive epubArchive) async {
     const epubContainerFilePath = 'META-INF/container.xml';
-
     final containerFileEntry = epubArchive.files.firstWhereOrNull(
-        (ArchiveFile file) => file.name == epubContainerFilePath);
+      (file) => file.name == epubContainerFilePath,
+    );
+
     if (containerFileEntry == null) {
       throw Exception(
-          'EPUB parsing error: $epubContainerFilePath file not found in archive.');
+        'EPUB parsing error: $epubContainerFilePath file not found in archive.',
+      );
     }
 
-    final containerDocument =
-        xml.XmlDocument.parse(convert.utf8.decode(containerFileEntry.content));
-    final packageElement = containerDocument
-        .findAllElements('container',
-            namespace: 'urn:oasis:names:tc:opendocument:xmlns:container')
-        .firstWhereOrNull((xml.XmlElement? elem) => elem != null);
+    final packageElement =
+        XmlDocument.parse(utf8.decode(containerFileEntry.content))
+            .findAllElements(
+              'container',
+              namespace: 'urn:oasis:names:tc:opendocument:xmlns:container',
+            )
+            .firstOrNull;
+
     if (packageElement == null) {
       throw Exception('EPUB parsing error: Invalid epub container');
     }
 
     final rootFileElement = packageElement.descendants.firstWhereOrNull(
-        (xml.XmlNode testElem) =>
-            (testElem is xml.XmlElement) &&
-            'rootfile' == testElem.name.local) as xml.XmlElement;
+      (testElem) {
+        return (testElem is XmlElement) && 'rootfile' == testElem.name.local;
+      },
+    ) as XmlElement;
 
     return rootFileElement.getAttribute('full-path');
   }

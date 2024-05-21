@@ -1,6 +1,5 @@
-import 'package:quiver/core.dart';
-
-import 'epub_metadata_field.dart';
+import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
+import 'package:quiver/collection.dart';
 
 class EpubMetadataMeta extends EpubMetadataField {
   EpubMetadataMeta({
@@ -27,30 +26,35 @@ class EpubMetadataMeta extends EpubMetadataField {
   String? lang;
 
   @override
-  int get hashCode => hashObjects([
+  int get hashCode => Object.hashAll([
+        id.hashCode,
         name.hashCode,
         content.hashCode,
         textContent.hashCode,
-        id.hashCode,
         refines.hashCode,
         property.hashCode,
         scheme.hashCode,
+        ...?attributes?.keys.map((e) => e.hashCode),
+        ...?attributes?.values.map((e) => e.hashCode),
         dir.hashCode,
         lang.hashCode,
       ]);
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubMetadataMeta?;
-    if (otherAs == null) return false;
-    return name == otherAs.name &&
-        content == otherAs.content &&
-        textContent == otherAs.textContent &&
-        id == otherAs.id &&
-        refines == otherAs.refines &&
-        property == otherAs.property &&
-        scheme == otherAs.scheme &&
-        dir == otherAs.dir &&
-        lang == otherAs.lang;
+    if (!(other is EpubMetadataMeta)) {
+      return false;
+    }
+
+    return name == other.name &&
+        content == other.content &&
+        textContent == other.textContent &&
+        id == other.id &&
+        refines == other.refines &&
+        property == other.property &&
+        scheme == other.scheme &&
+        mapsEqual(attributes, other.attributes) &&
+        dir == other.dir &&
+        lang == other.lang;
   }
 }

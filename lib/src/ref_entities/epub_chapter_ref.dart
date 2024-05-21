@@ -1,44 +1,41 @@
-import 'dart:async';
-
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_text_content_file_ref.dart';
+import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:quiver/collection.dart';
 
 class EpubChapterRef {
-  EpubTextContentFileRef? epubTextContentFileRef;
+  EpubChapterRef({
+    this.epubTextContentFileRef,
+    this.title,
+    this.contentFileName,
+    this.anchor,
+    this.subChapters,
+  });
 
+  EpubTextContentFileRef? epubTextContentFileRef;
   String? title;
   String? contentFileName;
   String? anchor;
   List<EpubChapterRef>? subChapters;
 
-  EpubChapterRef(EpubTextContentFileRef? epubTextContentFileRef) {
-    this.epubTextContentFileRef = epubTextContentFileRef;
-  }
-
   @override
-  int get hashCode {
-    final objects = [
-      title.hashCode,
-      contentFileName.hashCode,
-      anchor.hashCode,
-      epubTextContentFileRef.hashCode,
-      ...subChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
-    ];
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll([
+        title.hashCode,
+        contentFileName.hashCode,
+        anchor.hashCode,
+        epubTextContentFileRef.hashCode,
+        ...subChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
+      ]);
 
   @override
   bool operator ==(other) {
     if (!(other is EpubChapterRef)) {
       return false;
     }
+
     return title == other.title &&
         contentFileName == other.contentFileName &&
         anchor == other.anchor &&
         epubTextContentFileRef == other.epubTextContentFileRef &&
-        collections.listsEqual(subChapters, other.subChapters);
+        listsEqual(subChapters, other.subChapters);
   }
 
   Future<String> readHtmlContent() async {

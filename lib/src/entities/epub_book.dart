@@ -1,14 +1,22 @@
+import 'package:epub_editor/src/entities/epub_chapter.dart';
+import 'package:epub_editor/src/entities/epub_content.dart';
+import 'package:epub_editor/src/entities/epub_schema.dart';
+import 'package:epub_editor/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import '../ref_entities/epub_byte_content_file_ref.dart';
-import 'epub_chapter.dart';
-import 'epub_content.dart';
-import 'epub_schema.dart';
+import 'package:quiver/collection.dart';
 
 class EpubBook {
-  late EpubMetadataTranslatedString mainTitle;
+  EpubBook({
+    required this.mainTitle,
+    this.author,
+    this.authorList,
+    this.schema,
+    this.content,
+    this.coverImage,
+    this.chapters,
+  });
+
+  EpubMetadataTranslatedString mainTitle;
   String? author;
   List<String?>? authorList;
   EpubSchema? schema;
@@ -17,18 +25,15 @@ class EpubBook {
   List<EpubChapter>? chapters;
 
   @override
-  int get hashCode {
-    final objects = [
-      mainTitle.hashCode,
-      author.hashCode,
-      schema.hashCode,
-      content.hashCode,
-      ...coverImage?.getContentStream().map((byte) => byte.hashCode) ?? [0],
-      ...authorList?.map((author) => author.hashCode) ?? [0],
-      ...chapters?.map((chapter) => chapter.hashCode) ?? [0],
-    ];
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll([
+        mainTitle.hashCode,
+        author.hashCode,
+        schema.hashCode,
+        content.hashCode,
+        ...coverImage?.getContentStream().map((byte) => byte.hashCode) ?? [0],
+        ...authorList?.map((author) => author.hashCode) ?? [0],
+        ...chapters?.map((chapter) => chapter.hashCode) ?? [0],
+      ]);
 
   @override
   bool operator ==(other) {
@@ -38,11 +43,11 @@ class EpubBook {
 
     return mainTitle == other.mainTitle &&
         author == other.author &&
-        collections.listsEqual(authorList, other.authorList) &&
+        listsEqual(authorList, other.authorList) &&
         schema == other.schema &&
         content == other.content &&
-        collections.listsEqual(coverImage?.getContentStream(),
+        listsEqual(coverImage?.getContentStream(),
             other.coverImage?.getContentStream()) &&
-        collections.listsEqual(chapters, other.chapters);
+        listsEqual(chapters, other.chapters);
   }
 }

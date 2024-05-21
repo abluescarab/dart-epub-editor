@@ -9,35 +9,43 @@ import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 class EpubNavigationWriter {
   static String writeNavigation(EpubNavigation navigation) {
     final builder = XmlBuilder();
+
     builder.processing('xml', 'version="1.0"');
+    builder.element(
+      'ncx',
+      attributes: {
+        'version': '2005-1',
+        'lang': 'en',
+      },
+      nest: () {
+        builder.namespace(Namespaces.ncx);
 
-    builder.element('ncx', attributes: {
-      'version': '2005-1',
-      'lang': 'en',
-    }, nest: () {
-      builder.namespace(Namespaces.ncx);
+        writeNavigationHead(builder, navigation.head!);
+        writeNavigationDocTitle(builder, navigation.docTitle!);
+        writeNavigationMap(builder, navigation.navMap!);
+      },
+    );
 
-      writeNavigationHead(builder, navigation.head!);
-      writeNavigationDocTitle(builder, navigation.docTitle!);
-      writeNavigationMap(builder, navigation.navMap!);
-    });
-
-    return builder.buildDocument().toXmlString(pretty: false);
+    return builder.buildDocument().toXmlString(pretty: true);
   }
 
   static void writeNavigationDocTitle(
-      XmlBuilder builder, EpubNavigationDocTitle title) {
-    builder.element('docTitle', nest: () {
-      title.titles!.forEach((element) {
-        builder.text(element);
-      });
-    });
+    XmlBuilder builder,
+    EpubNavigationDocTitle title,
+  ) {
+    builder.element('docTitle',
+        nest: () => title.titles?.forEach((element) => builder.text(element)));
   }
 
   static void writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
     builder.element('head', nest: () {
-      head.metadata!.forEach((item) => builder.element('meta',
-          attributes: {'content': item.content!, 'name': item.name!}));
+      head.metadata?.forEach((item) => builder.element(
+            'meta',
+            attributes: {
+              'content': item.content!,
+              'name': item.name!,
+            },
+          ));
     });
   }
 
@@ -48,18 +56,19 @@ class EpubNavigationWriter {
   }
 
   static void writeNavigationPoint(
-      XmlBuilder builder, EpubNavigationPoint point) {
+    XmlBuilder builder,
+    EpubNavigationPoint point,
+  ) {
     builder.element('navPoint', attributes: {
       'id': point.id!,
       'playOrder': point.playOrder!,
     }, nest: () {
       point.navigationLabels!.forEach((element) {
         builder.element('navLabel', nest: () {
-          builder.element('text', nest: () {
-            builder.text(element.text!);
-          });
+          builder.element('text', nest: () => builder.text(element.text!));
         });
       });
+
       builder.element('content', attributes: {'src': point.content!.source!});
     });
   }

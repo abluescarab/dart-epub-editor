@@ -1,28 +1,24 @@
-import 'package:quiver/collection.dart' as collections;
-import 'package:quiver/core.dart';
-
-import 'epub_navigation_head_meta.dart';
+import 'package:epub_editor/src/schema/navigation/epub_navigation_head_meta.dart';
+import 'package:quiver/collection.dart';
 
 class EpubNavigationHead {
+  EpubNavigationHead({
+    this.metadata,
+  }) {
+    metadata ??= [];
+  }
+
   List<EpubNavigationHeadMeta>? metadata;
 
-  EpubNavigationHead() {
-    metadata = <EpubNavigationHeadMeta>[];
-  }
-
   @override
-  int get hashCode {
-    final objects = [...metadata!.map((meta) => meta.hashCode)];
-    return hashObjects(objects);
-  }
+  int get hashCode => Object.hashAll(metadata!.map((meta) => meta.hashCode));
 
   @override
   bool operator ==(other) {
-    final otherAs = other as EpubNavigationHead?;
-    if (otherAs == null) {
+    if (!(other is EpubNavigationHead)) {
       return false;
     }
 
-    return collections.listsEqual(metadata, otherAs.metadata);
+    return listsEqual(metadata, other.metadata);
   }
 }

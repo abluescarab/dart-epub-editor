@@ -8,9 +8,9 @@ import 'package:test/test.dart';
 
 main() async {
   final arch = Archive();
-  final bookRef = EpubBookRef(arch);
-  final contentFileRef = EpubTextContentFileRef(bookRef);
-  final reference = EpubChapterRef(contentFileRef);
+  final bookRef = EpubBookRef(archive: arch);
+  final contentFileRef = EpubTextContentFileRef(epubBookRef: bookRef);
+  final reference = EpubChapterRef(epubTextContentFileRef: contentFileRef);
 
   reference
     ..anchor = "anchor"
@@ -22,10 +22,10 @@ main() async {
   EpubChapterRef? testChapterRef;
   setUp(() async {
     final arch2 = Archive();
-    bookRef2 = EpubBookRef(arch2);
-    final contentFileRef2 = EpubTextContentFileRef(bookRef2!);
+    bookRef2 = EpubBookRef(archive: arch2);
+    final contentFileRef2 = EpubTextContentFileRef( epubBookRef:  bookRef2!);
 
-    testChapterRef = EpubChapterRef(contentFileRef2);
+    testChapterRef = EpubChapterRef(epubTextContentFileRef: contentFileRef2);
     testChapterRef!
       ..anchor = "anchor"
       ..contentFileName = "orthros"
@@ -54,8 +54,8 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        final subchapterContentFileRef = EpubTextContentFileRef(bookRef2!);
-        final chapter = EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = EpubTextContentFileRef(epubBookRef: bookRef2!);
+        final chapter = EpubChapterRef(epubTextContentFileRef: subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";
@@ -89,8 +89,8 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        final subchapterContentFileRef = EpubTextContentFileRef(bookRef2!);
-        final chapter = EpubChapterRef(subchapterContentFileRef);
+        final subchapterContentFileRef = EpubTextContentFileRef(epubBookRef:  bookRef2!);
+        final chapter = EpubChapterRef(epubTextContentFileRef: subchapterContentFileRef);
         chapter
           ..title = "A Brave new Epub"
           ..contentFileName = "orthros.txt";

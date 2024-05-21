@@ -10,7 +10,7 @@ import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
 main() async {
-  for (var epub in epubs.entries) {
+  for (final epub in epubs.entries) {
     final fileName = epub.key;
     final fullPath = path.join(
       io.Directory.current.path,

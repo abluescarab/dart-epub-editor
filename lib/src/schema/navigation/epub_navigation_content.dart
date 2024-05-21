@@ -1,6 +1,11 @@
 import 'package:quiver/core.dart';
 
 class EpubNavigationContent {
+  EpubNavigationContent({
+    this.id,
+    this.source,
+  });
+
   String? id;
   String? source;
 
@@ -12,6 +17,7 @@ class EpubNavigationContent {
     if (!(other is EpubNavigationContent)) {
       return false;
     }
+
     return id == other.id && source == other.source;
   }
 
