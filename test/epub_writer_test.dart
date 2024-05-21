@@ -60,8 +60,6 @@ main() async {
                 ? packageSplit.length
                 : originalSplit.length;
 
-            print(epub.key);
-
             for (var i = 0; i < length; i++) {
               expect(packageSplit[i], equals(originalSplit[i]));
             }

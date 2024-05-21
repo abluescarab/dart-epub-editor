@@ -22,8 +22,11 @@ abstract class EpubContentFileRef {
   }
 
   @override
-  int get hashCode =>
-      hash3(fileName.hashCode, contentMimeType.hashCode, contentType.hashCode);
+  int get hashCode => hash3(
+        fileName.hashCode,
+        contentMimeType.hashCode,
+        contentType.hashCode,
+      );
 
   @override
   bool operator ==(other) {
@@ -31,9 +34,10 @@ abstract class EpubContentFileRef {
       return false;
     }
 
-    return (other.fileName == fileName &&
+    return other.epubBookRef == epubBookRef &&
+        other.fileName == fileName &&
         other.contentMimeType == contentMimeType &&
-        other.contentType == contentType);
+        other.contentType == contentType;
   }
 
   ArchiveFile getContentFileEntry() {
