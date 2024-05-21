@@ -17,23 +17,26 @@ class EpubMetadataWriter {
   static void _writeContributor(
     XmlBuilder builder,
     EpubMetadataContributor item,
+    EpubVersion? version,
   ) {
     _writeId(builder, item);
 
-    if (item.role != null) {
-      builder.attribute(
-        'role',
-        item.role!,
-        namespace: Namespaces.opf,
-      );
-    }
+    if (version == EpubVersion.epub2) {
+      if (item.role != null) {
+        builder.attribute(
+          'role',
+          item.role!,
+          namespace: Namespaces.opf,
+        );
+      }
 
-    if (item.fileAs != null) {
-      builder.attribute(
-        'file-as',
-        item.fileAs!,
-        namespace: Namespaces.opf,
-      );
+      if (item.fileAs != null) {
+        builder.attribute(
+          'file-as',
+          item.fileAs!,
+          namespace: Namespaces.opf,
+        );
+      }
     }
 
     if (item.dir != null) {
@@ -103,7 +106,7 @@ class EpubMetadataWriter {
         ..contributors?.forEach((item) => builder.element(
               'contributor',
               namespace: Namespaces.dc,
-              nest: () => _writeContributor(builder, item),
+              nest: () => _writeContributor(builder, item, version),
             ))
         ..coverages?.forEach((item) => builder.element(
               'coverage',
@@ -118,7 +121,7 @@ class EpubMetadataWriter {
         ..creators?.forEach((item) => builder.element(
               'creator',
               namespace: Namespaces.dc,
-              nest: () => _writeContributor(builder, item),
+              nest: () => _writeContributor(builder, item, version),
             ))
         ..dates?.forEach((item) =>
             builder.element('date', namespace: Namespaces.dc, nest: () {
