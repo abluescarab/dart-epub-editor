@@ -10,7 +10,7 @@ class ChapterReader {
 
     return getChaptersImpl(
       bookRef,
-      bookRef.schema!.navigation!.navMap!.points!,
+      bookRef.schema!.navigation!.navMap!.points,
     );
   }
 

@@ -582,7 +582,7 @@ class NavigationReader {
           break;
         case 'ol':
           readNavigationMapV3(navigationPointChildNode)
-              .points!
+              .points
               .forEach((point) => result.childNavigationPoints.add(point));
           break;
       }

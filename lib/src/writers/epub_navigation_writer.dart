@@ -53,7 +53,7 @@ class EpubNavigationWriter {
 
   static void writeNavigationMap(XmlBuilder builder, EpubNavigationMap map) {
     builder.element('navMap', nest: () {
-      map.points!.forEach((item) => writeNavigationPoint(builder, item));
+      map.points.forEach((item) => writeNavigationPoint(builder, item));
     });
   }
 
