@@ -6,17 +6,17 @@ class EpubByteContentFile extends EpubContentFile {
     super.fileName,
     super.contentType,
     super.contentMimeType,
-    this.content,
+    required this.content,
   });
 
-  List<int>? content;
+  List<int> content;
 
   @override
   int get hashCode => Object.hashAll([
         contentMimeType.hashCode,
         contentType.hashCode,
         fileName.hashCode,
-        ...content?.map((content) => content.hashCode) ?? [0],
+        ...content.map((content) => content.hashCode),
       ]);
 
   @override
