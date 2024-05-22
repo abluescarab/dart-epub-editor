@@ -1,7 +1,5 @@
 class EpubNavigationLabel {
-  EpubNavigationLabel({
-    this.text,
-  });
+  EpubNavigationLabel({this.text});
 
   String? text;
 

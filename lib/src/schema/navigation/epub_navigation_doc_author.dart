@@ -2,15 +2,13 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigationDocAuthor {
   EpubNavigationDocAuthor({
-    this.authors,
-  }) {
-    authors ??= [];
-  }
+    List<String>? authors,
+  }) : this.authors = authors ?? [];
 
-  List<String>? authors;
+  List<String> authors;
 
   @override
-  int get hashCode => Object.hashAll(authors!.map((author) => author.hashCode));
+  int get hashCode => Object.hashAll(authors.map((author) => author.hashCode));
 
   @override
   bool operator ==(other) {

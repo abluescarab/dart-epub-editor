@@ -3,15 +3,13 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigationHead {
   EpubNavigationHead({
-    this.metadata,
-  }) {
-    metadata ??= [];
-  }
+    List<EpubNavigationHeadMeta>? metadata,
+  }) : this.metadata = metadata ?? [];
 
-  List<EpubNavigationHeadMeta>? metadata;
+  List<EpubNavigationHeadMeta> metadata;
 
   @override
-  int get hashCode => Object.hashAll(metadata!.map((meta) => meta.hashCode));
+  int get hashCode => Object.hashAll(metadata.map((meta) => meta.hashCode));
 
   @override
   bool operator ==(other) {

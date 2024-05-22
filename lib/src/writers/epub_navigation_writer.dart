@@ -33,13 +33,15 @@ class EpubNavigationWriter {
     XmlBuilder builder,
     EpubNavigationDocTitle title,
   ) {
-    builder.element('docTitle',
-        nest: () => title.titles?.forEach((element) => builder.text(element)));
+    builder.element(
+      'docTitle',
+      nest: () => title.titles.forEach((element) => builder.text(element)),
+    );
   }
 
   static void writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
     builder.element('head', nest: () {
-      head.metadata?.forEach((item) => builder.element(
+      head.metadata.forEach((item) => builder.element(
             'meta',
             attributes: {
               'content': item.content!,

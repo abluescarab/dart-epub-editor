@@ -15,7 +15,7 @@ main() async {
 
   setUp(() async {
     testNavigationDocTitle = EpubNavigationDocTitle(
-      titles: List.from(reference.titles!),
+      titles: List.from(reference.titles),
     );
   });
 
@@ -30,7 +30,7 @@ main() async {
       });
 
       test("is false when Titles changes", () async {
-        testNavigationDocTitle!.titles!.add(generator.randomString());
+        testNavigationDocTitle!.titles.add(generator.randomString());
         expect(testNavigationDocTitle, isNot(reference));
       });
     });
@@ -41,7 +41,7 @@ main() async {
       });
 
       test("is false when Titles changes", () async {
-        testNavigationDocTitle!.titles!.add(generator.randomString());
+        testNavigationDocTitle!.titles.add(generator.randomString());
         expect(testNavigationDocTitle!.hashCode, isNot(reference.hashCode));
       });
     });
