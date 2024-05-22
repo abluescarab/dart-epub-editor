@@ -2,13 +2,12 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_page_target.da
 import 'package:quiver/collection.dart';
 
 class EpubNavigationPageList {
-  EpubNavigationPageList({this.targets});
+  EpubNavigationPageList({required this.targets});
 
-  List<EpubNavigationPageTarget>? targets;
+  List<EpubNavigationPageTarget> targets;
 
   @override
-  int get hashCode =>
-      Object.hashAll(targets?.map((target) => target.hashCode) ?? [0]);
+  int get hashCode => Object.hashAll(targets.map((target) => target.hashCode));
 
   @override
   bool operator ==(other) {
