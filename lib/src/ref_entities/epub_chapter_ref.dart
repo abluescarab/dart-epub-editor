@@ -19,10 +19,10 @@ class EpubChapterRef {
 
   @override
   int get hashCode => Object.hashAll([
+        epubTextContentFileRef.hashCode,
         title.hashCode,
         contentFileName.hashCode,
         anchor.hashCode,
-        epubTextContentFileRef.hashCode,
         ...subChapters.map((subChapter) => subChapter.hashCode),
       ]);
 

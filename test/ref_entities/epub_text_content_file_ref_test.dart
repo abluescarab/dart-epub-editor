@@ -50,6 +50,7 @@ main() async {
         expect(testFile, isNot(reference));
       });
     });
+
     group(".hashCode", () {
       test("is the same for equivalent content", () async {
         expect(testFile!.hashCode, equals(reference.hashCode));

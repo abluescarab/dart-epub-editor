@@ -38,8 +38,8 @@ class EpubBookRef {
   @override
   int get hashCode => Object.hashAll([
         archive.hashCode,
-        title.hashCode,
         schema.hashCode,
+        title.hashCode,
         content.hashCode,
         ...authors?.map((author) => author.hashCode) ?? [0],
       ]);
@@ -51,8 +51,8 @@ class EpubBookRef {
     }
 
     return archive == other.archive &&
-        title == other.title &&
         schema == other.schema &&
+        title == other.title &&
         content == other.content &&
         listsEqual(authors, other.authors);
   }

@@ -26,7 +26,6 @@ main() async {
       epubTextContentFileRef: EpubTextContentFileRef(epubBookRef: bookRef2!),
       anchor: "anchor",
       contentFileName: "orthros",
-      subChapters: [],
       title: "A New Look at Chapters",
     );
   });
