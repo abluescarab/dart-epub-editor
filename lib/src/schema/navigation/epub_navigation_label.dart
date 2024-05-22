@@ -1,7 +1,7 @@
 class EpubNavigationLabel {
-  EpubNavigationLabel({this.text});
+  EpubNavigationLabel({required this.text});
 
-  String? text;
+  String text;
 
   @override
   int get hashCode => text.hashCode;
@@ -17,6 +17,6 @@ class EpubNavigationLabel {
 
   @override
   String toString() {
-    return text!;
+    return text;
   }
 }
