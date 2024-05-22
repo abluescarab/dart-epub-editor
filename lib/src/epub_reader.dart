@@ -5,7 +5,6 @@ import 'package:epub_editor/src/entities/epub_book.dart';
 import 'package:epub_editor/src/entities/epub_byte_content_file.dart';
 import 'package:epub_editor/src/entities/epub_chapter.dart';
 import 'package:epub_editor/src/entities/epub_content.dart';
-import 'package:epub_editor/src/entities/epub_content_file.dart';
 import 'package:epub_editor/src/entities/epub_text_content_file.dart';
 import 'package:epub_editor/src/readers/schema_reader.dart';
 import 'package:epub_editor/src/ref_entities/epub_book_ref.dart';
