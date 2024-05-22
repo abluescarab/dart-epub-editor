@@ -4,19 +4,19 @@ import 'package:quiver/collection.dart';
 class EpubSpine {
   EpubSpine({
     this.tableOfContents,
-    this.items,
     this.ltr,
-  });
+    List<EpubSpineItemRef>? items,
+  }) : this.items = items ?? [];
 
   String? tableOfContents;
-  List<EpubSpineItemRef>? items;
+  List<EpubSpineItemRef> items;
   bool? ltr;
 
   @override
   int get hashCode => Object.hashAll([
         tableOfContents.hashCode,
         ltr.hashCode,
-        ...items!.map((item) => item.hashCode)
+        ...items.map((item) => item.hashCode)
       ]);
 
   @override

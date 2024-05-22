@@ -46,7 +46,7 @@ class NavigationReader {
       }
 
       final tocManifestItem = package.manifest!.items
-          ?.cast<EpubManifestItem?>()
+          .cast<EpubManifestItem?>()
           .firstWhereOrNull(
               (item) => item!.id!.toLowerCase() == tocId.toLowerCase());
 
@@ -149,7 +149,7 @@ class NavigationReader {
     } else {
       //Version 3
       final tocManifestItem = package.manifest!.items
-          ?.cast<EpubManifestItem?>()
+          .cast<EpubManifestItem?>()
           .firstWhereOrNull((element) => element!.properties == 'nav');
 
       if (tocManifestItem == null) {
@@ -210,7 +210,7 @@ class NavigationReader {
       result = EpubNavigation(
         docTitle: EpubNavigationDocTitle(
           titles: package.metadata?.titles
-              ?.map((titleElement) => titleElement.value ?? '')
+              .map((titleElement) => titleElement.value ?? '')
               .toList(),
         ),
         docAuthors: [],
@@ -282,7 +282,7 @@ class NavigationReader {
 
   static String extractContentPath(String tocFileEntryPath, String ref) {
     if (!tocFileEntryPath.endsWith('/')) {
-      tocFileEntryPath = tocFileEntryPath + '/';
+      tocFileEntryPath += '/';
     }
 
     return (tocFileEntryPath + ref)
@@ -413,55 +413,38 @@ class NavigationReader {
   }
 
   static EpubNavigationMap readNavigationMap(XmlElement navigationMapNode) {
-    final result = EpubNavigationMap()..points = <EpubNavigationPoint>[];
-
-    navigationMapNode.children
-        .whereType<XmlElement>()
-        .forEach((navigationPointNode) {
-      if (navigationPointNode.name.local.toLowerCase() == 'navpoint') {
-        result.points!.add(readNavigationPoint(navigationPointNode));
-      }
-    });
-
-    return result;
+    return EpubNavigationMap(
+        points: navigationMapNode.children
+            .where((e) =>
+                e is XmlElement && e.name.local.toLowerCase() == 'navpoint')
+            .map((e) => readNavigationPoint(e as XmlElement))
+            .toList());
   }
 
   static EpubNavigationMap readNavigationMapV3(XmlElement navigationMapNode) {
-    final result = EpubNavigationMap()..points = <EpubNavigationPoint>[];
-
-    navigationMapNode.children
-        .whereType<XmlElement>()
-        .forEach((navigationPointNode) {
-      if (navigationPointNode.name.local.toLowerCase() == 'li') {
-        result.points!.add(readNavigationPointV3(navigationPointNode));
-      }
-    });
-
-    return result;
+    return EpubNavigationMap(
+      points: navigationMapNode.children
+          .where((e) => e is XmlElement && e.name.local.toLowerCase() == 'li')
+          .map((e) => readNavigationPointV3(e as XmlElement))
+          .toList(),
+    );
   }
 
   static EpubNavigationPageList readNavigationPageList(
     XmlElement navigationPageListNode,
   ) {
-    final result = EpubNavigationPageList()
-      ..targets = <EpubNavigationPageTarget>[];
-
-    navigationPageListNode.children
-        .whereType<XmlElement>()
-        .forEach((pageTargetNode) {
-      if (pageTargetNode.name.local == 'pageTarget') {
-        result.targets!.add(readNavigationPageTarget(pageTargetNode));
-      }
-    });
-
-    return result;
+    return EpubNavigationPageList(
+      targets: navigationPageListNode.children
+          .where((e) => e is XmlElement && e.name.local == 'pageTarget')
+          .map((e) => readNavigationPageTarget(e as XmlElement))
+          .toList(),
+    );
   }
 
   static EpubNavigationPageTarget readNavigationPageTarget(
     XmlElement navigationPageTargetNode,
   ) {
-    final result = EpubNavigationPageTarget()
-      ..navigationLabels = <EpubNavigationLabel>[];
+    final result = EpubNavigationPageTarget();
 
     navigationPageTargetNode.attributes
         .forEach((navigationPageTargetNodeAttribute) {
@@ -499,7 +482,7 @@ class NavigationReader {
         .forEach((navigationPageTargetChildNode) {
       switch (navigationPageTargetChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          result.navigationLabels!.add(
+          result.navigationLabels.add(
             readNavigationLabel(navigationPageTargetChildNode),
           );
           break;
@@ -509,7 +492,7 @@ class NavigationReader {
       }
     });
 
-    if (result.navigationLabels!.isEmpty) {
+    if (result.navigationLabels.isEmpty) {
       throw Exception(
         'Incorrect EPUB navigation page target: at least one navLabel element '
         'is required.',
@@ -544,16 +527,12 @@ class NavigationReader {
       throw Exception('Incorrect EPUB navigation point: point ID is missing.');
     }
 
-    result
-      ..navigationLabels = <EpubNavigationLabel>[]
-      ..childNavigationPoints = <EpubNavigationPoint>[];
-
     navigationPointNode.children
         .whereType<XmlElement>()
         .forEach((navigationPointChildNode) {
       switch (navigationPointChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          result.navigationLabels!.add(
+          result.navigationLabels.add(
             readNavigationLabel(navigationPointChildNode),
           );
           break;
@@ -561,14 +540,14 @@ class NavigationReader {
           result.content = readNavigationContent(navigationPointChildNode);
           break;
         case 'navpoint':
-          result.childNavigationPoints!.add(
+          result.childNavigationPoints.add(
             readNavigationPoint(navigationPointChildNode),
           );
           break;
       }
     });
 
-    if (result.navigationLabels!.isEmpty) {
+    if (result.navigationLabels.isEmpty) {
       throw Exception(
         'EPUB parsing error: navigation point ${result.id} should contain at '
         'least one navigation label.',
@@ -588,9 +567,7 @@ class NavigationReader {
   static EpubNavigationPoint readNavigationPointV3(
     XmlElement navigationPointNode,
   ) {
-    final result = EpubNavigationPoint()
-      ..navigationLabels = <EpubNavigationLabel>[]
-      ..childNavigationPoints = <EpubNavigationPoint>[];
+    final result = EpubNavigationPoint();
 
     navigationPointNode.children
         .whereType<XmlElement>()
@@ -598,7 +575,7 @@ class NavigationReader {
       switch (navigationPointChildNode.name.local.toLowerCase()) {
         case 'a':
         case 'span':
-          result.navigationLabels!.add(
+          result.navigationLabels.add(
             readNavigationLabelV3(navigationPointChildNode),
           );
           result.content = readNavigationContentV3(navigationPointChildNode);
@@ -606,12 +583,12 @@ class NavigationReader {
         case 'ol':
           readNavigationMapV3(navigationPointChildNode)
               .points!
-              .forEach((point) => result.childNavigationPoints!.add(point));
+              .forEach((point) => result.childNavigationPoints.add(point));
           break;
       }
     });
 
-    if (result.navigationLabels!.isEmpty) {
+    if (result.navigationLabels.isEmpty) {
       throw Exception(
         'EPUB parsing error: navigation point ${result.id} should contain at '
         'least one navigation label.',

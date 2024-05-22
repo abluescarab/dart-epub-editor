@@ -3,15 +3,13 @@ import 'package:quiver/collection.dart';
 
 class EpubGuide {
   EpubGuide({
-    this.items,
-  }) {
-    items ??= [];
-  }
+    List<EpubGuideReference>? items,
+  }) : this.items = items ?? [];
 
-  List<EpubGuideReference>? items;
+  List<EpubGuideReference> items;
 
   @override
-  int get hashCode => Object.hashAll(items!.map((item) => item.hashCode));
+  int get hashCode => Object.hashAll(items.map((item) => item.hashCode));
 
   @override
   bool operator ==(other) {

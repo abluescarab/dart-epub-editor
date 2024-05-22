@@ -36,7 +36,7 @@ class EpubWriter {
     ));
 
     // Add all content to the archive
-    book.content!.allFiles!.forEach((name, file) {
+    book.content!.allFiles.forEach((name, file) {
       List<int>? content;
 
       if (file is EpubByteContentFile) {

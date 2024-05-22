@@ -6,17 +6,18 @@ class EpubNavigationPoint {
     this.id,
     this.classAttribute,
     this.playOrder,
-    this.navigationLabels,
     this.content,
-    this.childNavigationPoints,
-  });
+    List<EpubNavigationPoint>? childNavigationPoints,
+    List<EpubNavigationLabel>? navigationLabels,
+  })  : this.childNavigationPoints = childNavigationPoints ?? [],
+        this.navigationLabels = navigationLabels ?? [];
 
   String? id;
   String? classAttribute;
   String? playOrder;
-  List<EpubNavigationLabel>? navigationLabels;
   EpubNavigationContent? content;
-  List<EpubNavigationPoint>? childNavigationPoints;
+  List<EpubNavigationPoint> childNavigationPoints;
+  List<EpubNavigationLabel> navigationLabels;
 
   @override
   int get hashCode => Object.hashAll([
@@ -24,8 +25,8 @@ class EpubNavigationPoint {
         classAttribute.hashCode,
         playOrder.hashCode,
         content.hashCode,
-        ...navigationLabels!.map((label) => label.hashCode),
-        ...childNavigationPoints!.map((point) => point.hashCode)
+        ...navigationLabels.map((label) => label.hashCode),
+        ...childNavigationPoints.map((point) => point.hashCode)
       ]);
 
   @override

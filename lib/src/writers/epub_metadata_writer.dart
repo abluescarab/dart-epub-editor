@@ -83,27 +83,27 @@ class EpubMetadataWriter {
       namespaces: {Namespaces.opf: 'opf', Namespaces.dc: 'dc'},
       nest: () {
         meta!
-          ..contributors?.forEach((item) => builder.element(
+          ..contributors.forEach((item) => builder.element(
                 'contributor',
                 namespace: Namespaces.dc,
                 nest: () => _writeContributor(builder, item, version),
               ))
-          ..coverages?.forEach((item) => builder.element(
+          ..coverages.forEach((item) => builder.element(
                 'coverage',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..coverages?.forEach((item) => builder.element(
+          ..coverages.forEach((item) => builder.element(
                 'coverage',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..creators?.forEach((item) => builder.element(
+          ..creators.forEach((item) => builder.element(
                 'creator',
                 namespace: Namespaces.dc,
                 nest: () => _writeContributor(builder, item, version),
               ))
-          ..dates?.forEach((item) => builder.element(
+          ..dates.forEach((item) => builder.element(
                 'date',
                 namespace: Namespaces.dc,
                 nest: () {
@@ -120,17 +120,17 @@ class EpubMetadataWriter {
                   builder.text(item.date!);
                 },
               ))
-          ..descriptions?.forEach((item) => builder.element(
+          ..descriptions.forEach((item) => builder.element(
                 'description',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..formats?.forEach((item) => builder.element(
+          ..formats.forEach((item) => builder.element(
                 'format',
                 namespace: Namespaces.dc,
                 nest: () => _writeString(builder, item),
               ))
-          ..identifiers?.forEach((item) => builder.element(
+          ..identifiers.forEach((item) => builder.element(
                 'identifier',
                 namespace: Namespaces.dc,
                 nest: () {
@@ -147,48 +147,48 @@ class EpubMetadataWriter {
                   builder.text(item.identifier!);
                 },
               ))
-          ..languages?.forEach((item) => builder.element(
+          ..languages.forEach((item) => builder.element(
                 'language',
                 namespace: Namespaces.dc,
                 nest: () => _writeString(builder, item),
               ))
-          ..publishers?.forEach((item) => builder.element(
+          ..publishers.forEach((item) => builder.element(
                 'publisher',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..relations?.forEach((item) => builder.element(
+          ..relations.forEach((item) => builder.element(
                 'relation',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..rights?.forEach((item) => builder.element(
+          ..rights.forEach((item) => builder.element(
                 'rights',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..sources?.forEach((item) => builder.element(
+          ..sources.forEach((item) => builder.element(
                 'source',
                 namespace: Namespaces.dc,
                 nest: () => _writeString(builder, item),
               ))
-          ..subjects?.forEach((item) => builder.element(
+          ..subjects.forEach((item) => builder.element(
                 'subject',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..titles?.forEach((item) => builder.element(
+          ..titles.forEach((item) => builder.element(
                 'title',
                 namespace: Namespaces.dc,
                 nest: () => _writeTranslatedString(builder, item),
               ))
-          ..types?.forEach((item) => builder.element(
+          ..types.forEach((item) => builder.element(
                 'type',
                 namespace: Namespaces.dc,
                 nest: () => _writeString(builder, item),
               ));
 
-        meta.metaItems?.forEach(
+        meta.metaItems.forEach(
           (item) => builder.element('meta', nest: () {
             _writeId(builder, item);
 

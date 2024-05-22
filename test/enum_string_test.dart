@@ -6,20 +6,35 @@ import 'package:test/test.dart';
 main() {
   test("Enum one", () {
     expect(
-        EnumFromString<Simple>(Simple.values).get("one"), equals(Simple.one));
+      EnumFromString<Simple>(Simple.values).get("one"),
+      equals(Simple.one),
+    );
   });
+
   test("Enum two", () {
     expect(
-        EnumFromString<Simple>(Simple.values).get("two"), equals(Simple.two));
+      EnumFromString<Simple>(Simple.values).get("two"),
+      equals(Simple.two),
+    );
   });
+
   test("Enum one", () {
-    expect(EnumFromString<Simple>(Simple.values).get("three"),
-        equals(Simple.three));
+    expect(
+      EnumFromString<Simple>(Simple.values).get("three"),
+      equals(Simple.three),
+    );
   });
+
   test("Enum one Lower Case", () {
     expect(
-        EnumFromString<Simple>(Simple.values).get("one"), equals(Simple.one));
+      EnumFromString<Simple>(Simple.values).get("one"),
+      equals(Simple.one),
+    );
   });
 }
 
-enum Simple { one, two, three }
+enum Simple {
+  one,
+  two,
+  three,
+}

@@ -3,15 +3,13 @@ import 'package:quiver/collection.dart';
 
 class EpubManifest {
   EpubManifest({
-    this.items,
-  }) {
-    items ??= [];
-  }
+    List<EpubManifestItem>? items,
+  }) : this.items = items ?? [];
 
-  List<EpubManifestItem>? items;
+  List<EpubManifestItem> items;
 
   @override
-  int get hashCode => Object.hashAll(items!.map((item) => item.hashCode));
+  int get hashCode => Object.hashAll(items.map((item) => item.hashCode));
 
   @override
   bool operator ==(other) {

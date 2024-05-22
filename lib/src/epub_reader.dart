@@ -74,23 +74,23 @@ class EpubReader {
 
   static Future<EpubContent> readContent(EpubContentRef contentRef) async {
     final result = EpubContent(
-      html: await readTextContentFiles(contentRef.html!),
-      css: await readTextContentFiles(contentRef.css!),
-      images: await readByteContentFiles(contentRef.images!),
-      fonts: await readByteContentFiles(contentRef.fonts!),
+      html: await readTextContentFiles(contentRef.html),
+      css: await readTextContentFiles(contentRef.css),
+      images: await readByteContentFiles(contentRef.images),
+      fonts: await readByteContentFiles(contentRef.fonts),
       allFiles: <String, EpubContentFile>{},
     );
 
     result
-      ..html!.forEach((key, value) => result.allFiles![key] = value)
-      ..css!.forEach((key, value) => result.allFiles![key] = value)
-      ..images!.forEach((key, value) => result.allFiles![key] = value)
-      ..fonts!.forEach((key, value) => result.allFiles![key] = value);
+      ..html.forEach((key, value) => result.allFiles[key] = value)
+      ..css.forEach((key, value) => result.allFiles[key] = value)
+      ..images.forEach((key, value) => result.allFiles[key] = value)
+      ..fonts.forEach((key, value) => result.allFiles[key] = value);
 
-    await Future.forEach(contentRef.allFiles!.keys, (dynamic key) async {
-      if (!result.allFiles!.containsKey(key)) {
-        result.allFiles![key] =
-            await readByteContentFile(contentRef.allFiles![key]!);
+    await Future.forEach(contentRef.allFiles.keys, (dynamic key) async {
+      if (!result.allFiles.containsKey(key)) {
+        result.allFiles[key] =
+            await readByteContentFile(contentRef.allFiles[key]!);
       }
     });
 

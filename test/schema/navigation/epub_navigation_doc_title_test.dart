@@ -12,10 +12,13 @@ main() async {
   final EpubNavigationDocTitle reference = generator.randomNavigationDocTitle();
 
   EpubNavigationDocTitle? testNavigationDocTitle;
+
   setUp(() async {
-    testNavigationDocTitle = EpubNavigationDocTitle()
-      ..titles = List.from(reference.titles!);
+    testNavigationDocTitle = EpubNavigationDocTitle(
+      titles: List.from(reference.titles!),
+    );
   });
+
   tearDown(() async {
     testNavigationDocTitle = null;
   });

@@ -7,26 +7,22 @@ import 'package:epub_editor/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:test/test.dart';
 
 main() async {
-  Archive arch = Archive();
-  EpubBookRef ref = EpubBookRef(archive: arch);
-
-  final reference = EpubByteContentFileRef(epubBookRef:  ref);
-  reference
-    ..contentMimeType = "application/test"
-    ..contentType = EpubContentType.other
-    ..fileName = "orthrosFile";
+  final reference = EpubByteContentFileRef(
+    epubBookRef: EpubBookRef(archive: Archive()),
+    contentMimeType: "application/test",
+    contentType: EpubContentType.other,
+    fileName: "orthrosFile",
+  );
 
   EpubByteContentFileRef? testFileRef;
 
   setUp(() async {
-    Archive arch2 = Archive();
-    EpubBookRef ref2 = EpubBookRef(archive:  arch2);
-
-    testFileRef = EpubByteContentFileRef(epubBookRef:  ref2);
-    testFileRef!
-      ..contentMimeType = "application/test"
-      ..contentType = EpubContentType.other
-      ..fileName = "orthrosFile";
+    testFileRef = EpubByteContentFileRef(
+      epubBookRef: EpubBookRef(archive: Archive()),
+      contentMimeType: "application/test",
+      contentType: EpubContentType.other,
+      fileName: "orthrosFile",
+    );
   });
 
   tearDown(() async {

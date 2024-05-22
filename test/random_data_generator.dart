@@ -25,9 +25,7 @@ import 'package:epub_editor/src/schema/opf/epub_spine_item_ref.dart';
 import 'package:epub_editor/src/schema/opf/epub_version.dart';
 
 class RandomString {
-  RandomString({
-    required this.rng,
-  });
+  RandomString(this.rng);
 
   final Random rng;
 
@@ -52,33 +50,47 @@ class RandomString {
   /// Generates a random string of [length] with characters
   /// between ascii [from] to [to].
   /// Defaults to characters of ascii '!' to '~'.
-  String randomString(int length, {int from = asciiStart, int to = asciiEnd}) {
-    return String.fromCharCodes(
-        List.generate(length, (index) => randomBetween(from, to)));
-  }
+  String randomString(
+    int length, {
+    int from = asciiStart,
+    int to = asciiEnd,
+  }) =>
+      String.fromCharCodes(
+        List.generate(length, (index) => randomBetween(from, to)),
+      );
 
   /// Generates a random string of [length] with only numeric characters.
-  String randomNumeric(int length) =>
-      randomString(length, from: numericStart, to: numericEnd);
+  String randomNumeric(int length) => randomString(
+        length,
+        from: numericStart,
+        to: numericEnd,
+      );
 
   /// Generates a random string of [length] with only alpha characters.
   String randomAlpha(int length) {
     final lowerAlphaLength = randomBetween(0, length);
-    final upperAlphaLength = length - lowerAlphaLength;
-    final lowerAlpha = randomString(lowerAlphaLength,
-        from: lowerAlphaStart, to: lowerAlphaEnd);
-    final upperAlpha = randomString(upperAlphaLength,
-        from: upperAlphaStart, to: upperAlphaEnd);
-    return randomMerge(lowerAlpha, upperAlpha);
+
+    return randomMerge(
+      randomString(
+        lowerAlphaLength,
+        from: lowerAlphaStart,
+        to: lowerAlphaEnd,
+      ),
+      randomString(
+        length - lowerAlphaLength,
+        from: upperAlphaStart,
+        to: upperAlphaEnd,
+      ),
+    );
   }
 
   /// Generates a random string of [length] with alpha-numeric characters.
   String randomAlphaNumeric(int length) {
     final alphaLength = randomBetween(0, length);
-    final numericLength = length - alphaLength;
-    final alpha = randomAlpha(alphaLength);
-    final numeric = randomNumeric(numericLength);
-    return randomMerge(alpha, numeric);
+    return randomMerge(
+      randomAlpha(alphaLength),
+      randomNumeric(length - alphaLength),
+    );
   }
 
   /// Merge [a] with [b] and scramble characters.
@@ -95,12 +107,10 @@ class RandomDataGenerator {
   final int _length;
 
   RandomDataGenerator(this.rng, this._length) {
-    _randomString = RandomString(rng: rng);
+    _randomString = RandomString(rng);
   }
 
-  String randomString() {
-    return _randomString.randomAlphaNumeric(_length);
-  }
+  String randomString() => _randomString.randomAlphaNumeric(_length);
 
   EpubNavigationPoint randomEpubNavigationPoint([int depth = 0]) =>
       EpubNavigationPoint(
@@ -128,11 +138,13 @@ class RandomDataGenerator {
         value: randomString(),
       );
 
-  EpubNavigationLabel randomEpubNavigationLabel() =>
-      EpubNavigationLabel(text: randomString());
+  EpubNavigationLabel randomEpubNavigationLabel() => EpubNavigationLabel(
+        text: randomString(),
+      );
 
-  EpubNavigationHead randomEpubNavigationHead() =>
-      EpubNavigationHead(metadata: [randomNavigationHeadMeta()]);
+  EpubNavigationHead randomEpubNavigationHead() => EpubNavigationHead(
+        metadata: [randomNavigationHeadMeta()],
+      );
 
   EpubNavigationHeadMeta randomNavigationHeadMeta() => EpubNavigationHeadMeta(
         content: randomString(),
@@ -140,11 +152,14 @@ class RandomDataGenerator {
         scheme: randomString(),
       );
 
-  EpubNavigationDocTitle randomNavigationDocTitle() =>
-      EpubNavigationDocTitle(titles: [randomString()]);
+  EpubNavigationDocTitle randomNavigationDocTitle() => EpubNavigationDocTitle(
+        titles: [randomString()],
+      );
 
   EpubNavigationDocAuthor randomNavigationDocAuthor() =>
-      EpubNavigationDocAuthor(authors: [randomString()]);
+      EpubNavigationDocAuthor(
+        authors: [randomString()],
+      );
 
   EpubPackage randomEpubPackage() => EpubPackage(
         guide: randomEpubGuide(),
@@ -159,11 +174,13 @@ class RandomDataGenerator {
         tableOfContents: _randomString.randomAlpha(_length),
       );
 
-  EpubSpineItemRef randomEpubSpineItemRef() =>
-      EpubSpineItemRef(idRef: _randomString.randomAlpha(_length));
+  EpubSpineItemRef randomEpubSpineItemRef() => EpubSpineItemRef(
+        idRef: _randomString.randomAlpha(_length),
+      );
 
-  EpubManifest randomEpubManifest() =>
-      EpubManifest(items: [randomEpubManifestItem()]);
+  EpubManifest randomEpubManifest() => EpubManifest(
+        items: [randomEpubManifestItem()],
+      );
 
   EpubManifestItem randomEpubManifestItem() => EpubManifestItem(
         fallback: _randomString.randomAlpha(_length),
@@ -175,7 +192,9 @@ class RandomDataGenerator {
         requiredNamespace: _randomString.randomAlpha(_length),
       );
 
-  EpubGuide randomEpubGuide() => EpubGuide(items: [randomEpubGuideReference()]);
+  EpubGuide randomEpubGuide() => EpubGuide(
+        items: [randomEpubGuideReference()],
+      );
 
   EpubGuideReference randomEpubGuideReference() => EpubGuideReference(
         href: _randomString.randomAlpha(_length),
@@ -230,8 +249,9 @@ class RandomDataGenerator {
         role: _randomString.randomAlpha(_length),
       );
 
-  EpubMetadataString randomEpubMetadataString() =>
-      EpubMetadataString(value: _randomString.randomAlpha(_length));
+  EpubMetadataString randomEpubMetadataString() => EpubMetadataString(
+        value: _randomString.randomAlpha(_length),
+      );
 
   EpubMetadataTranslatedString randomEpubMetadataTranslatedString() =>
       EpubMetadataTranslatedString(

@@ -4,27 +4,30 @@ import 'package:epub_editor/src/entities/epub_chapter.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final reference = EpubChapter();
-  reference
-    ..anchor = "anchor"
-    ..contentFileName = "orthros"
-    ..htmlContent = "<html></html>"
-    ..subChapters = []
-    ..title = "A New Look at Chapters";
+  final reference = EpubChapter(
+    anchor: "anchor",
+    contentFileName: "orthros",
+    htmlContent: "<html></html>",
+    subChapters: [],
+    title: "A New Look at Chapters",
+  );
 
   EpubChapter? testChapter;
+
   setUp(() async {
-    testChapter = EpubChapter();
-    testChapter!
-      ..anchor = "anchor"
-      ..contentFileName = "orthros"
-      ..htmlContent = "<html></html>"
-      ..subChapters = []
-      ..title = "A New Look at Chapters";
+    testChapter = EpubChapter(
+      anchor: "anchor",
+      contentFileName: "orthros",
+      htmlContent: "<html></html>",
+      subChapters: [],
+      title: "A New Look at Chapters",
+    );
   });
+
   tearDown(() async {
     testChapter = null;
   });
+
   group("EpubChapter", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
@@ -48,11 +51,13 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        final chapter = EpubChapter();
-        chapter
-          ..title = "A Brave new Epub"
-          ..contentFileName = "orthros.txt";
-        testChapter!.subChapters = [chapter];
+        testChapter!.subChapters = [
+          EpubChapter(
+            title: "A Brave new Epub",
+            contentFileName: "orthros.txt",
+          )
+        ];
+
         expect(testChapter, isNot(reference));
       });
 
@@ -88,11 +93,13 @@ main() async {
       });
 
       test("is false when SubChapters changes", () async {
-        final chapter = EpubChapter();
-        chapter
-          ..title = "A Brave new Epub"
-          ..contentFileName = "orthros.txt";
-        testChapter!.subChapters = [chapter];
+        testChapter!.subChapters = [
+          EpubChapter(
+            title: "A Brave new Epub",
+            contentFileName: "orthros.txt",
+          )
+        ];
+
         expect(testChapter.hashCode, isNot(reference.hashCode));
       });
 

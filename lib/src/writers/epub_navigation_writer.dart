@@ -63,7 +63,7 @@ class EpubNavigationWriter {
       'id': point.id!,
       'playOrder': point.playOrder!,
     }, nest: () {
-      point.navigationLabels!.forEach((element) {
+      point.navigationLabels.forEach((element) {
         builder.element('navLabel', nest: () {
           builder.element('text', nest: () => builder.text(element.text!));
         });

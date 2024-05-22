@@ -13,10 +13,13 @@ main() async {
       generator.randomNavigationDocAuthor();
 
   EpubNavigationDocAuthor? testNavigationDocAuthor;
+
   setUp(() async {
-    testNavigationDocAuthor = EpubNavigationDocAuthor()
-      ..authors = List.from(reference.authors!);
+    testNavigationDocAuthor = EpubNavigationDocAuthor(
+      authors: List.from(reference.authors!),
+    );
   });
+
   tearDown(() async {
     testNavigationDocAuthor = null;
   });

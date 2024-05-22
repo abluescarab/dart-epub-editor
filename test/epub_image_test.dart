@@ -9,16 +9,22 @@ import 'package:epub_editor/epub_editor.dart';
 
 main() async {
   String fileName = "Frankenstein.epub";
-  String fullPath =
-      path.join(io.Directory.current.path, "test", "res", fileName);
+  String fullPath = path.join(
+    io.Directory.current.path,
+    "test",
+    "res",
+    fileName,
+  );
   final targetFile = io.File(fullPath);
+
   if (!(await targetFile.exists())) {
     throw Exception("Specified epub file not found: ${fullPath}");
   }
-  List<int> bytes = await targetFile.readAsBytes();
-  test("Test Epub Image", () async {
-    EpubBook epubRef = await EpubReader.readBook(bytes);
 
+  final bytes = await targetFile.readAsBytes();
+
+  test("Test Epub Image", () async {
+    final epubRef = await EpubReader.readBook(bytes);
     expect(epubRef.coverImage, isNotNull);
 
     // expect(3, epubRef.CoverImage.format);
@@ -27,8 +33,7 @@ main() async {
   });
 
   test("Test Epub Ref Image", () async {
-    EpubBookRef epubRef = await EpubReader.openBook(bytes);
-
+    final epubRef = await EpubReader.openBook(bytes);
     final coverImage = await epubRef.readCover();
 
     expect(coverImage, isNotNull);

@@ -9,18 +9,21 @@ import '../../random_data_generator.dart';
 
 main() async {
   final generator = RandomDataGenerator(Random(7898), 10);
-  final EpubNavigationPoint reference = generator.randomEpubNavigationPoint(1);
+  final reference = generator.randomEpubNavigationPoint(1);
 
   EpubNavigationPoint? testNavigationPoint;
+
   setUp(() async {
-    testNavigationPoint = EpubNavigationPoint()
-      ..childNavigationPoints = List.from(reference.childNavigationPoints!)
-      ..classAttribute = reference.classAttribute
-      ..content = reference.content
-      ..id = reference.id
-      ..navigationLabels = List.from(reference.navigationLabels!)
-      ..playOrder = reference.playOrder;
+    testNavigationPoint = EpubNavigationPoint(
+      childNavigationPoints: List.from(reference.childNavigationPoints),
+      classAttribute: reference.classAttribute,
+      content: reference.content,
+      id: reference.id,
+      navigationLabels: List.from(reference.navigationLabels),
+      playOrder: reference.playOrder,
+    );
   });
+
   tearDown(() async {
     testNavigationPoint = null;
   });
@@ -32,28 +35,34 @@ main() async {
       });
 
       test("is false when ChildNavigationPoints changes", () async {
-        testNavigationPoint!.childNavigationPoints!
-            .add(generator.randomEpubNavigationPoint());
+        testNavigationPoint!.childNavigationPoints.add(
+          generator.randomEpubNavigationPoint(),
+        );
         expect(testNavigationPoint, isNot(reference));
       });
+
       test("is false when Class changes", () async {
         testNavigationPoint!.classAttribute = generator.randomString();
         expect(testNavigationPoint, isNot(reference));
       });
+
       test("is false when Content changes", () async {
         testNavigationPoint!.content = generator.randomEpubNavigationContent();
         expect(testNavigationPoint, isNot(reference));
       });
+
       test("is false when Id changes", () async {
         testNavigationPoint!.id = generator.randomString();
         expect(testNavigationPoint, isNot(reference));
       });
+
       test("is false when PlayOrder changes", () async {
         testNavigationPoint!.playOrder = generator.randomString();
         expect(testNavigationPoint, isNot(reference));
       });
+
       test("is false when NavigationLabels changes", () async {
-        testNavigationPoint!.navigationLabels!
+        testNavigationPoint!.navigationLabels
             .add(generator.randomEpubNavigationLabel());
         expect(testNavigationPoint, isNot(reference));
       });
@@ -65,28 +74,33 @@ main() async {
       });
 
       test("is false when ChildNavigationPoints changes", () async {
-        testNavigationPoint!.childNavigationPoints!
+        testNavigationPoint!.childNavigationPoints
             .add(generator.randomEpubNavigationPoint());
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Class changes", () async {
         testNavigationPoint!.classAttribute = generator.randomString();
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Content changes", () async {
         testNavigationPoint!.content = generator.randomEpubNavigationContent();
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Id changes", () async {
         testNavigationPoint!.id = generator.randomString();
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when PlayOrder changes", () async {
         testNavigationPoint!.playOrder = generator.randomString();
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when NavigationLabels changes", () async {
-        testNavigationPoint!.navigationLabels!
+        testNavigationPoint!.navigationLabels
             .add(generator.randomEpubNavigationLabel());
         expect(testNavigationPoint!.hashCode, isNot(reference.hashCode));
       });

@@ -9,20 +9,22 @@ import '../../random_data_generator.dart';
 
 main() async {
   final RandomDataGenerator generator = RandomDataGenerator(Random(123778), 10);
-
   final reference = generator.randomEpubGuideReference();
 
   EpubGuideReference? testGuideReference;
+
   setUp(() async {
-    testGuideReference = EpubGuideReference();
-    testGuideReference!
-      ..href = reference.href
-      ..title = reference.title
-      ..type = reference.type;
+    testGuideReference = EpubGuideReference(
+      href: reference.href,
+      title: reference.title,
+      type: reference.type,
+    );
   });
+
   tearDown(() async {
     testGuideReference = null;
   });
+
   group("EpubGuideReference", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
@@ -31,7 +33,6 @@ main() async {
 
       test("is false when Href changes", () async {
         testGuideReference!.href = "A different href";
-
         expect(testGuideReference, isNot(reference));
       });
 
@@ -53,7 +54,6 @@ main() async {
 
       test("is false when Href changes", () async {
         testGuideReference!.href = "A different href";
-
         expect(testGuideReference!.hashCode, isNot(reference.hashCode));
       });
 

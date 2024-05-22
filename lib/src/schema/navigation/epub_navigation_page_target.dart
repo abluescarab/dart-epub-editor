@@ -11,8 +11,8 @@ class EpubNavigationPageTarget {
     this.classAttribute,
     this.playOrder,
     this.content,
-    this.navigationLabels,
-  });
+    List<EpubNavigationLabel>? navigationLabels,
+  }) : this.navigationLabels = navigationLabels ?? [];
 
   String? id;
   String? value;
@@ -20,7 +20,7 @@ class EpubNavigationPageTarget {
   String? classAttribute;
   String? playOrder;
   EpubNavigationContent? content;
-  List<EpubNavigationLabel>? navigationLabels;
+  List<EpubNavigationLabel> navigationLabels;
 
   @override
   int get hashCode => Object.hashAll([
@@ -30,7 +30,7 @@ class EpubNavigationPageTarget {
         classAttribute.hashCode,
         playOrder.hashCode,
         content.hashCode,
-        ...navigationLabels?.map((label) => label.hashCode) ?? [0]
+        ...navigationLabels.map((label) => label.hashCode)
       ]);
 
   @override

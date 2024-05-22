@@ -5,25 +5,30 @@ import 'package:epub_editor/src/schema/opf/epub_manifest_item.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final reference = EpubManifest();
-  reference.items = [
-    EpubManifestItem()
-      ..fallback = "Some Fallback"
-      ..fallbackStyle = "A Very Stylish Fallback"
-      ..href = "Some HREF"
-      ..id = "Some ID"
-      ..mediaType = "MKV"
-      ..requiredModules = "nodejs require()"
-      ..requiredNamespace = ".NET Namespace"
-  ];
+  final reference = EpubManifest(items: [
+    EpubManifestItem(
+      fallback: "Some Fallback",
+      fallbackStyle: "A Very Stylish Fallback",
+      href: "Some HREF",
+      id: "Some ID",
+      mediaType: "MKV",
+      requiredModules: "nodejs require()",
+      requiredNamespace: ".NET Namespace",
+    ),
+  ]);
 
   EpubManifest? testManifest;
+
   setUp(() async {
-    testManifest = EpubManifest()..items = List.from(reference.items!);
+    testManifest = EpubManifest(
+      items: List.from(reference.items),
+    );
   });
+
   tearDown(() async {
     testManifest = null;
   });
+
   group("EpubManifest", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
@@ -31,14 +36,17 @@ main() async {
       });
 
       test("is false when Items changes", () async {
-        testManifest!.items!.add(EpubManifestItem()
-          ..fallback = "Some Different Fallback"
-          ..fallbackStyle = "A less than Stylish Fallback"
-          ..href = "Some Different HREF"
-          ..id = "Some Different ID"
-          ..mediaType = "RealPlayer"
-          ..requiredModules = "require()"
-          ..requiredNamespace = "Namespace");
+        testManifest!.items.add(
+          EpubManifestItem(
+            fallback: "Some Different Fallback",
+            fallbackStyle: "A less than Stylish Fallback",
+            href: "Some Different HREF",
+            id: "Some Different ID",
+            mediaType: "RealPlayer",
+            requiredModules: "require()",
+            requiredNamespace: "Namespace",
+          ),
+        );
 
         expect(testManifest, isNot(reference));
       });
@@ -50,14 +58,16 @@ main() async {
       });
 
       test("is false when Items changes", () async {
-        testManifest!.items!.add(EpubManifestItem()
-          ..fallback = "Some Different Fallback"
-          ..fallbackStyle = "A less than Stylish Fallback"
-          ..href = "Some Different HREF"
-          ..id = "Some Different ID"
-          ..mediaType = "RealPlayer"
-          ..requiredModules = "require()"
-          ..requiredNamespace = "Namespace");
+        testManifest!.items.add(EpubManifestItem(
+          fallback: "Some Different Fallback",
+          fallbackStyle: "A less than Stylish Fallback",
+          href: "Some Different HREF",
+          id: "Some Different ID",
+          mediaType: "RealPlayer",
+          requiredModules: "require()",
+          requiredNamespace: "Namespace",
+        ));
+
         expect(testManifest!.hashCode, isNot(reference.hashCode));
       });
     });

@@ -10,17 +10,20 @@ import '../../random_data_generator.dart';
 main() async {
   final int length = 10;
   final RandomString randomString = RandomString(Random(123788));
-
-  final reference = EpubSpineItemRef()
-    ..isLinear = true
-    ..idRef = randomString.randomAlpha(length);
+  final reference = EpubSpineItemRef(
+    isLinear: true,
+    idRef: randomString.randomAlpha(length),
+  );
 
   EpubSpineItemRef? testSpineItemRef;
+
   setUp(() async {
-    testSpineItemRef = EpubSpineItemRef()
-      ..isLinear = reference.isLinear
-      ..idRef = reference.idRef;
+    testSpineItemRef = EpubSpineItemRef(
+      isLinear: reference.isLinear,
+      idRef: reference.idRef,
+    );
   });
+
   tearDown(() async {
     testSpineItemRef = null;
   });
@@ -30,10 +33,12 @@ main() async {
       test("is true for equivalent objects", () async {
         expect(testSpineItemRef, equals(reference));
       });
+
       test("is false when IsLinear changes", () async {
         testSpineItemRef!.isLinear = !testSpineItemRef!.isLinear!;
         expect(testSpineItemRef, isNot(reference));
       });
+
       test("is false when IdRef changes", () async {
         testSpineItemRef!.idRef = randomString.randomAlpha(length);
         expect(testSpineItemRef, isNot(reference));
@@ -44,10 +49,12 @@ main() async {
       test("is true for equivalent objects", () async {
         expect(testSpineItemRef!.hashCode, equals(reference.hashCode));
       });
+
       test("is false when IsLinear changes", () async {
         testSpineItemRef!.isLinear = !testSpineItemRef!.isLinear!;
         expect(testSpineItemRef!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when IdRef changes", () async {
         testSpineItemRef!.idRef = randomString.randomAlpha(length);
         expect(testSpineItemRef!.hashCode, isNot(reference.hashCode));

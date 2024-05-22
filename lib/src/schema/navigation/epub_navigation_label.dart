@@ -1,4 +1,3 @@
-
 class EpubNavigationLabel {
   EpubNavigationLabel({
     this.text,

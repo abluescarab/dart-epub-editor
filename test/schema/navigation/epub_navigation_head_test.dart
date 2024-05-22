@@ -9,17 +9,20 @@ import '../../random_data_generator.dart';
 
 main() async {
   final RandomDataGenerator generator = RandomDataGenerator(Random(123778), 10);
-
   final EpubNavigationHead reference = generator.randomEpubNavigationHead();
 
   EpubNavigationHead? testGuideReference;
+
   setUp(() async {
-    testGuideReference = EpubNavigationHead()
-      ..metadata = List.from(reference.metadata!);
+    testGuideReference = EpubNavigationHead(
+      metadata: List.from(reference.metadata!),
+    );
   });
+
   tearDown(() async {
     testGuideReference = null;
   });
+
   group("EpubNavigationHead", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {

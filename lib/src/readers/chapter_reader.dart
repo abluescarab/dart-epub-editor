@@ -43,7 +43,7 @@ class ChapterReader {
 
       contentFileName = Uri.decodeFull(contentFileName!);
 
-      if (!bookRef.content!.html!.containsKey(contentFileName)) {
+      if (!bookRef.content!.html.containsKey(contentFileName)) {
         throw Exception(
           'Incorrect EPUB manifest: item with href = \"$contentFileName\" is '
           'missing.',
@@ -51,13 +51,13 @@ class ChapterReader {
       }
 
       result.add(EpubChapterRef(
-        epubTextContentFileRef: bookRef.content!.html![contentFileName],
+        epubTextContentFileRef: bookRef.content!.html[contentFileName],
         contentFileName: contentFileName,
         anchor: anchor,
-        title: navigationPoint.navigationLabels!.first.text,
+        title: navigationPoint.navigationLabels.first.text,
         subChapters: getChaptersImpl(
           bookRef,
-          navigationPoint.childNavigationPoints!,
+          navigationPoint.childNavigationPoints,
         ),
       ));
     }

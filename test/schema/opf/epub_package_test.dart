@@ -10,21 +10,24 @@ import '../../random_data_generator.dart';
 
 main() async {
   final int length = 10;
-
-  final RandomDataGenerator generator =
-      RandomDataGenerator(Random(123778), length);
-
+  final RandomDataGenerator generator = RandomDataGenerator(
+    Random(123778),
+    length,
+  );
   final reference = generator.randomEpubPackage()..version = EpubVersion.epub3;
 
   EpubPackage? testPackage;
+
   setUp(() async {
-    testPackage = EpubPackage()
-      ..guide = reference.guide
-      ..manifest = reference.manifest
-      ..metadata = reference.metadata
-      ..spine = reference.spine
-      ..version = reference.version;
+    testPackage = EpubPackage(
+      guide: reference.guide,
+      manifest: reference.manifest,
+      metadata: reference.metadata,
+      spine: reference.spine,
+      version: reference.version,
+    );
   });
+
   tearDown(() async {
     testPackage = null;
   });
@@ -34,22 +37,27 @@ main() async {
       test("is true for equivalent objects", () async {
         expect(testPackage, equals(reference));
       });
+
       test("is false when Guide changes", () async {
         testPackage!.guide = generator.randomEpubGuide();
         expect(testPackage, isNot(reference));
       });
+
       test("is false when Manifest changes", () async {
         testPackage!.manifest = generator.randomEpubManifest();
         expect(testPackage, isNot(reference));
       });
+
       test("is false when Metadata changes", () async {
         testPackage!.metadata = generator.randomEpubMetadata();
         expect(testPackage, isNot(reference));
       });
+
       test("is false when Spine changes", () async {
         testPackage!.spine = generator.randomEpubSpine();
         expect(testPackage, isNot(reference));
       });
+
       test("is false when Version changes", () async {
         testPackage!.version = testPackage!.version == EpubVersion.epub2
             ? EpubVersion.epub3
@@ -62,22 +70,27 @@ main() async {
       test("is true for equivalent objects", () async {
         expect(testPackage!.hashCode, equals(reference.hashCode));
       });
+
       test("is false when Guide changes", () async {
         testPackage!.guide = generator.randomEpubGuide();
         expect(testPackage!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Manifest changes", () async {
         testPackage!.manifest = generator.randomEpubManifest();
         expect(testPackage!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Metadata changes", () async {
         testPackage!.metadata = generator.randomEpubMetadata();
         expect(testPackage!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Spine changes", () async {
         testPackage!.spine = generator.randomEpubSpine();
         expect(testPackage!.hashCode, isNot(reference.hashCode));
       });
+
       test("is false when Version changes", () async {
         testPackage!.version = testPackage!.version == EpubVersion.epub2
             ? EpubVersion.epub3

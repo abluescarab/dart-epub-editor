@@ -10,13 +10,13 @@ class BookCoverReader {
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
-    if (manifest?.items != null && manifest!.items!.isNotEmpty) {
-      final coverImageItem = manifest.items?.firstWhereOrNull(
+    if (manifest?.items != null && manifest!.items.isNotEmpty) {
+      final coverImageItem = manifest.items.firstWhereOrNull(
           (epubManifestItem) => epubManifestItem.properties == 'cover-image');
 
       if (coverImageItem != null) {
         final epubByteContentFileRef =
-            bookRef.content?.images?[coverImageItem.href];
+            bookRef.content?.images[coverImageItem.href];
 
         if (epubByteContentFileRef != null) {
           return epubByteContentFileRef;
@@ -27,7 +27,8 @@ class BookCoverReader {
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.
     final metaItems = bookRef.schema!.package!.metadata!.metaItems;
-    if (metaItems == null || metaItems.isEmpty) {
+
+    if (metaItems.isEmpty) {
       return null;
     }
 
@@ -45,7 +46,7 @@ class BookCoverReader {
     }
 
     final coverManifestItem = bookRef.schema!.package!.manifest!.items
-        ?.firstWhereOrNull((manifestItem) =>
+        .firstWhereOrNull((manifestItem) =>
             manifestItem.id!.toLowerCase() ==
             coverMetaItem.content!.toLowerCase());
 
@@ -56,13 +57,13 @@ class BookCoverReader {
       );
     }
 
-    if (!bookRef.content!.images!.containsKey(coverManifestItem.href)) {
+    if (!bookRef.content!.images.containsKey(coverManifestItem.href)) {
       throw Exception(
         'Incorrect EPUB manifest: item with href = "${coverManifestItem.href}" '
         'is missing.',
       );
     }
 
-    return bookRef.content!.images![coverManifestItem.href];
+    return bookRef.content!.images[coverManifestItem.href];
   }
 }

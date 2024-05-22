@@ -7,23 +7,29 @@ import 'package:test/test.dart';
 import 'package:epub_editor/epub_editor.dart';
 
 main() async {
-  String fileName = "Frankenstein.epub";
-  String fullPath =
-      path.join(io.Directory.current.path, "test", "res", fileName);
+  final fileName = "Frankenstein.epub";
+  final fullPath = path.join(
+    io.Directory.current.path,
+    "test",
+    "res",
+    fileName,
+  );
   final targetFile = io.File(fullPath);
+
   if (!(await targetFile.exists())) {
     throw Exception("Specified epub file not found: ${fullPath}");
   }
 
-  List<int> bytes = await targetFile.readAsBytes();
+  final bytes = await targetFile.readAsBytes();
+
   test("Test Epub Ref", () async {
-    EpubBookRef epubRef = await EpubReader.openBook(bytes);
+    final epubRef = await EpubReader.openBook(bytes);
     final t = await epubRef.getChapters();
     print("${t.length}");
   });
 
   test("Test Epub Read", () async {
-    EpubBook epubRef = await EpubReader.readBook(bytes);
+    final epubRef = await EpubReader.readBook(bytes);
 
     expect(epubRef.author, equals("Mary Wollstonecraft Shelley"));
     expect(
@@ -33,9 +39,14 @@ main() async {
   });
 
   test("Test can read", () async {
-    String baseName =
-        path.join(io.Directory.current.path, "test", "res", "std");
-    io.Directory baseDir = io.Directory(baseName);
+    final baseName = path.join(
+      io.Directory.current.path,
+      "test",
+      "res",
+      "std",
+    );
+    final baseDir = io.Directory(baseName);
+
     if (!(await baseDir.exists())) {
       throw Exception("Base path does not exist: ${baseName}");
     }
@@ -45,9 +56,9 @@ main() async {
         .forEach((io.FileSystemEntity fe) async {
       if (fe.path.contains("epub30-spec.epub")) {
         try {
-          io.File tf = io.File(fe.path);
-          List<int> bytes = await tf.readAsBytes();
-          EpubBook book = await EpubReader.readBook(bytes);
+          final bytes = await io.File(fe.path).readAsBytes();
+          final book = await EpubReader.readBook(bytes);
+
           expect(book, isNotNull);
         } catch (e) {
           print("File: ${fe.path}, Exception: ${e}");
@@ -60,6 +71,7 @@ main() async {
   test("Test can open", () async {
     final baseName = path.join(io.Directory.current.path, "test", "res", "std");
     final baseDir = io.Directory(baseName);
+
     if (!(await baseDir.exists())) {
       throw Exception("Base path does not exist: ${baseName}");
     }
@@ -68,9 +80,9 @@ main() async {
         .list(recursive: false, followLinks: false)
         .forEach((io.FileSystemEntity fe) async {
       try {
-        final tf = io.File(fe.path);
-        final bytes = await tf.readAsBytes();
+        final bytes = await io.File(fe.path).readAsBytes();
         final ref = await EpubReader.openBook(bytes);
+
         expect(ref, isNotNull);
       } catch (e) {
         print("File: ${fe.path}, Exception: ${e}");

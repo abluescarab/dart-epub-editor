@@ -5,32 +5,36 @@ import 'package:quiver/collection.dart';
 
 class EpubContentRef {
   EpubContentRef({
-    this.html,
-    this.css,
-    this.images,
-    this.fonts,
-    this.allFiles,
-  });
+    Map<String, EpubTextContentFileRef>? html,
+    Map<String, EpubTextContentFileRef>? css,
+    Map<String, EpubByteContentFileRef>? images,
+    Map<String, EpubByteContentFileRef>? fonts,
+    Map<String, EpubTextContentFileRef>? allFiles,
+  })  : this.html = html ?? {},
+        this.css = css ?? {},
+        this.images = images ?? {},
+        this.fonts = fonts ?? {},
+        this.allFiles = allFiles ?? {};
 
-  Map<String, EpubTextContentFileRef>? html = {};
-  Map<String, EpubTextContentFileRef>? css = {};
-  Map<String, EpubByteContentFileRef>? images = {};
-  Map<String, EpubByteContentFileRef>? fonts = {};
-  Map<String, EpubContentFileRef>? allFiles = {};
+  Map<String, EpubTextContentFileRef> html;
+  Map<String, EpubTextContentFileRef> css;
+  Map<String, EpubByteContentFileRef> images;
+  Map<String, EpubByteContentFileRef> fonts;
+  Map<String, EpubContentFileRef> allFiles;
 
   @override
   int get hashCode {
     return Object.hashAll([
-      ...html!.keys.map((key) => key.hashCode),
-      ...html!.values.map((value) => value.hashCode),
-      ...css!.keys.map((key) => key.hashCode),
-      ...css!.values.map((value) => value.hashCode),
-      ...images!.keys.map((key) => key.hashCode),
-      ...images!.values.map((value) => value.hashCode),
-      ...fonts!.keys.map((key) => key.hashCode),
-      ...fonts!.values.map((value) => value.hashCode),
-      ...allFiles!.keys.map((key) => key.hashCode),
-      ...allFiles!.values.map((value) => value.hashCode)
+      ...html.keys.map((key) => key.hashCode),
+      ...html.values.map((value) => value.hashCode),
+      ...css.keys.map((key) => key.hashCode),
+      ...css.values.map((value) => value.hashCode),
+      ...images.keys.map((key) => key.hashCode),
+      ...images.values.map((value) => value.hashCode),
+      ...fonts.keys.map((key) => key.hashCode),
+      ...fonts.values.map((value) => value.hashCode),
+      ...allFiles.keys.map((key) => key.hashCode),
+      ...allFiles.values.map((value) => value.hashCode)
     ]);
   }
 

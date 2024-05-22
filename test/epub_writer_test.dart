@@ -22,10 +22,9 @@ main() async {
 
     if (await file.exists()) {
       final contents = file.readAsBytes();
-      final book = await EpubReader.readBook(contents);
 
       epub.value["contents"] = contents;
-      epub.value["book"] = book;
+      epub.value["book"] = await EpubReader.readBook(contents);
     }
   }
 
@@ -47,15 +46,13 @@ main() async {
       test("write content formats correctly", () {
         for (final epub in epubs.entries) {
           final book = epub.value["book"] as EpubBook?;
-          final original = epub.value["package"] as String;
 
           if (book != null) {
-            final package =
-                EpubPackageWriter.writeContent(book.schema!.package!);
-
+            final package = EpubPackageWriter.writeContent(
+              book.schema!.package!,
+            );
             final packageSplit = package.split("\n");
-            final originalSplit = original.split("\n");
-
+            final originalSplit = (epub.value["package"] as String).split("\n");
             final length = packageSplit.length < originalSplit.length
                 ? packageSplit.length
                 : originalSplit.length;

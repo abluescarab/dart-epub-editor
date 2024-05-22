@@ -5,7 +5,6 @@ import 'package:epub_editor/src/readers/book_cover_reader.dart';
 import 'package:epub_editor/src/readers/chapter_reader.dart';
 import 'package:epub_editor/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_chapter_ref.dart';
-import 'package:epub_editor/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
@@ -15,14 +14,18 @@ class EpubBookRef {
   EpubBookRef({
     required this.archive,
     this.schema,
-    this.content,
+    String? author,
+    List<String?>? authorList,
+    EpubMetadataTranslatedString? title,
+    EpubContentRef? content,
   }) {
-    title = schema?.package?.metadata?.titles?.first;
-    authorList = schema?.package?.metadata?.creators
-        ?.map((creator) => creator.name)
-        .toList();
-    author = authorList?.join(", ");
-    content = _parseContentMap();
+    title = title ?? schema?.package?.metadata?.titles.first;
+    authorList = authorList ??
+        schema?.package?.metadata?.creators
+            .map((creator) => creator.name)
+            .toList();
+    author = author ?? authorList?.join(", ");
+    content = content ?? _parseContentMap();
   }
 
   /// Main title.
@@ -111,10 +114,10 @@ class EpubBookRef {
       css: <String, EpubTextContentFileRef>{},
       images: <String, EpubByteContentFileRef>{},
       fonts: <String, EpubByteContentFileRef>{},
-      allFiles: <String, EpubContentFileRef>{},
+      allFiles: <String, EpubTextContentFileRef>{},
     );
 
-    schema!.package!.manifest!.items?.forEach((manifestItem) {
+    schema!.package!.manifest!.items.forEach((manifestItem) {
       final fileName = manifestItem.href;
       final contentMimeType = manifestItem.mediaType!;
       final contentType = _getContentTypeByContentMimeType(contentMimeType);
@@ -136,10 +139,10 @@ class EpubBookRef {
 
           switch (contentType) {
             case EpubContentType.xhtml_1_1:
-              result.html![fileName] = epubTextContentFile;
+              result.html[fileName] = epubTextContentFile;
               break;
             case EpubContentType.css:
-              result.css![fileName] = epubTextContentFile;
+              result.css[fileName] = epubTextContentFile;
               break;
             case EpubContentType.dtbook:
             case EpubContentType.dtbook_ncx:
@@ -157,7 +160,7 @@ class EpubBookRef {
               break;
           }
 
-          result.allFiles![fileName] = epubTextContentFile;
+          result.allFiles[fileName] = epubTextContentFile;
           break;
         default:
           final epubByteContentFile = EpubByteContentFileRef(
@@ -173,11 +176,11 @@ class EpubBookRef {
             case EpubContentType.image_png:
             case EpubContentType.image_svg:
             case EpubContentType.image_bmp:
-              result.images![fileName] = epubByteContentFile;
+              result.images[fileName] = epubByteContentFile;
               break;
             case EpubContentType.font_truetype:
             case EpubContentType.font_opentype:
-              result.fonts![fileName] = epubByteContentFile;
+              result.fonts[fileName] = epubByteContentFile;
               break;
             case EpubContentType.css:
             case EpubContentType.xhtml_1_1:
@@ -190,7 +193,7 @@ class EpubBookRef {
               break;
           }
 
-          result.allFiles![fileName] = epubByteContentFile;
+          result.allFiles[fileName] = epubByteContentFile;
           break;
       }
     });

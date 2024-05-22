@@ -45,16 +45,14 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFile(
-          content: "Hello",
-          contentMimeType: "application/txt",
-          contentType: EpubContentType.other,
-          fileName: "orthros.txt",
-        );
-
-        EpubContent content = EpubContent();
-        content.allFiles?["hello"] = file;
-        testBook!.content = content;
+        testBook!.content = EpubContent(allFiles: {
+          "hello": EpubTextContentFile(
+            content: "Hello",
+            contentMimeType: "application/txt",
+            contentType: EpubContentType.other,
+            fileName: "orthros.txt",
+          )
+        });
 
         expect(testBook, isNot(reference));
       });
@@ -70,12 +68,13 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        final chapter = EpubChapter(
-          title: "A Brave new Epub",
-          contentFileName: "orthros.txt",
-        );
+        testBook!.chapters = [
+          EpubChapter(
+            title: "A Brave new Epub",
+            contentFileName: "orthros.txt",
+          )
+        ];
 
-        testBook!.chapters = [chapter];
         expect(testBook, isNot(reference));
       });
 
@@ -85,8 +84,7 @@ main() async {
       // });
 
       test("is false when Schema changes", () async {
-        final schema = EpubSchema(contentDirectoryPath: "some/random/path");
-        testBook!.schema = schema;
+        testBook!.schema = EpubSchema(contentDirectoryPath: "some/random/path");
         expect(testBook, isNot(reference));
       });
 
@@ -103,16 +101,14 @@ main() async {
       });
 
       test("is false when Content changes", () async {
-        final file = EpubTextContentFile(
-          content: "Hello",
-          contentMimeType: "application/txt",
-          contentType: EpubContentType.other,
-          fileName: "orthros.txt",
-        );
-
-        EpubContent content = EpubContent();
-        content.allFiles!["hello"] = file;
-        testBook!.content = content;
+        testBook!.content = EpubContent(allFiles: {
+          "hello": EpubTextContentFile(
+            content: "Hello",
+            contentMimeType: "application/txt",
+            contentType: EpubContentType.other,
+            fileName: "orthros.txt",
+          )
+        });
 
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
@@ -128,12 +124,13 @@ main() async {
       });
 
       test("is false when Chapters changes", () async {
-        final chapter = EpubChapter(
-          title: "A Brave new Epub",
-          contentFileName: "orthros.txt",
-        );
+        testBook!.chapters = [
+          EpubChapter(
+            title: "A Brave new Epub",
+            contentFileName: "orthros.txt",
+          )
+        ];
 
-        testBook!.chapters = [chapter];
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
 
@@ -143,9 +140,7 @@ main() async {
       // });
 
       test("is false when Schema changes", () async {
-        final schema = EpubSchema(contentDirectoryPath: "some/random/path");
-        
-        testBook!.schema = schema;
+        testBook!.schema = EpubSchema(contentDirectoryPath: "some/random/path");
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
 

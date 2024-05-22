@@ -1,4 +1,3 @@
-
 class EpubManifestItem {
   EpubManifestItem({
     this.id,

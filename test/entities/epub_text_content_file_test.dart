@@ -5,24 +5,28 @@ import 'package:epub_editor/src/entities/epub_text_content_file.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final reference = EpubTextContentFile();
-  reference
-    ..content = "Hello"
-    ..contentMimeType = "application/test"
-    ..contentType = EpubContentType.other
-    ..fileName = "orthrosFile";
+  final reference = EpubTextContentFile(
+    content: "Hello",
+    contentMimeType: "application/test",
+    contentType: EpubContentType.other,
+    fileName: "orthrosFile",
+  );
+
   EpubTextContentFile? testFile;
+
   setUp(() async {
-    testFile = EpubTextContentFile();
-    testFile!
-      ..content = "Hello"
-      ..contentMimeType = "application/test"
-      ..contentType = EpubContentType.other
-      ..fileName = "orthrosFile";
+    testFile = EpubTextContentFile(
+      content: "Hello",
+      contentMimeType: "application/test",
+      contentType: EpubContentType.other,
+      fileName: "orthrosFile",
+    );
   });
+
   tearDown(() async {
     testFile = null;
   });
+
   group("EpubTextContentFile", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {

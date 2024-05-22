@@ -10,7 +10,7 @@ import 'epub_metadata_writer.dart';
 class EpubPackageWriter {
   static void writeManifest(XmlBuilder builder, EpubManifest? manifest) {
     builder.element('manifest', nest: () {
-      manifest!.items?.forEach((item) {
+      manifest!.items.forEach((item) {
         builder.element('item', nest: () {
           builder
             ..attribute('id', item.id!)
@@ -29,7 +29,7 @@ class EpubPackageWriter {
     builder.element(
       'spine',
       attributes: {'toc': spine.tableOfContents!},
-      nest: () => spine.items!.forEach((spineItem) => builder.element(
+      nest: () => spine.items.forEach((spineItem) => builder.element(
             'itemref',
             attributes: {
               'idref': spineItem.idRef!,
@@ -41,7 +41,7 @@ class EpubPackageWriter {
 
   static void writeGuide(XmlBuilder builder, EpubGuide? guide) {
     builder.element('guide', nest: () {
-      guide!.items!.forEach((guideItem) => builder.element(
+      guide!.items.forEach((guideItem) => builder.element(
             'reference',
             attributes: {
               'type': guideItem.type!,

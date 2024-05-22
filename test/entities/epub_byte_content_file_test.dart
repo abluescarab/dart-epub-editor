@@ -5,22 +5,22 @@ import 'package:epub_editor/src/entities/epub_content_type.dart';
 import 'package:test/test.dart';
 
 main() async {
-  final reference = EpubByteContentFile();
-  reference
-    ..content = [0, 1, 2, 3]
-    ..contentMimeType = "application/test"
-    ..contentType = EpubContentType.other
-    ..fileName = "orthrosFile";
+  final reference = EpubByteContentFile(
+    content: [0, 1, 2, 3],
+    contentMimeType: "application/test",
+    contentType: EpubContentType.other,
+    fileName: "orthrosFile",
+  );
 
   EpubByteContentFile? testFile;
 
   setUp(() async {
-    testFile = EpubByteContentFile();
-    testFile!
-      ..content = [0, 1, 2, 3]
-      ..contentMimeType = "application/test"
-      ..contentType = EpubContentType.other
-      ..fileName = "orthrosFile";
+    testFile = EpubByteContentFile(
+      content: [0, 1, 2, 3],
+      contentMimeType: "application/test",
+      contentType: EpubContentType.other,
+      fileName: "orthrosFile",
+    );
   });
 
   tearDown(() async {
