@@ -76,10 +76,6 @@ main() async {
         expect(testChapterRef.hashCode, equals(reference.hashCode));
       });
 
-      test("is true for equivalent objects", () async {
-        expect(testChapterRef.hashCode, equals(reference.hashCode));
-      });
-
       test("is false when Anchor changes", () async {
         testChapterRef!.anchor = "NotAnAnchor";
         expect(testChapterRef.hashCode, isNot(reference.hashCode));
