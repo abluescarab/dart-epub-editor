@@ -432,14 +432,12 @@ class NavigationReader {
 
   static EpubNavigationPageList readNavigationPageList(
     XmlElement navigationPageListNode,
-  ) {
-    return EpubNavigationPageList(
-      targets: navigationPageListNode.children
-          .where((e) => e is XmlElement && e.name.local == 'pageTarget')
-          .map((e) => readNavigationPageTarget(e as XmlElement))
-          .toList(),
-    );
-  }
+  ) =>
+      EpubNavigationPageList(
+          targets: navigationPageListNode.children
+              .where((e) => e is XmlElement && e.name.local == 'pageTarget')
+              .map((e) => readNavigationPageTarget(e as XmlElement))
+              .toList());
 
   static EpubNavigationPageTarget readNavigationPageTarget(
     XmlElement navigationPageTargetNode,
