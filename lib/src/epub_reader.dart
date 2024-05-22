@@ -150,7 +150,7 @@ class EpubReader {
           contentFileName: chapterRef.contentFileName,
           anchor: chapterRef.anchor,
           htmlContent: await chapterRef.readHtmlContent(),
-          subChapters: await readChapters(chapterRef.subChapters!),
+          subChapters: await readChapters(chapterRef.subChapters),
         ),
       );
     });

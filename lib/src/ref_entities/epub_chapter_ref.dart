@@ -7,14 +7,14 @@ class EpubChapterRef {
     this.title,
     this.contentFileName,
     this.anchor,
-    this.subChapters,
-  });
+    List<EpubChapterRef>? subChapters,
+  }) : this.subChapters = subChapters ?? [];
 
   EpubTextContentFileRef? epubTextContentFileRef;
   String? title;
   String? contentFileName;
   String? anchor;
-  List<EpubChapterRef>? subChapters;
+  List<EpubChapterRef> subChapters;
 
   @override
   int get hashCode => Object.hashAll([
@@ -22,7 +22,7 @@ class EpubChapterRef {
         contentFileName.hashCode,
         anchor.hashCode,
         epubTextContentFileRef.hashCode,
-        ...subChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
+        ...subChapters.map((subChapter) => subChapter.hashCode),
       ]);
 
   @override
@@ -44,6 +44,6 @@ class EpubChapterRef {
 
   @override
   String toString() {
-    return 'Title: $title, Subchapter count: ${subChapters!.length}';
+    return 'Title: $title, Subchapter count: ${subChapters.length}';
   }
 }
