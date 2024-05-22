@@ -4,13 +4,13 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_point.dart';
 
 class ChapterReader {
   static List<EpubChapterRef> getChapters(EpubBookRef bookRef) {
-    if (bookRef.schema!.navigation == null) {
+    if (bookRef.schema.navigation == null) {
       return [];
     }
 
     return getChaptersImpl(
       bookRef,
-      bookRef.schema!.navigation!.navMap!.points,
+      bookRef.schema.navigation!.navMap!.points,
     );
   }
 

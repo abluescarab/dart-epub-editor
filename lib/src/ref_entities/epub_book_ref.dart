@@ -13,27 +13,31 @@ import 'package:quiver/collection.dart';
 class EpubBookRef {
   EpubBookRef({
     required this.archive,
-    this.schema,
+    EpubSchema? schema,
     String? author,
     List<String?>? authorList,
     EpubMetadataTranslatedString? title,
     EpubContentRef? content,
-  }) {
-    title = title ?? schema?.package.metadata?.titles.first;
-    authorList = authorList ??
-        schema?.package.metadata?.creators
+  }) : this.schema = schema ?? EpubSchema() {
+    this.title = title ?? this.schema.package.metadata?.titles.first;
+    this.authorList = authorList ??
+        this
+            .schema
+            .package
+            .metadata
+            ?.creators
             .map((creator) => creator.name)
             .toList();
-    author = author ?? authorList?.join(", ");
-    content = content ?? _parseContentMap();
+    this.author = author ?? authorList?.join(", ");
+    this.content = content ?? _parseContentMap();
   }
 
   /// Main title.
   Archive archive;
+  EpubSchema schema;
   EpubMetadataTranslatedString? title;
   String? author;
   List<String?>? authorList;
-  EpubSchema? schema;
   EpubContentRef? content;
 
   @override
@@ -117,7 +121,7 @@ class EpubBookRef {
       allFiles: <String, EpubTextContentFileRef>{},
     );
 
-    schema!.package.manifest!.items.forEach((manifestItem) {
+    schema.package.manifest!.items.forEach((manifestItem) {
       final fileName = manifestItem.href;
       final contentMimeType = manifestItem.mediaType!;
       final contentType = _getContentTypeByContentMimeType(contentMimeType);

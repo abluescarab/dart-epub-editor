@@ -41,7 +41,7 @@ abstract class EpubContentFileRef {
 
   ArchiveFile getContentFileEntry() {
     final contentFilePath = ZipPathUtils.combine(
-      epubBookRef.schema!.contentDirectoryPath,
+      epubBookRef.schema.contentDirectoryPath,
       fileName,
     );
 
