@@ -7,10 +7,10 @@ class EpubTextContentFile extends EpubContentFile {
     super.fileName,
     super.contentType,
     super.contentMimeType,
-    this.content,
+    required this.content,
   });
 
-  String? content;
+  String content;
 
   @override
   int get hashCode => hash4(
