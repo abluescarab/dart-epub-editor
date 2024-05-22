@@ -3,21 +3,22 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigationPoint {
   EpubNavigationPoint({
+    List<EpubNavigationPoint>? childNavigationPoints,
+    List<EpubNavigationLabel>? navigationLabels,
     this.id,
     this.classAttribute,
     this.playOrder,
     this.content,
-    List<EpubNavigationPoint>? childNavigationPoints,
-    List<EpubNavigationLabel>? navigationLabels,
   })  : this.childNavigationPoints = childNavigationPoints ?? [],
         this.navigationLabels = navigationLabels ?? [];
+
+  List<EpubNavigationPoint> childNavigationPoints;
+  List<EpubNavigationLabel> navigationLabels;
 
   String? id;
   String? classAttribute;
   String? playOrder;
   EpubNavigationContent? content;
-  List<EpubNavigationPoint> childNavigationPoints;
-  List<EpubNavigationLabel> navigationLabels;
 
   @override
   int get hashCode => Object.hashAll([
@@ -45,6 +46,6 @@ class EpubNavigationPoint {
 
   @override
   String toString() {
-    return 'id: $id, content.source: ${content!.source}';
+    return 'id: $id, content.source: ${content?.source}';
   }
 }

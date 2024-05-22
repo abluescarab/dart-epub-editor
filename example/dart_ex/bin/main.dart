@@ -30,7 +30,7 @@ main(List<String> args) async {
 // CHAPTERS
 
 // Enumerating chapters
-  epubBook.chapters!.forEach((EpubChapter chapter) {
+  epubBook.chapters.forEach((EpubChapter chapter) {
     // Title of chapter
     String chapterTitle = chapter.title!;
 

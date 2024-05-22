@@ -2,25 +2,26 @@ import 'package:quiver/collection.dart';
 
 class EpubChapter {
   EpubChapter({
+    List<EpubChapter>? subChapters,
     this.title,
     this.contentFileName,
     this.anchor,
     this.htmlContent,
-    List<EpubChapter>? subChapters,
   }) : this.subChapters = subChapters ?? [];
 
-  String? title;
-  String? contentFileName;
-  String? anchor;
-  String? htmlContent;
   List<EpubChapter> subChapters;
+
+  String? anchor;
+  String? contentFileName;
+  String? htmlContent;
+  String? title;
 
   @override
   int get hashCode => Object.hashAll([
-        title.hashCode,
-        contentFileName.hashCode,
         anchor.hashCode,
+        contentFileName.hashCode,
         htmlContent.hashCode,
+        title.hashCode,
         ...subChapters.map((subChapter) => subChapter.hashCode),
       ]);
 
@@ -30,10 +31,10 @@ class EpubChapter {
       return false;
     }
 
-    return title == other.title &&
+    return anchor == other.anchor &&
         contentFileName == other.contentFileName &&
-        anchor == other.anchor &&
         htmlContent == other.htmlContent &&
+        title == other.title &&
         listsEqual(subChapters, other.subChapters);
   }
 

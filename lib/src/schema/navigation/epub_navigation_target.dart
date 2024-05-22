@@ -3,20 +3,22 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigationTarget {
   EpubNavigationTarget({
+    EpubNavigationContent? content,
+    List<EpubNavigationLabel>? navigationLabels,
     this.id,
     this.classAttribute,
     this.value,
     this.playOrder,
-    this.navigationLabels,
-    this.content,
-  });
+  })  : this.navigationLabels = navigationLabels ?? [],
+        this.content = EpubNavigationContent();
+
+  EpubNavigationContent content;
+  List<EpubNavigationLabel> navigationLabels;
 
   String? id;
   String? classAttribute;
   String? value;
   String? playOrder;
-  List<EpubNavigationLabel>? navigationLabels;
-  EpubNavigationContent? content;
 
   @override
   int get hashCode => Object.hashAll([
@@ -25,7 +27,7 @@ class EpubNavigationTarget {
         value.hashCode,
         playOrder.hashCode,
         content.hashCode,
-        ...navigationLabels!.map((label) => label.hashCode)
+        ...navigationLabels.map((label) => label.hashCode)
       ]);
 
   @override

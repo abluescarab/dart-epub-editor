@@ -3,17 +3,18 @@ import 'package:quiver/collection.dart';
 
 class EpubMetadataTranslatedString extends EpubMetadataField {
   EpubMetadataTranslatedString({
+    Map<String, String>? attributes,
     super.id,
     this.value,
     this.dir,
     this.lang,
-    this.attributes,
-  });
+  }) : this.attributes = attributes ?? {};
+
+  Map<String, String> attributes;
 
   String? value;
   String? dir;
   String? lang;
-  Map<String, String>? attributes;
 
   @override
   int get hashCode => Object.hashAll([
@@ -21,8 +22,8 @@ class EpubMetadataTranslatedString extends EpubMetadataField {
         value.hashCode,
         dir.hashCode,
         lang.hashCode,
-        ...?attributes?.keys.map((e) => e.hashCode),
-        ...?attributes?.values.map((e) => e.hashCode),
+        ...attributes.keys.map((e) => e.hashCode),
+        ...attributes.values.map((e) => e.hashCode),
       ]);
 
   @override

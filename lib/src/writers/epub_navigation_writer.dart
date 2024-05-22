@@ -20,9 +20,9 @@ class EpubNavigationWriter {
       nest: () {
         builder.namespace(Namespaces.ncx);
 
-        _writeNavigationHead(builder, navigation.head!);
-        _writeNavigationDocTitle(builder, navigation.docTitle!);
-        _writeNavigationMap(builder, navigation.navMap!);
+        _writeNavigationHead(builder, navigation.head);
+        _writeNavigationDocTitle(builder, navigation.docTitle);
+        _writeNavigationMap(builder, navigation.navMap);
       },
     );
 
@@ -39,7 +39,8 @@ class EpubNavigationWriter {
     );
   }
 
-  static void _writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
+  static void _writeNavigationHead(
+      XmlBuilder builder, EpubNavigationHead head) {
     builder.element('head', nest: () {
       head.metadata.forEach((item) => builder.element(
             'meta',

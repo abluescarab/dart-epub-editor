@@ -14,40 +14,34 @@ class EpubBookRef {
   EpubBookRef({
     required this.archive,
     EpubSchema? schema,
-    String? author,
-    List<String?>? authorList,
     EpubMetadataTranslatedString? title,
+    List<String?>? authors,
     EpubContentRef? content,
   }) : this.schema = schema ?? EpubSchema() {
-    this.title = title ?? this.schema.package.metadata?.titles.first;
-    this.authorList = authorList ??
-        this
-            .schema
-            .package
-            .metadata
-            ?.creators
-            .map((creator) => creator.name)
-            .toList();
-    this.author = author ?? authorList?.join(", ");
+    final metadata = this.schema.package.metadata;
+
+    this.title =
+        title ?? (metadata.titles.isNotEmpty ? metadata.titles.first : null);
+    this.authors =
+        authors ?? metadata.creators.map((creator) => creator.name).toList();
     this.content = content ?? _parseContentMap();
   }
 
-  /// Main title.
   Archive archive;
   EpubSchema schema;
+
+  /// Main title.
   EpubMetadataTranslatedString? title;
-  String? author;
-  List<String?>? authorList;
+  List<String?>? authors;
   EpubContentRef? content;
 
   @override
   int get hashCode => Object.hashAll([
         archive.hashCode,
         title.hashCode,
-        author.hashCode,
         schema.hashCode,
         content.hashCode,
-        ...authorList?.map((author) => author.hashCode) ?? [0],
+        ...authors?.map((author) => author.hashCode) ?? [0],
       ]);
 
   @override
@@ -58,10 +52,9 @@ class EpubBookRef {
 
     return archive == other.archive &&
         title == other.title &&
-        author == other.author &&
         schema == other.schema &&
         content == other.content &&
-        listsEqual(authorList, other.authorList);
+        listsEqual(authors, other.authors);
   }
 
   Future<List<EpubChapterRef>> getChapters() async {
@@ -121,7 +114,7 @@ class EpubBookRef {
       allFiles: <String, EpubTextContentFileRef>{},
     );
 
-    schema.package.manifest!.items.forEach((manifestItem) {
+    schema.package.manifest.items.forEach((manifestItem) {
       final fileName = manifestItem.href;
       final contentMimeType = manifestItem.mediaType!;
       final contentType = _getContentTypeByContentMimeType(contentMimeType);

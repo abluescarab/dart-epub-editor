@@ -49,7 +49,7 @@ main() async {
 
           if (book != null) {
             final package = EpubPackageWriter.writeContent(
-              book.schema!.package,
+              book.schema.package,
             );
             final packageSplit = package.split("\n");
             final originalSplit = (epub.value["package"] as String).split("\n");

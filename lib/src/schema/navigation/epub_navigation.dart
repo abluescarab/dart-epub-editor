@@ -8,20 +8,25 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigation {
   EpubNavigation({
-    this.head,
-    this.docTitle,
-    this.docAuthors,
-    this.navMap,
-    this.pageList,
-    this.navLists,
-  });
+    EpubNavigationMap? navMap,
+    List<EpubNavigationDocAuthor>? docAuthors,
+    EpubNavigationHead? head,
+    EpubNavigationDocTitle? docTitle,
+    EpubNavigationPageList? pageList,
+    List<EpubNavigationList>? navLists,
+  })  : this.navMap = navMap ?? EpubNavigationMap(),
+        this.docAuthors = docAuthors ?? [],
+        this.head = head ?? EpubNavigationHead(),
+        this.docTitle = docTitle ?? EpubNavigationDocTitle(),
+        this.pageList = pageList ?? EpubNavigationPageList(),
+        this.navLists = navLists ?? [];
 
-  EpubNavigationHead? head;
-  EpubNavigationDocTitle? docTitle;
-  List<EpubNavigationDocAuthor>? docAuthors;
-  EpubNavigationMap? navMap;
-  EpubNavigationPageList? pageList;
-  List<EpubNavigationList>? navLists;
+  EpubNavigationMap navMap;
+  List<EpubNavigationDocAuthor> docAuthors;
+  EpubNavigationHead head;
+  EpubNavigationDocTitle docTitle;
+  EpubNavigationPageList pageList;
+  List<EpubNavigationList> navLists;
 
   @override
   int get hashCode => Object.hashAll([
@@ -29,8 +34,8 @@ class EpubNavigation {
         docTitle.hashCode,
         navMap.hashCode,
         pageList.hashCode,
-        ...docAuthors?.map((author) => author.hashCode) ?? [0],
-        ...navLists?.map((navList) => navList.hashCode) ?? [0]
+        ...docAuthors.map((author) => author.hashCode),
+        ...navLists.map((navList) => navList.hashCode)
       ]);
 
   @override

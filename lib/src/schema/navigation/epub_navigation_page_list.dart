@@ -2,7 +2,9 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_page_target.da
 import 'package:quiver/collection.dart';
 
 class EpubNavigationPageList {
-  EpubNavigationPageList({required this.targets});
+  EpubNavigationPageList({
+    List<EpubNavigationPageTarget>? targets,
+  }) : this.targets = targets ?? [];
 
   List<EpubNavigationPageTarget> targets;
 

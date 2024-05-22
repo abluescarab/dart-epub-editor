@@ -39,13 +39,13 @@ class NavigationReader {
     EpubNavigation result;
 
     if (package.version == EpubVersion.epub2) {
-      final tocId = package.spine!.tableOfContents;
+      final tocId = package.spine.tableOfContents;
 
       if (tocId == null || tocId.isEmpty) {
         throw Exception('EPUB parsing error: TOC ID is empty.');
       }
 
-      final tocManifestItem = package.manifest!.items
+      final tocManifestItem = package.manifest.items
           .cast<EpubManifestItem?>()
           .firstWhereOrNull(
               (item) => item!.id!.toLowerCase() == tocId.toLowerCase());
@@ -148,7 +148,7 @@ class NavigationReader {
       );
     } else {
       //Version 3
-      final tocManifestItem = package.manifest!.items
+      final tocManifestItem = package.manifest.items
           .cast<EpubManifestItem?>()
           .firstWhereOrNull((element) => element!.properties == 'nav');
 
@@ -209,7 +209,7 @@ class NavigationReader {
 
       result = EpubNavigation(
         docTitle: EpubNavigationDocTitle(
-          titles: package.metadata?.titles
+          titles: package.metadata.titles
               .map((titleElement) => titleElement.value ?? '')
               .toList(),
         ),
@@ -397,12 +397,12 @@ class NavigationReader {
         .forEach((navigationListChildNode) {
       switch (navigationListChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          result.navigationLabels!.add(
+          result.navigationLabels.add(
             readNavigationLabel(navigationListChildNode),
           );
           break;
         case 'navtarget':
-          result.navigationTargets!.add(
+          result.navigationTargets.add(
             readNavigationTarget(navigationListChildNode),
           );
           break;
@@ -639,7 +639,7 @@ class NavigationReader {
         .forEach((navigationTargetChildNode) {
       switch (navigationTargetChildNode.name.local.toLowerCase()) {
         case 'navlabel':
-          result.navigationLabels!.add(
+          result.navigationLabels.add(
             readNavigationLabel(navigationTargetChildNode),
           );
           break;
@@ -649,7 +649,7 @@ class NavigationReader {
       }
     });
 
-    if (result.navigationLabels!.isEmpty) {
+    if (result.navigationLabels.isEmpty) {
       throw Exception(
         'Incorrect EPUB navigation target: at least one navLabel element is '
         'required.',

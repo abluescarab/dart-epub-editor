@@ -31,7 +31,7 @@ main() async {
   test("Test Epub Read", () async {
     final epubRef = await EpubReader.readBook(bytes);
 
-    expect(epubRef.author, equals("Mary Wollstonecraft Shelley"));
+    expect(epubRef.authors?.first, "Mary Wollstonecraft Shelley");
     expect(
       epubRef.mainTitle?.value,
       equals("Frankenstein; Or, The Modern Prometheus"),

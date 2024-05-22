@@ -4,23 +4,25 @@ import 'package:quiver/collection.dart';
 
 class EpubNavigationList {
   EpubNavigationList({
+    List<EpubNavigationLabel>? navigationLabels,
+    List<EpubNavigationTarget>? navigationTargets,
     this.id,
     this.classAttribute,
-    this.navigationLabels,
-    this.navigationTargets,
-  });
+  })  : this.navigationLabels = navigationLabels ?? [],
+        this.navigationTargets = navigationTargets ?? [];
+
+  List<EpubNavigationLabel> navigationLabels;
+  List<EpubNavigationTarget> navigationTargets;
 
   String? id;
   String? classAttribute;
-  List<EpubNavigationLabel>? navigationLabels;
-  List<EpubNavigationTarget>? navigationTargets;
 
   @override
   int get hashCode => Object.hashAll([
         id.hashCode,
         classAttribute.hashCode,
-        ...navigationLabels?.map((label) => label.hashCode) ?? [0],
-        ...navigationTargets?.map((target) => target.hashCode) ?? [0]
+        ...navigationLabels.map((label) => label.hashCode),
+        ...navigationTargets.map((target) => target.hashCode)
       ]);
 
   @override

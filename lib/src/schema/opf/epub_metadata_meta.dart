@@ -3,6 +3,7 @@ import 'package:quiver/collection.dart';
 
 class EpubMetadataMeta extends EpubMetadataField {
   EpubMetadataMeta({
+    Map<String, String>? attributes,
     super.id,
     this.name,
     this.content,
@@ -12,8 +13,9 @@ class EpubMetadataMeta extends EpubMetadataField {
     this.scheme,
     this.dir,
     this.lang,
-    Map<String, String>? attributes,
   }) : this.attributes = attributes ?? {};
+
+  Map<String, String> attributes;
 
   String? name;
   String? content;
@@ -21,7 +23,6 @@ class EpubMetadataMeta extends EpubMetadataField {
   String? refines;
   String? property;
   String? scheme;
-  Map<String, String> attributes;
   String? dir;
   String? lang;
 

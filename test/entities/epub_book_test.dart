@@ -11,8 +11,7 @@ import 'package:test/test.dart';
 
 main() async {
   final reference = EpubBook(
-    author: "orthros",
-    authorList: ["orthros"],
+    authors: ["orthros"],
     chapters: [EpubChapter()],
     content: EpubContent(),
     // coverImage = Image(width: 100, height: 100),
@@ -24,8 +23,7 @@ main() async {
 
   setUp(() async {
     testBook = EpubBook(
-      author: "orthros",
-      authorList: ["orthros"],
+      authors: ["orthros"],
       chapters: [EpubChapter()],
       content: EpubContent(),
       // coverImage = Image(width: 100, height: 100),
@@ -57,13 +55,8 @@ main() async {
         expect(testBook, isNot(reference));
       });
 
-      test("is false when Author changes", () async {
-        testBook!.author = "NotOrthros";
-        expect(testBook, isNot(reference));
-      });
-
-      test("is false when AuthorList changes", () async {
-        testBook!.authorList = ["NotOrthros"];
+      test("is false when Authors changes", () async {
+        testBook!.authors = ["NotOrthros"];
         expect(testBook, isNot(reference));
       });
 
@@ -113,13 +106,8 @@ main() async {
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Author changes", () async {
-        testBook!.author = "NotOrthros";
-        expect(testBook.hashCode, isNot(reference.hashCode));
-      });
-
-      test("is false when AuthorList changes", () async {
-        testBook!.authorList = ["NotOrthros"];
+      test("is false when Authors changes", () async {
+        testBook!.authors = ["NotOrthros"];
         expect(testBook.hashCode, isNot(reference.hashCode));
       });
 

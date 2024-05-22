@@ -2,7 +2,9 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_point.dart';
 import 'package:quiver/collection.dart';
 
 class EpubNavigationMap {
-  EpubNavigationMap({required this.points});
+  EpubNavigationMap({
+    List<EpubNavigationPoint>? points,
+  }) : this.points = points ?? [];
 
   List<EpubNavigationPoint> points;
 

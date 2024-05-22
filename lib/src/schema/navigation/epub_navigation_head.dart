@@ -2,7 +2,9 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_head_meta.dart
 import 'package:quiver/collection.dart';
 
 class EpubNavigationHead {
-  EpubNavigationHead({required this.metadata});
+  EpubNavigationHead({
+    List<EpubNavigationHeadMeta>? metadata,
+  }) : this.metadata = metadata ?? [];
 
   List<EpubNavigationHeadMeta> metadata;
 

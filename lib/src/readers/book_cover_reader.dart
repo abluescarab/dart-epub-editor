@@ -10,7 +10,7 @@ class BookCoverReader {
 
     // ------------------- Version 3 method ------------------- //
     // - Read cover image in version 3 method.
-    if (manifest?.items != null && manifest!.items.isNotEmpty) {
+    if (manifest.items.isNotEmpty) {
       final coverImageItem = manifest.items.firstWhereOrNull(
           (epubManifestItem) => epubManifestItem.properties == 'cover-image');
 
@@ -26,7 +26,7 @@ class BookCoverReader {
 
     // ------------------- Version 2 method ------------------- //
     // - Read cover image in version 2 method.
-    final metaItems = bookRef.schema.package.metadata!.metaItems;
+    final metaItems = bookRef.schema.package.metadata.metaItems;
 
     if (metaItems.isEmpty) {
       return null;
@@ -45,7 +45,7 @@ class BookCoverReader {
       );
     }
 
-    final coverManifestItem = bookRef.schema.package.manifest!.items
+    final coverManifestItem = bookRef.schema.package.manifest.items
         .firstWhereOrNull((manifestItem) =>
             manifestItem.id!.toLowerCase() ==
             coverMetaItem.content!.toLowerCase());

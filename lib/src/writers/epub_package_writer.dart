@@ -82,11 +82,8 @@ class EpubPackageWriter {
         );
 
         writeManifest(builder, package.manifest);
-        writeSpine(builder, package.spine!);
-
-        if (package.guide != null) {
-          writeGuide(builder, package.guide);
-        }
+        writeSpine(builder, package.spine);
+        writeGuide(builder, package.guide);
       },
     );
 

@@ -3,9 +3,9 @@ import 'package:quiver/collection.dart';
 
 class EpubByteContentFile extends EpubContentFile {
   EpubByteContentFile({
-    super.fileName,
     super.contentType,
     super.contentMimeType,
+    super.fileName,
     required this.content,
   });
 
@@ -25,9 +25,9 @@ class EpubByteContentFile extends EpubContentFile {
       return false;
     }
 
-    return listsEqual(content, other.content) &&
-        contentMimeType == other.contentMimeType &&
+    return contentMimeType == other.contentMimeType &&
         contentType == other.contentType &&
-        fileName == other.fileName;
+        fileName == other.fileName &&
+        listsEqual(content, other.content);
   }
 }

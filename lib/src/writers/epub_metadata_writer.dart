@@ -44,11 +44,7 @@ class EpubMetadataWriter {
 
   static void _writeString(XmlBuilder builder, EpubMetadataString item) {
     _writeId(builder, item);
-
-    if (item.attributes != null) {
-      item.attributes!.forEach((key, value) => builder.attribute(key, value));
-    }
-
+    item.attributes.forEach((key, value) => builder.attribute(key, value));
     builder.text(item.value!);
   }
 
@@ -66,10 +62,7 @@ class EpubMetadataWriter {
       builder.attribute('lang', item.lang!, namespace: 'xml');
     }
 
-    if (item.attributes != null) {
-      item.attributes!.forEach((key, value) => builder.attribute(key, value));
-    }
-
+    item.attributes.forEach((key, value) => builder.attribute(key, value));
     builder.text(item.value!);
   }
 

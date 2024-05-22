@@ -36,7 +36,7 @@ class EpubWriter {
     ));
 
     // Add all content to the archive
-    book.content!.allFiles.forEach((name, file) {
+    book.content.allFiles.forEach((name, file) {
       List<int>? content;
 
       if (file is EpubByteContentFile) {
@@ -47,7 +47,7 @@ class EpubWriter {
 
       arch.addFile(
         ArchiveFile(
-          ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
+          ZipPathUtils.combine(book.schema.contentDirectoryPath, name)!,
           content!.length,
           content,
         ),
@@ -55,11 +55,11 @@ class EpubWriter {
     });
 
     // Generate the content.opf file and add it to the Archive
-    final contentOpf = EpubPackageWriter.writeContent(book.schema!.package);
+    final contentOpf = EpubPackageWriter.writeContent(book.schema.package);
 
     arch.addFile(
       ArchiveFile(
-        ZipPathUtils.combine(book.schema!.contentDirectoryPath, 'content.opf')!,
+        ZipPathUtils.combine(book.schema.contentDirectoryPath, 'content.opf')!,
         contentOpf.length,
         utf8.encode(contentOpf),
       ),

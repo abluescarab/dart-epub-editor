@@ -7,32 +7,32 @@ import 'package:quiver/collection.dart';
 
 class EpubBook {
   EpubBook({
+    EpubSchema? schema,
+    EpubContent? content,
+    List<EpubChapter>? chapters,
     this.mainTitle,
-    this.author,
-    this.authorList,
-    this.schema,
-    this.content,
+    this.authors,
     this.coverImage,
-    this.chapters,
-  });
+  })  : this.schema = schema ?? EpubSchema(),
+        this.content = content ?? EpubContent(),
+        this.chapters = chapters ?? [];
+
+  EpubSchema schema;
+  EpubContent content;
+  List<EpubChapter> chapters;
 
   EpubMetadataTranslatedString? mainTitle;
-  String? author;
-  List<String?>? authorList;
-  EpubSchema? schema;
-  EpubContent? content;
+  List<String?>? authors;
   EpubByteContentFileRef? coverImage;
-  List<EpubChapter>? chapters;
 
   @override
   int get hashCode => Object.hashAll([
-        mainTitle.hashCode,
-        author.hashCode,
         schema.hashCode,
         content.hashCode,
+        mainTitle.hashCode,
+        ...chapters.map((chapter) => chapter.hashCode),
+        ...authors?.map((author) => author.hashCode) ?? [0],
         ...coverImage?.getContentStream().map((byte) => byte.hashCode) ?? [0],
-        ...authorList?.map((author) => author.hashCode) ?? [0],
-        ...chapters?.map((chapter) => chapter.hashCode) ?? [0],
       ]);
 
   @override
@@ -41,11 +41,10 @@ class EpubBook {
       return false;
     }
 
-    return mainTitle == other.mainTitle &&
-        author == other.author &&
-        listsEqual(authorList, other.authorList) &&
-        schema == other.schema &&
+    return schema == other.schema &&
         content == other.content &&
+        mainTitle == other.mainTitle &&
+        listsEqual(authors, other.authors) &&
         listsEqual(coverImage?.getContentStream(),
             other.coverImage?.getContentStream()) &&
         listsEqual(chapters, other.chapters);

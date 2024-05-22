@@ -3,13 +3,14 @@ import 'package:quiver/collection.dart';
 
 class EpubSpine {
   EpubSpine({
+    List<EpubSpineItemRef>? items,
     this.tableOfContents,
     this.ltr,
-    List<EpubSpineItemRef>? items,
   }) : this.items = items ?? [];
 
-  String? tableOfContents;
   List<EpubSpineItemRef> items;
+
+  String? tableOfContents;
   bool? ltr;
 
   @override

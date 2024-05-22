@@ -14,8 +14,7 @@ main() async {
   final reference = EpubBookRef(
     archive: arch,
     schema: EpubSchema(),
-    author: "orthros",
-    authorList: ["orthros"],
+    authors: ["orthros"],
     title: EpubMetadataTranslatedString(value: "A Dissertation on Epubs"),
   );
 
@@ -25,8 +24,7 @@ main() async {
     testBookRef = EpubBookRef(
       archive: arch,
       schema: EpubSchema(),
-      author: "orthros",
-      authorList: ["orthros"],
+      authors: ["orthros"],
       title: EpubMetadataTranslatedString(value: "A Dissertation on Epubs"),
     );
   });
@@ -54,13 +52,8 @@ main() async {
         expect(testBookRef, isNot(reference));
       });
 
-      test("is false when Author changes", () async {
-        testBookRef!.author = "NotOrthros";
-        expect(testBookRef, isNot(reference));
-      });
-
-      test("is false when AuthorList changes", () async {
-        testBookRef!.authorList = ["NotOrthros"];
+      test("is false when Authors changes", () async {
+        testBookRef!.authors = ["NotOrthros"];
         expect(testBookRef, isNot(reference));
       });
 
@@ -97,13 +90,8 @@ main() async {
         expect(testBookRef, isNot(reference));
       });
 
-      test("is false when Author changes", () async {
-        testBookRef!.author = "NotOrthros";
-        expect(testBookRef.hashCode, isNot(reference.hashCode));
-      });
-
-      test("is false when AuthorList changes", () async {
-        testBookRef!.authorList = ["NotOrthros"];
+      test("is false when Authors changes", () async {
+        testBookRef!.authors = ["NotOrthros"];
         expect(testBookRef.hashCode, isNot(reference.hashCode));
       });
 

@@ -18,9 +18,9 @@ class SchemaReader {
     );
 
     return EpubSchema(
-      contentDirectoryPath: contentDirectoryPath,
       package: package,
       navigation: navigation,
+      contentDirectoryPath: contentDirectoryPath,
     );
   }
 }

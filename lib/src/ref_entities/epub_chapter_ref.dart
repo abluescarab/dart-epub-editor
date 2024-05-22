@@ -3,18 +3,19 @@ import 'package:quiver/collection.dart';
 
 class EpubChapterRef {
   EpubChapterRef({
+    List<EpubChapterRef>? subChapters,
     this.epubTextContentFileRef,
     this.title,
     this.contentFileName,
     this.anchor,
-    List<EpubChapterRef>? subChapters,
   }) : this.subChapters = subChapters ?? [];
+
+  List<EpubChapterRef> subChapters;
 
   EpubTextContentFileRef? epubTextContentFileRef;
   String? title;
   String? contentFileName;
   String? anchor;
-  List<EpubChapterRef> subChapters;
 
   @override
   int get hashCode => Object.hashAll([

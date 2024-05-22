@@ -18,7 +18,7 @@ main() async {
       classAttribute: reference.classAttribute,
       content: reference.content,
       id: reference.id,
-      navigationLabels: List.from(reference.navigationLabels!),
+      navigationLabels: List.from(reference.navigationLabels),
       playOrder: reference.playOrder,
       value: reference.value,
     );
