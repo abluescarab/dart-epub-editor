@@ -10,10 +10,10 @@ class EpubMetadataMeta extends EpubMetadataField {
     this.refines,
     this.property,
     this.scheme,
-    this.attributes,
     this.dir,
     this.lang,
-  });
+    Map<String, String>? attributes,
+  }) : this.attributes = attributes ?? {};
 
   String? name;
   String? content;
@@ -21,7 +21,7 @@ class EpubMetadataMeta extends EpubMetadataField {
   String? refines;
   String? property;
   String? scheme;
-  Map<String, String>? attributes;
+  Map<String, String> attributes;
   String? dir;
   String? lang;
 
@@ -34,8 +34,8 @@ class EpubMetadataMeta extends EpubMetadataField {
         refines.hashCode,
         property.hashCode,
         scheme.hashCode,
-        ...?attributes?.keys.map((e) => e.hashCode),
-        ...?attributes?.values.map((e) => e.hashCode),
+        ...attributes.keys.map((e) => e.hashCode),
+        ...attributes.values.map((e) => e.hashCode),
         dir.hashCode,
         lang.hashCode,
       ]);

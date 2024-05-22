@@ -202,8 +202,8 @@ class PackageReader {
                   .where((meta) => meta.property == 'alternate-script')
                   .map((meta) => EpubMetadataAlternateScript(
                         value: meta.textContent, // Name in another language.
-                        lang: meta.attributes?['lang'],
-                        dir: meta.attributes?['dir'],
+                        lang: meta.attributes['lang'],
+                        dir: meta.attributes['dir'],
                       ))
                   .toList()
               ..displaySeq = int.tryParse(
@@ -343,9 +343,7 @@ class PackageReader {
 
   /// [readMetadata MetaVersion2] and [readMetadata MetaVersion3] have been merged for backward compatibility.
   static EpubMetadataMeta readMetadataMeta(XmlElement metadataMetaNode) {
-    final result = EpubMetadataMeta(
-      attributes: {},
-    );
+    final result = EpubMetadataMeta();
 
     metadataMetaNode.attributes.forEach(
       (metadataMetaNodeAttribute) {
@@ -353,7 +351,7 @@ class PackageReader {
             metadataMetaNodeAttribute.name.local.toLowerCase();
         final attributeValue = valueOrInnerText(metadataMetaNodeAttribute);
 
-        result.attributes![attributeName] = attributeValue;
+        result.attributes[attributeName] = attributeValue;
 
         switch (attributeName) {
           case 'id':
