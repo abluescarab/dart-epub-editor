@@ -130,21 +130,21 @@ class EpubReader {
 
   static Future<EpubByteContentFile> readByteContentFile(
     EpubContentFileRef contentFileRef,
-  ) async {
-    return EpubByteContentFile(
-      fileName: contentFileRef.fileName,
-      contentType: contentFileRef.contentType,
-      contentMimeType: contentFileRef.contentMimeType,
-      content: await contentFileRef.readContentAsBytes(),
-    );
-  }
+  ) async =>
+      EpubByteContentFile(
+        fileName: contentFileRef.fileName,
+        contentType: contentFileRef.contentType,
+        contentMimeType: contentFileRef.contentMimeType,
+        content: await contentFileRef.readContentAsBytes(),
+      );
 
   static Future<List<EpubChapter>> readChapters(
-      List<EpubChapterRef> chapterRefs) async {
+    List<EpubChapterRef> chapterRefs,
+  ) async {
     final result = <EpubChapter>[];
 
-    await Future.forEach(chapterRefs, (EpubChapterRef chapterRef) async {
-      result.add(
+    chapterRefs.forEach(
+      (chapterRef) async => result.add(
         EpubChapter(
           title: chapterRef.title,
           contentFileName: chapterRef.contentFileName,
@@ -152,8 +152,8 @@ class EpubReader {
           htmlContent: await chapterRef.readHtmlContent(),
           subChapters: await readChapters(chapterRef.subChapters),
         ),
-      );
-    });
+      ),
+    );
 
     return result;
   }
