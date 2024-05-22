@@ -7,7 +7,7 @@ import 'package:quiver/collection.dart';
 
 class EpubBook {
   EpubBook({
-    required this.mainTitle,
+    this.mainTitle,
     this.author,
     this.authorList,
     this.schema,
@@ -16,7 +16,7 @@ class EpubBook {
     this.chapters,
   });
 
-  EpubMetadataTranslatedString mainTitle;
+  EpubMetadataTranslatedString? mainTitle;
   String? author;
   List<String?>? authorList;
   EpubSchema? schema;

@@ -33,7 +33,7 @@ main() async {
 
     expect(epubRef.author, equals("Mary Wollstonecraft Shelley"));
     expect(
-      epubRef.mainTitle.value,
+      epubRef.mainTitle?.value,
       equals("Frankenstein; Or, The Modern Prometheus"),
     );
   });
