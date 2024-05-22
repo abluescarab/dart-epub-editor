@@ -48,8 +48,9 @@ class EpubReader {
   /// Additional information is loaded in the [schema] property such as the
   /// Epub version, Publishers, Languages and more.
   static Future<EpubBookRef> openBook(FutureOr<List<int>> bytes) async {
-    final epubArchive =
-        ZipDecoder().decodeBytes(bytes is Future ? await bytes : bytes);
+    final epubArchive = ZipDecoder().decodeBytes(
+      bytes is Future ? await bytes : bytes,
+    );
 
     return EpubBookRef(
       archive: epubArchive,
@@ -78,7 +79,6 @@ class EpubReader {
       css: await readTextContentFiles(contentRef.css),
       images: await readByteContentFiles(contentRef.images),
       fonts: await readByteContentFiles(contentRef.fonts),
-      allFiles: <String, EpubContentFile>{},
     );
 
     result
@@ -87,10 +87,11 @@ class EpubReader {
       ..images.forEach((key, value) => result.allFiles[key] = value)
       ..fonts.forEach((key, value) => result.allFiles[key] = value);
 
-    await Future.forEach(contentRef.allFiles.keys, (dynamic key) async {
+    contentRef.allFiles.keys.forEach((key) async {
       if (!result.allFiles.containsKey(key)) {
-        result.allFiles[key] =
-            await readByteContentFile(contentRef.allFiles[key]!);
+        result.allFiles[key] = await readByteContentFile(
+          contentRef.allFiles[key]!,
+        );
       }
     });
 
@@ -102,8 +103,8 @@ class EpubReader {
   ) async {
     final result = <String, EpubTextContentFile>{};
 
-    await Future.forEach(textContentFileRefs.keys, (dynamic key) async {
-      EpubContentFileRef value = textContentFileRefs[key]!;
+    textContentFileRefs.keys.forEach((key) async {
+      final value = textContentFileRefs[key]!;
 
       result[key] = EpubTextContentFile(
         fileName: value.fileName,
@@ -121,7 +122,7 @@ class EpubReader {
   ) async {
     final result = <String, EpubByteContentFile>{};
 
-    await Future.forEach(byteContentFileRefs.keys, (dynamic key) async {
+    byteContentFileRefs.keys.forEach((key) async {
       result[key] = await readByteContentFile(byteContentFileRefs[key]!);
     });
 
