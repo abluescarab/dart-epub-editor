@@ -20,16 +20,16 @@ class EpubNavigationWriter {
       nest: () {
         builder.namespace(Namespaces.ncx);
 
-        writeNavigationHead(builder, navigation.head!);
-        writeNavigationDocTitle(builder, navigation.docTitle!);
-        writeNavigationMap(builder, navigation.navMap!);
+        _writeNavigationHead(builder, navigation.head!);
+        _writeNavigationDocTitle(builder, navigation.docTitle!);
+        _writeNavigationMap(builder, navigation.navMap!);
       },
     );
 
     return builder.buildDocument().toXmlString(pretty: true);
   }
 
-  static void writeNavigationDocTitle(
+  static void _writeNavigationDocTitle(
     XmlBuilder builder,
     EpubNavigationDocTitle title,
   ) {
@@ -39,7 +39,7 @@ class EpubNavigationWriter {
     );
   }
 
-  static void writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
+  static void _writeNavigationHead(XmlBuilder builder, EpubNavigationHead head) {
     builder.element('head', nest: () {
       head.metadata.forEach((item) => builder.element(
             'meta',
@@ -51,13 +51,13 @@ class EpubNavigationWriter {
     });
   }
 
-  static void writeNavigationMap(XmlBuilder builder, EpubNavigationMap map) {
+  static void _writeNavigationMap(XmlBuilder builder, EpubNavigationMap map) {
     builder.element('navMap', nest: () {
-      map.points.forEach((item) => writeNavigationPoint(builder, item));
+      map.points.forEach((item) => _writeNavigationPoint(builder, item));
     });
   }
 
-  static void writeNavigationPoint(
+  static void _writeNavigationPoint(
     XmlBuilder builder,
     EpubNavigationPoint point,
   ) {
