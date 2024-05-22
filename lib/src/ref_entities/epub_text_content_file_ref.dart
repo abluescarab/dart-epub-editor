@@ -10,7 +10,7 @@ class EpubTextContentFileRef extends EpubContentFileRef {
     super.contentMimeType,
   });
 
-  Future<String> ReadContentAsync() async {
+  Future<String> readContent() async {
     return readContentAsText();
   }
 }
