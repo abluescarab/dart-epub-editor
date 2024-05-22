@@ -106,13 +106,7 @@ class EpubBookRef {
   }
 
   EpubContentRef _parseContentMap() {
-    final result = EpubContentRef(
-      html: <String, EpubTextContentFileRef>{},
-      css: <String, EpubTextContentFileRef>{},
-      images: <String, EpubByteContentFileRef>{},
-      fonts: <String, EpubByteContentFileRef>{},
-      allFiles: <String, EpubTextContentFileRef>{},
-    );
+    final result = EpubContentRef();
 
     schema.package.manifest.items.forEach((manifestItem) {
       final fileName = manifestItem.href;
