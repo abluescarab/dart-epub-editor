@@ -3,12 +3,12 @@ import 'package:quiver/core.dart';
 
 class EpubSchema {
   EpubSchema({
-    this.package,
     this.navigation,
     this.contentDirectoryPath,
-  });
+    EpubPackage? package,
+  }) : this.package = package ?? EpubPackage();
 
-  EpubPackage? package;
+  EpubPackage package;
   EpubNavigation? navigation;
   String? contentDirectoryPath;
 

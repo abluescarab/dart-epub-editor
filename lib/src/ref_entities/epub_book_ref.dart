@@ -19,9 +19,9 @@ class EpubBookRef {
     EpubMetadataTranslatedString? title,
     EpubContentRef? content,
   }) {
-    title = title ?? schema?.package?.metadata?.titles.first;
+    title = title ?? schema?.package.metadata?.titles.first;
     authorList = authorList ??
-        schema?.package?.metadata?.creators
+        schema?.package.metadata?.creators
             .map((creator) => creator.name)
             .toList();
     author = author ?? authorList?.join(", ");
@@ -117,7 +117,7 @@ class EpubBookRef {
       allFiles: <String, EpubTextContentFileRef>{},
     );
 
-    schema!.package!.manifest!.items.forEach((manifestItem) {
+    schema!.package.manifest!.items.forEach((manifestItem) {
       final fileName = manifestItem.href;
       final contentMimeType = manifestItem.mediaType!;
       final contentType = _getContentTypeByContentMimeType(contentMimeType);
