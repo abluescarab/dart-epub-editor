@@ -1,5 +1,5 @@
 import 'package:archive/archive.dart';
-import 'package:epub_editor/src/entities/epub_content_type.dart';
+import 'package:epub_editor/src/utils/types/epub_content_type.dart';
 import 'package:epub_editor/src/entities/epub_schema.dart';
 import 'package:epub_editor/src/readers/book_cover_reader.dart';
 import 'package:epub_editor/src/readers/chapter_reader.dart';

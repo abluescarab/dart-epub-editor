@@ -3,8 +3,8 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_contributor.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
 import 'package:epub_editor/src/utils/namespaces.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 
 class EpubMetadataWriter {

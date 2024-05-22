@@ -2,8 +2,8 @@ import 'package:epub_editor/src/schema/opf/epub_guide.dart';
 import 'package:epub_editor/src/schema/opf/epub_manifest.dart';
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
 import 'package:epub_editor/src/schema/opf/epub_spine.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
 import 'package:epub_editor/src/utils/namespaces.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 import 'epub_metadata_writer.dart';
 

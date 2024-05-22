@@ -6,7 +6,7 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_author.dar
 import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_title.dart';
 import 'package:epub_editor/src/schema/opf/epub_guide.dart';
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:test/test.dart';
 
 main() async {

@@ -1,7 +1,7 @@
 library epubreadertest;
 
 import 'package:archive/archive.dart';
-import 'package:epub_editor/src/entities/epub_content_type.dart';
+import 'package:epub_editor/src/utils/types/epub_content_type.dart';
 import 'package:epub_editor/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
 import 'package:test/test.dart';

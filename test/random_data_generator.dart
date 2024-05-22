@@ -22,7 +22,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart'
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
 import 'package:epub_editor/src/schema/opf/epub_spine.dart';
 import 'package:epub_editor/src/schema/opf/epub_spine_item_ref.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 
 class RandomString {
   RandomString(this.rng);

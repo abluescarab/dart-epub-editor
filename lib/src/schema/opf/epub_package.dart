@@ -2,7 +2,7 @@ import 'package:epub_editor/src/schema/opf/epub_guide.dart';
 import 'package:epub_editor/src/schema/opf/epub_manifest.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata.dart';
 import 'package:epub_editor/src/schema/opf/epub_spine.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:quiver/collection.dart';
 
 class EpubPackage {

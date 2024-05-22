@@ -1,6 +1,6 @@
 import 'package:epub_editor/src/schema/navigation/epub_navigation_content.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_label.dart';
-import 'package:epub_editor/src/schema/navigation/epub_navigation_page_target_type.dart';
+import 'package:epub_editor/src/utils/types/epub_navigation_page_target_type.dart';
 import 'package:quiver/collection.dart';
 
 class EpubNavigationPageTarget {

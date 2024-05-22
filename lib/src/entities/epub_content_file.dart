@@ -1,5 +1,5 @@
 import 'package:epub_editor/epub_editor.dart';
-import 'package:epub_editor/src/entities/epub_content_type.dart';
+import 'package:epub_editor/src/utils/types/epub_content_type.dart';
 import 'package:quiver/core.dart';
 
 abstract class EpubContentFile {

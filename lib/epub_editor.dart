@@ -10,7 +10,6 @@ export 'src/entities/epub_byte_content_file.dart';
 export 'src/entities/epub_chapter.dart';
 export 'src/entities/epub_content.dart';
 export 'src/entities/epub_content_file.dart';
-export 'src/entities/epub_content_type.dart';
 export 'src/entities/epub_schema.dart';
 export 'src/entities/epub_text_content_file.dart';
 
@@ -34,7 +33,6 @@ export 'src/schema/navigation/epub_navigation_list.dart';
 export 'src/schema/navigation/epub_navigation_map.dart';
 export 'src/schema/navigation/epub_navigation_page_list.dart';
 export 'src/schema/navigation/epub_navigation_page_target.dart';
-export 'src/schema/navigation/epub_navigation_page_target_type.dart';
 export 'src/schema/navigation/epub_navigation_point.dart';
 export 'src/schema/navigation/epub_navigation_target.dart';
 
@@ -55,10 +53,12 @@ export 'src/schema/opf/epub_metadata_translated_string.dart';
 export 'src/schema/opf/epub_package.dart';
 export 'src/schema/opf/epub_spine.dart';
 export 'src/schema/opf/epub_spine_item_ref.dart';
-export 'src/schema/opf/epub_version.dart';
 
 // writers
 export 'src/writers/epub_package_writer.dart'; // export for testing
 
 // utils
 export 'src/utils/enum_from_string.dart';
+export 'src/utils/types/epub_content_type.dart';
+export 'src/utils/types/epub_navigation_page_target_type.dart';
+export 'src/utils/types/epub_version.dart';

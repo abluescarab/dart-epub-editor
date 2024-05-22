@@ -1,7 +1,7 @@
 library epubreadertest;
 
 import 'package:epub_editor/src/entities/epub_byte_content_file.dart';
-import 'package:epub_editor/src/entities/epub_content_type.dart';
+import 'package:epub_editor/src/utils/types/epub_content_type.dart';
 import 'package:test/test.dart';
 
 main() async {

@@ -3,7 +3,7 @@ library epubreadertest;
 import 'dart:math';
 
 import 'package:epub_editor/src/schema/opf/epub_package.dart';
-import 'package:epub_editor/src/schema/opf/epub_version.dart';
+import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
