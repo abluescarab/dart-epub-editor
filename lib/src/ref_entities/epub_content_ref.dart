@@ -9,7 +9,7 @@ class EpubContentRef {
     Map<String, EpubTextContentFileRef>? css,
     Map<String, EpubByteContentFileRef>? images,
     Map<String, EpubByteContentFileRef>? fonts,
-    Map<String, EpubTextContentFileRef>? allFiles,
+    Map<String, EpubContentFileRef>? allFiles,
   })  : this.html = html ?? {},
         this.css = css ?? {},
         this.images = images ?? {},
