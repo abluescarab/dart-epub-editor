@@ -57,7 +57,7 @@ class PackageReader {
   }
 
   static EpubGuide readGuide(XmlElement guideNode) {
-    final result = EpubGuide();
+    final guideReferences = <EpubGuideReference>[];
 
     guideNode.children.whereType<XmlElement>().forEach((guideReferenceNode) {
       if (guideReferenceNode.name.local.toLowerCase() == 'reference') {
@@ -87,15 +87,15 @@ class PackageReader {
           throw Exception('Incorrect EPUB guide: item href is missing');
         }
 
-        result.items.add(guideReference);
+        guideReferences.add(guideReference);
       }
     });
 
-    return result;
+    return EpubGuide(items: guideReferences);
   }
 
   static EpubManifest readManifest(XmlElement manifestNode) {
-    final result = EpubManifest();
+    final manifestItems = <EpubManifestItem>[];
 
     manifestNode.children.whereType<XmlElement>().forEach((manifestItemNode) {
       if (manifestItemNode.name.local.toLowerCase() == 'item') {
@@ -149,11 +149,11 @@ class PackageReader {
           );
         }
 
-        result.items.add(manifestItem);
+        manifestItems.add(manifestItem);
       }
     });
 
-    return result;
+    return EpubManifest(items: manifestItems);
   }
 
   static EpubMetadata readMetadata(
