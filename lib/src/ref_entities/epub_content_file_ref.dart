@@ -14,17 +14,17 @@ abstract class EpubContentFileRef {
     this.contentMimeType,
   });
 
+  EpubBookRef epubBookRef;
   String? fileName;
   EpubContentType? contentType;
   String? contentMimeType;
-  EpubBookRef epubBookRef;
 
   @override
   int get hashCode => hash4(
+        epubBookRef.hashCode,
         fileName.hashCode,
         contentMimeType.hashCode,
         contentType.hashCode,
-        epubBookRef.hashCode,
       );
 
   @override
