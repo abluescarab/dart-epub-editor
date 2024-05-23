@@ -64,10 +64,11 @@ class EpubReader {
 
     return EpubBook(
       schema: epubBookRef.schema,
-      mainTitle: epubBookRef.title!,
       content: await readContent(epubBookRef.content!),
-      coverImage: await epubBookRef.readCover(),
       chapters: await readChapters(await epubBookRef.getChapters()),
+      mainTitle: epubBookRef.title,
+      authors: epubBookRef.authors,
+      coverImage: await epubBookRef.readCover(),
     );
   }
 
