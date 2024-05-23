@@ -8,7 +8,6 @@ main() async {
     anchor: "anchor",
     contentFileName: "orthros",
     htmlContent: "<html></html>",
-    subChapters: [],
     title: "A New Look at Chapters",
   );
 
@@ -19,7 +18,6 @@ main() async {
       anchor: "anchor",
       contentFileName: "orthros",
       htmlContent: "<html></html>",
-      subChapters: [],
       title: "A New Look at Chapters",
     );
   });
