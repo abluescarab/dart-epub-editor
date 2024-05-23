@@ -9,27 +9,26 @@ class EpubPackage {
   EpubPackage({
     EpubMetadata? metadata,
     EpubSpine? spine,
-    EpubGuide? guide,
     EpubManifest? manifest,
     EpubVersion? version,
     this.uniqueIdentifier,
     this.namespaces,
+    this.guide,
     this.dir,
     this.lang,
   })  : this.metadata = metadata ?? EpubMetadata(),
         this.spine = spine ?? EpubSpine(),
-        this.guide = guide ?? EpubGuide(),
         this.manifest = manifest ?? EpubManifest(),
         this.version = version ?? EpubVersion.epub2;
 
   EpubMetadata metadata;
   EpubSpine spine;
-  EpubGuide guide;
   EpubManifest manifest;
   EpubVersion version;
 
   String? uniqueIdentifier;
   Map<String, String>? namespaces;
+  EpubGuide? guide;
   String? dir;
   String? lang;
 

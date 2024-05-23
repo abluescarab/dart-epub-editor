@@ -39,9 +39,9 @@ class EpubPackageWriter {
     );
   }
 
-  static void writeGuide(XmlBuilder builder, EpubGuide? guide) {
+  static void writeGuide(XmlBuilder builder, EpubGuide guide) {
     builder.element('guide', nest: () {
-      guide!.items.forEach((guideItem) => builder.element(
+      guide.items.forEach((guideItem) => builder.element(
             'reference',
             attributes: {
               'type': guideItem.type!,
@@ -83,7 +83,10 @@ class EpubPackageWriter {
 
         writeManifest(builder, package.manifest);
         writeSpine(builder, package.spine);
-        writeGuide(builder, package.guide);
+
+        if (package.guide != null) {
+          writeGuide(builder, package.guide!);
+        }
       },
     );
 
