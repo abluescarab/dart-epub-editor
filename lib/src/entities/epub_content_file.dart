@@ -4,13 +4,13 @@ import 'package:quiver/core.dart';
 
 abstract class EpubContentFile {
   EpubContentFile({
-    this.contentType,
     this.contentMimeType,
+    this.contentType,
     this.fileName,
   });
 
-  EpubContentType? contentType;
   String? contentMimeType;
+  EpubContentType? contentType;
   String? fileName;
 
   @override

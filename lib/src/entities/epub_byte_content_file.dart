@@ -3,8 +3,8 @@ import 'package:quiver/collection.dart';
 
 class EpubByteContentFile extends EpubContentFile {
   EpubByteContentFile({
-    super.contentType,
     super.contentMimeType,
+    super.contentType,
     super.fileName,
     required this.content,
   });

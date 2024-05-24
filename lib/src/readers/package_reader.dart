@@ -411,6 +411,37 @@ class PackageReader {
         ),
       );
 
+  static EpubSpine readSpine(XmlElement spineNode) {
+    final tocAttribute = spineNode.getAttribute('toc');
+    final pageProgression = spineNode.getAttribute(
+      'page-progression-direction',
+    );
+    final result = EpubSpine(
+      tableOfContents: tocAttribute,
+      ltr: pageProgression == null || pageProgression.toLowerCase() == 'ltr',
+    );
+
+    spineNode.children.whereType<XmlElement>().forEach((spineItemNode) {
+      if (spineItemNode.name.local.toLowerCase() == 'itemref') {
+        final idRefAttribute = spineItemNode.getAttribute('idref');
+
+        if (idRefAttribute == null || idRefAttribute.isEmpty) {
+          throw Exception('Incorrect EPUB spine: item ID ref is missing');
+        }
+
+        final linearAttribute = spineItemNode.getAttribute('linear');
+
+        result.items.add(EpubSpineItemRef(
+          idRef: idRefAttribute,
+          isLinear:
+              linearAttribute == null || linearAttribute.toLowerCase() == 'yes',
+        ));
+      }
+    });
+
+    return result;
+  }
+
   static Future<EpubPackage> readPackage(
     Archive epubArchive,
     String rootFilePath,
@@ -481,37 +512,6 @@ class PackageReader {
     if (guideNode != null) {
       result.guide = readGuide(guideNode);
     }
-
-    return result;
-  }
-
-  static EpubSpine readSpine(XmlElement spineNode) {
-    final tocAttribute = spineNode.getAttribute('toc');
-    final pageProgression = spineNode.getAttribute(
-      'page-progression-direction',
-    );
-    final result = EpubSpine(
-      tableOfContents: tocAttribute,
-      ltr: pageProgression == null || pageProgression.toLowerCase() == 'ltr',
-    );
-
-    spineNode.children.whereType<XmlElement>().forEach((spineItemNode) {
-      if (spineItemNode.name.local.toLowerCase() == 'itemref') {
-        final idRefAttribute = spineItemNode.getAttribute('idref');
-
-        if (idRefAttribute == null || idRefAttribute.isEmpty) {
-          throw Exception('Incorrect EPUB spine: item ID ref is missing');
-        }
-
-        final linearAttribute = spineItemNode.getAttribute('linear');
-
-        result.items.add(EpubSpineItemRef(
-          idRef: idRefAttribute,
-          isLinear:
-              linearAttribute == null || linearAttribute.toLowerCase() == 'yes',
-        ));
-      }
-    });
 
     return result;
   }
