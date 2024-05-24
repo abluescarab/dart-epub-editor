@@ -15,7 +15,7 @@ class EpubNavigationWriter {
       'ncx',
       attributes: {
         'version': '2005-1',
-        'lang': 'en',
+        'xml:lang': 'en',
       },
       nest: () {
         builder.namespace(Namespaces.ncx);
