@@ -5,6 +5,7 @@ import 'package:epub_editor/src/entities/epub_book.dart';
 import 'package:epub_editor/src/entities/epub_byte_content_file.dart';
 import 'package:epub_editor/src/entities/epub_text_content_file.dart';
 import 'package:epub_editor/src/utils/zip_path_utils.dart';
+import 'package:epub_editor/src/writers/epub_navigation_writer.dart';
 import 'package:epub_editor/src/writers/epub_package_writer.dart';
 
 class EpubWriter {
@@ -45,25 +46,31 @@ class EpubWriter {
         content = utf8.encode(file.content);
       }
 
-      arch.addFile(
-        ArchiveFile(
-          ZipPathUtils.combine(book.schema.contentDirectoryPath, name)!,
-          content!.length,
-          content,
-        ),
-      );
+      arch.addFile(ArchiveFile(
+        ZipPathUtils.combine(book.schema.contentDirectoryPath, name)!,
+        content!.length,
+        content,
+      ));
     });
 
     // Generate the content.opf file and add it to the Archive
     final contentOpf = EpubPackageWriter.writeContent(book.schema.package);
 
-    arch.addFile(
-      ArchiveFile(
-        ZipPathUtils.combine(book.schema.contentDirectoryPath, 'content.opf')!,
-        contentOpf.length,
-        utf8.encode(contentOpf),
-      ),
-    );
+    arch.addFile(ArchiveFile(
+      ZipPathUtils.combine(book.schema.contentDirectoryPath, 'content.opf')!,
+      contentOpf.length,
+      utf8.encode(contentOpf),
+    ));
+
+    final navigationFile =
+        EpubNavigationWriter.writeNavigation(book.schema.navigation);
+
+    // TODO: also write to toc.xhtml with xhtml format if epub3
+    arch.addFile(ArchiveFile(
+      ZipPathUtils.combine(book.schema.contentDirectoryPath, 'toc.ncx')!,
+      navigationFile.length,
+      utf8.encode(navigationFile),
+    ));
 
     return arch;
   }
