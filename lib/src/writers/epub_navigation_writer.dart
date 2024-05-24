@@ -70,8 +70,8 @@ class EpubNavigationWriter {
     EpubNavigationPoint point,
   ) {
     builder.element('navPoint', attributes: {
-      'id': point.id!,
-      'playOrder': point.playOrder!,
+      if (point.id != null) 'id': point.id!,
+      if (point.playOrder != null) 'playOrder': point.playOrder!,
     }, nest: () {
       point.navigationLabels.forEach((element) {
         builder.element('navLabel', nest: () {
