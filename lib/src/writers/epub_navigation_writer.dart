@@ -45,7 +45,9 @@ class EpubNavigationWriter {
   }
 
   static void _writeNavigationHead(
-      XmlBuilder builder, EpubNavigationHead head) {
+    XmlBuilder builder,
+    EpubNavigationHead head,
+  ) {
     builder.element('head', nest: () {
       head.metadata.forEach((item) => builder.element(
             'meta',
