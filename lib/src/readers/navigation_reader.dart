@@ -139,6 +139,7 @@ class NavigationReader {
           ),
         );
 
+    // TODO: head section is blank
     return EpubNavigation(
       docAuthors: docAuthors,
       pageList:
