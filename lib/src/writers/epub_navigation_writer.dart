@@ -10,7 +10,7 @@ class EpubNavigationWriter {
   static String writeNavigation(EpubNavigation navigation) {
     final builder = XmlBuilder();
 
-    builder.processing('xml', 'version="1.0"');
+    builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element(
       'ncx',
       attributes: {
