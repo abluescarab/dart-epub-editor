@@ -20,9 +20,4 @@ class EpubSpineItemRef {
 
     return idRef == other.idRef && isLinear == other.isLinear;
   }
-
-  @override
-  String toString() {
-    return 'IdRef: $idRef';
-  }
 }

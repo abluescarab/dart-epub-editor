@@ -22,9 +22,4 @@ class EpubGuideReference {
 
     return type == other.type && title == other.title && href == other.href;
   }
-
-  @override
-  String toString() {
-    return 'Type: $type, Href: $href';
-  }
 }

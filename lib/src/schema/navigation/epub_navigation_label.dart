@@ -14,9 +14,4 @@ class EpubNavigationLabel {
 
     return text == other.text;
   }
-
-  @override
-  String toString() {
-    return text;
-  }
 }

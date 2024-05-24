@@ -42,9 +42,4 @@ class EpubChapterRef {
   Future<String> readHtmlContent() async {
     return epubTextContentFileRef!.readContentAsText();
   }
-
-  @override
-  String toString() {
-    return 'Title: $title, Subchapter count: ${subChapters.length}';
-  }
 }

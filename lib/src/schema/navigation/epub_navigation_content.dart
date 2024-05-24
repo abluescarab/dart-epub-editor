@@ -20,9 +20,4 @@ class EpubNavigationContent {
 
     return id == other.id && source == other.source;
   }
-
-  @override
-  String toString() {
-    return 'Source: $source';
-  }
 }

@@ -50,10 +50,4 @@ class EpubManifestItem {
         fallbackStyle == other.fallbackStyle &&
         properties == other.properties;
   }
-
-  @override
-  String toString() {
-    return 'Id: $id, Href = $href, MediaType = $mediaType, Properties = '
-        '$properties, MediaOverlay = $mediaOverlay';
-  }
 }

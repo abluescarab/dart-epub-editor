@@ -37,9 +37,4 @@ class EpubChapter {
         title == other.title &&
         listsEqual(subChapters, other.subChapters);
   }
-
-  @override
-  String toString() {
-    return 'Title: $title, Subchapter count: ${subChapters.length}';
-  }
 }

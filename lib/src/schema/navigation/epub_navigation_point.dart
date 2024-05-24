@@ -43,9 +43,4 @@ class EpubNavigationPoint {
         content == other.content &&
         listsEqual(childNavigationPoints, other.childNavigationPoints);
   }
-
-  @override
-  String toString() {
-    return 'id: $id, content.source: ${content?.source}';
-  }
 }
