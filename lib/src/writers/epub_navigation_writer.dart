@@ -35,7 +35,12 @@ class EpubNavigationWriter {
   ) {
     builder.element(
       'docTitle',
-      nest: () => title.titles.forEach((element) => builder.text(element)),
+      nest: () => title.titles.forEach(
+        (element) => builder.element(
+          'text',
+          nest: () => builder.text(element),
+        ),
+      ),
     );
   }
 
