@@ -5,14 +5,21 @@ class EpubNavigationHeadMeta {
     this.name,
     this.content,
     this.scheme,
+    this.charset,
   });
 
   String? name;
   String? content;
   String? scheme;
+  String? charset;
 
   @override
-  int get hashCode => hash3(name.hashCode, content.hashCode, scheme.hashCode);
+  int get hashCode => hash4(
+        name.hashCode,
+        content.hashCode,
+        scheme.hashCode,
+        charset.hashCode,
+      );
 
   @override
   bool operator ==(other) {
@@ -22,6 +29,7 @@ class EpubNavigationHeadMeta {
 
     return name == other.name &&
         content == other.content &&
-        scheme == other.scheme;
+        scheme == other.scheme &&
+        charset == other.charset;
   }
 }
