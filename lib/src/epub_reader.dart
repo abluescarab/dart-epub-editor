@@ -1,18 +1,24 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:archive/archive.dart';
+import 'package:collection/collection.dart';
 import 'package:epub_editor/src/entities/epub_book.dart';
 import 'package:epub_editor/src/entities/epub_byte_content_file.dart';
 import 'package:epub_editor/src/entities/epub_chapter.dart';
 import 'package:epub_editor/src/entities/epub_content.dart';
+import 'package:epub_editor/src/entities/epub_schema.dart';
 import 'package:epub_editor/src/entities/epub_text_content_file.dart';
-import 'package:epub_editor/src/readers/schema_reader.dart';
+import 'package:epub_editor/src/readers/navigation_reader.dart';
+import 'package:epub_editor/src/readers/package_reader.dart';
 import 'package:epub_editor/src/ref_entities/epub_book_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_byte_content_file_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_chapter_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_content_file_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_content_ref.dart';
 import 'package:epub_editor/src/ref_entities/epub_text_content_file_ref.dart';
+import 'package:epub_editor/src/utils/zip_path_utils.dart';
+import 'package:xml/xml.dart';
 
 /// A class that provides the primary interface to read Epub files.
 ///
@@ -53,7 +59,7 @@ class EpubReader {
 
     return EpubBookRef(
       archive: epubArchive,
-      schema: await SchemaReader.readSchema(epubArchive),
+      schema: await _readSchema(epubArchive),
     );
   }
 
@@ -64,7 +70,7 @@ class EpubReader {
 
     return EpubBook(
       schema: epubBookRef.schema,
-      content: await readContent(epubBookRef.content!),
+      content: await _readContent(epubBookRef.content!),
       chapters: await readChapters(await epubBookRef.getChapters()),
       mainTitle: epubBookRef.title,
       authors: epubBookRef.authors,
@@ -72,12 +78,12 @@ class EpubReader {
     );
   }
 
-  static Future<EpubContent> readContent(EpubContentRef contentRef) async {
+  static Future<EpubContent> _readContent(EpubContentRef contentRef) async {
     final result = EpubContent(
-      html: await readTextContentFiles(contentRef.html),
-      css: await readTextContentFiles(contentRef.css),
-      images: await readByteContentFiles(contentRef.images),
-      fonts: await readByteContentFiles(contentRef.fonts),
+      html: await _readTextContentFiles(contentRef.html),
+      css: await _readTextContentFiles(contentRef.css),
+      images: await _readByteContentFiles(contentRef.images),
+      fonts: await _readByteContentFiles(contentRef.fonts),
     );
 
     result
@@ -88,7 +94,7 @@ class EpubReader {
 
     contentRef.allFiles.keys.forEach((key) async {
       if (!result.allFiles.containsKey(key)) {
-        result.allFiles[key] = await readByteContentFile(
+        result.allFiles[key] = await _readByteContentFile(
           contentRef.allFiles[key]!,
         );
       }
@@ -97,7 +103,7 @@ class EpubReader {
     return result;
   }
 
-  static Future<Map<String, EpubTextContentFile>> readTextContentFiles(
+  static Future<Map<String, EpubTextContentFile>> _readTextContentFiles(
     Map<String, EpubTextContentFileRef> textContentFileRefs,
   ) async {
     final result = <String, EpubTextContentFile>{};
@@ -116,19 +122,19 @@ class EpubReader {
     return result;
   }
 
-  static Future<Map<String, EpubByteContentFile>> readByteContentFiles(
+  static Future<Map<String, EpubByteContentFile>> _readByteContentFiles(
     Map<String, EpubByteContentFileRef> byteContentFileRefs,
   ) async {
     final result = <String, EpubByteContentFile>{};
 
     byteContentFileRefs.keys.forEach((key) async {
-      result[key] = await readByteContentFile(byteContentFileRefs[key]!);
+      result[key] = await _readByteContentFile(byteContentFileRefs[key]!);
     });
 
     return result;
   }
 
-  static Future<EpubByteContentFile> readByteContentFile(
+  static Future<EpubByteContentFile> _readByteContentFile(
     EpubContentFileRef contentFileRef,
   ) async =>
       EpubByteContentFile(
@@ -156,5 +162,62 @@ class EpubReader {
     );
 
     return result;
+  }
+
+  /// Reads the path for the ePub root file in the [archive].
+  static Future<String> _readRootFilePath(Archive archive) async {
+    const containerFilePath = "META-INF/container.xml";
+    final containerFileEntry = archive.files
+        .firstWhereOrNull((element) => element.name == containerFilePath);
+
+    if (containerFileEntry == null) {
+      throw Exception(
+        "EPUB parsing error: $containerFilePath file not found in archive.",
+      );
+    }
+
+    final packageElement =
+        XmlDocument.parse(utf8.decode(containerFileEntry.content))
+            .findAllElements(
+              "container",
+              namespace: "urn:oasis:names:tc:opendocument:xmlns:container",
+            )
+            .firstOrNull;
+
+    if (packageElement == null) {
+      throw Exception("EPUB parsing error: invalid epub container");
+    }
+
+    final rootFileElement = packageElement.descendants.firstWhereOrNull(
+      (element) => (element is XmlElement) && "rootfile" == element.name.local,
+    ) as XmlElement;
+
+    final rootFilePath = rootFileElement.getAttribute("full-path");
+
+    if (rootFilePath == null) {
+      throw Exception(
+        "EPUB parsing error: root file not found in $containerFilePath",
+      );
+    }
+
+    return rootFilePath;
+  }
+
+  /// Reads the [EpubSchema] from a given [archive].
+  static Future<EpubSchema> _readSchema(Archive archive) async {
+    final rootFilePath = await _readRootFilePath(archive);
+    final contentDirectoryPath = ZipPathUtils.getDirectoryPath(rootFilePath);
+    final package = await PackageReader.readPackage(archive, rootFilePath);
+    final navigation = await NavigationReader.readNavigation(
+      archive,
+      contentDirectoryPath,
+      package,
+    );
+
+    return EpubSchema(
+      package: package,
+      navigation: navigation,
+      contentDirectoryPath: contentDirectoryPath,
+    );
   }
 }
