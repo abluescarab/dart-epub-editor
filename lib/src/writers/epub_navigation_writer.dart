@@ -3,10 +3,12 @@ import 'package:epub_editor/src/schema/navigation/epub_navigation_doc_title.dart
 import 'package:epub_editor/src/schema/navigation/epub_navigation_head.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_map.dart';
 import 'package:epub_editor/src/schema/navigation/epub_navigation_point.dart';
+import 'package:epub_editor/src/utils/encode_xml_string.dart';
 import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
 
 class EpubNavigationWriter {
+  // TODO: also write toc.xhtml if epub3
   static String writeNavigation(EpubNavigation navigation) {
     final builder = XmlBuilder();
 
@@ -38,7 +40,7 @@ class EpubNavigationWriter {
       nest: () => title.titles.forEach(
         (element) => builder.element(
           'text',
-          nest: () => builder.text(element),
+          nest: () => builder.text(encodeXmlString(element)),
         ),
       ),
     );
@@ -52,8 +54,10 @@ class EpubNavigationWriter {
       head.metadata.forEach((item) => builder.element(
             'meta',
             attributes: {
-              'content': item.content!,
-              'name': item.name!,
+              if (item.name != null) 'name': item.name!,
+              if (item.content != null) 'content': item.content!,
+              if (item.scheme != null) 'scheme': item.scheme!,
+              if (item.charset != null) 'charset': item.charset!,
             },
           ));
     });
@@ -75,9 +79,16 @@ class EpubNavigationWriter {
     }, nest: () {
       point.navigationLabels.forEach((element) {
         builder.element('navLabel', nest: () {
-          builder.element('text', nest: () => builder.text(element.text));
+          builder.element(
+            'text',
+            nest: () => builder.text(encodeXmlString(element.text)),
+          );
         });
       });
+
+      point.childNavigationPoints.forEach(
+        (childPoint) => _writeNavigationPoint(builder, childPoint),
+      );
 
       builder.element('content', attributes: {'src': point.content!.source!});
     });

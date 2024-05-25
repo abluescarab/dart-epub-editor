@@ -3,6 +3,7 @@ import 'package:epub_editor/src/schema/opf/epub_metadata_contributor.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_field.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_string.dart';
 import 'package:epub_editor/src/schema/opf/epub_metadata_translated_string.dart';
+import 'package:epub_editor/src/utils/encode_xml_string.dart';
 import 'package:epub_editor/src/utils/namespaces.dart';
 import 'package:epub_editor/src/utils/types/epub_version.dart';
 import 'package:xml/src/xml/builder.dart' show XmlBuilder;
@@ -39,13 +40,13 @@ class EpubMetadataWriter {
       builder.attribute('lang', item.lang!, namespace: 'xml');
     }
 
-    builder.text(item.name!);
+    builder.text(encodeXmlString(item.name!));
   }
 
   static void _writeString(XmlBuilder builder, EpubMetadataString item) {
     _writeId(builder, item);
     item.attributes.forEach((key, value) => builder.attribute(key, value));
-    builder.text(item.value!);
+    builder.text(encodeXmlString(item.value!));
   }
 
   static void _writeTranslatedString(
@@ -63,7 +64,7 @@ class EpubMetadataWriter {
     }
 
     item.attributes.forEach((key, value) => builder.attribute(key, value));
-    builder.text(item.value!);
+    builder.text(encodeXmlString(item.value!));
   }
 
   static void writeMetadata(
@@ -110,7 +111,7 @@ class EpubMetadataWriter {
                     );
                   }
 
-                  builder.text(item.date!);
+                  builder.text(encodeXmlString(item.date!));
                 },
               ))
           ..descriptions.forEach((item) => builder.element(
@@ -137,7 +138,7 @@ class EpubMetadataWriter {
                     );
                   }
 
-                  builder.text(item.identifier!);
+                  builder.text(encodeXmlString(item.identifier!));
                 },
               ))
           ..languages.forEach((item) => builder.element(
@@ -190,7 +191,7 @@ class EpubMetadataWriter {
             }
 
             if (item.textContent != null && item.textContent!.isNotEmpty) {
-              builder.text(item.textContent!);
+              builder.text(encodeXmlString(item.textContent!));
             }
           }),
         );

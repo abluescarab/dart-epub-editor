@@ -1,5 +1,3 @@
-// ignore: omit_local_variable_types
-
 import 'dart:convert';
 
 import 'package:archive/archive.dart';
@@ -31,19 +29,14 @@ import 'package:xml/xml.dart';
 class NavigationReader {
   static String? _tocFileEntryPath;
 
-  // TODO: navigation not working for Alice
   static EpubNavigation readNavigation(
     Archive epubArchive,
     String contentDirectoryPath,
     EpubPackage package,
-  ) {
-    if (package.version == EpubVersion.epub2) {
-      return readNavigationV2(epubArchive, contentDirectoryPath, package);
-    } else {
-      //Version 3
-      return readNavigationV3(epubArchive, contentDirectoryPath, package);
-    }
-  }
+  ) =>
+      package.version == EpubVersion.epub2
+          ? readNavigationV2(epubArchive, contentDirectoryPath, package)
+          : readNavigationV3(epubArchive, contentDirectoryPath, package);
 
   static EpubNavigation readNavigationV2(
     Archive epubArchive,
@@ -115,7 +108,14 @@ class NavigationReader {
 
     ncxNode.findElements('docAuthor', namespace: Namespaces.ncx).forEach(
           (docAuthorNode) => docAuthors.add(
-            readNavigationDocAuthor(docAuthorNode),
+            EpubNavigationDocAuthor(
+              authors: docAuthorNode.children
+                  .where((child) =>
+                      child is XmlElement &&
+                      child.name.local.toLowerCase() == 'text')
+                  .map((e) => valueOrInnerText(e))
+                  .toList(),
+            ),
           ),
         );
 
@@ -139,14 +139,31 @@ class NavigationReader {
           ),
         );
 
-    // TODO: head section is blank
     return EpubNavigation(
       docAuthors: docAuthors,
-      pageList:
-          pageListNode != null ? readNavigationPageList(pageListNode) : null,
+      pageList: pageListNode != null
+          ? EpubNavigationPageList(
+              targets: pageListNode.children
+                  .where((e) => e is XmlElement && e.name.local == 'pageTarget')
+                  .map((e) => readNavigationPageTarget(e as XmlElement))
+                  .toList(),
+            )
+          : null,
       head: readNavigationHead(headNode),
-      docTitle: readNavigationDocTitle(docTitleNode),
-      navMap: readNavigationMap(navMapNode),
+      docTitle: EpubNavigationDocTitle(
+        titles: docTitleNode.children
+            .where((child) =>
+                child is XmlElement && child.name.local.toLowerCase() == 'text')
+            .map((e) => valueOrInnerText(e))
+            .toList(),
+      ),
+      navMap: EpubNavigationMap(
+        points: navMapNode.children
+            .where((e) =>
+                e is XmlElement && e.name.local.toLowerCase() == 'navpoint')
+            .map((e) => readNavigationPoint(e as XmlElement))
+            .toList(),
+      ),
       navLists: navLists,
     );
   }
@@ -208,14 +225,24 @@ class NavigationReader {
       );
     }
 
+    var playOrder = 1;
+
     return EpubNavigation(
       docTitle: EpubNavigationDocTitle(
         titles: package.metadata.titles
             .map((titleElement) => titleElement.value ?? '')
             .toList(),
       ),
-      docAuthors: [],
-      navMap: readNavigationMapV3(navNode.findElements('ol').single),
+      head: readNavigationHead(headNode),
+      navMap: EpubNavigationMap(
+        points: navNode
+            .findElements('ol')
+            .single
+            .children
+            .where((e) => e is XmlElement && e.name.local.toLowerCase() == 'li')
+            .map((e) => readNavigationPointV3(e as XmlElement, playOrder++))
+            .toList(),
+      ),
     );
   }
 
@@ -278,64 +305,68 @@ class NavigationReader {
     return result;
   }
 
-  static String extractContentPath(String tocFileEntryPath, String ref) {
-    if (!tocFileEntryPath.endsWith('/')) {
-      tocFileEntryPath += '/';
-    }
+  // static String extractContentPath(
+  //   String tocFileEntryPath,
+  //   String ref,
+  // ) {
+  //   if (!tocFileEntryPath.endsWith('/')) {
+  //     tocFileEntryPath += '/';
+  //   }
+  //
+  //   return (tocFileEntryPath + ref)
+  //     ..replaceAll('/\./', '/')
+  //     ..replaceAll(RegExp(r'/[^/]+/\.\./'), '/')
+  //     ..replaceAll(RegExp(r'^[^/]+/\.\./'), '');
+  // }
+  //
+  // static EpubNavigationHead readNavigationHeadV3(
+  //   XmlElement headNode,
+  // ) {
+  //   return EpubNavigationHead(
+  //       metadata: headNode.children
+  //           .where((child) =>
+  //               child is XmlElement && child.name.local.toLowerCase() == 'meta')
+  //           .map((e) {
+  //     final meta = EpubNavigationHeadMeta();
+  //
+  //     e.attributes.forEach((metaNodeAttribute) {
+  //       final attributeValue = metaNodeAttribute.value;
+  //
+  //       switch(metaNodeAttribute.name.local.toLowerCase()) {
+  //
+  //       }
+  //     })
+  //   }));
+  // }
 
-    return (tocFileEntryPath + ref)
-      ..replaceAll('/\./', '/')
-      ..replaceAll(RegExp(r'/[^/]+/\.\./'), '/')
-      ..replaceAll(RegExp(r'^[^/]+/\.\./'), '');
-  }
+  static EpubNavigationHead readNavigationHead(XmlElement headNode) {
+    return EpubNavigationHead(
+        metadata: headNode.children
+            .where((child) =>
+                child is XmlElement && child.name.local.toLowerCase() == 'meta')
+            .map((e) {
+      final meta = EpubNavigationHeadMeta();
 
-  static EpubNavigationDocAuthor readNavigationDocAuthor(
-    XmlElement docAuthorNode,
-  ) =>
-      EpubNavigationDocAuthor(
-          authors: docAuthorNode.children
-              .where((child) =>
-                  child is XmlElement &&
-                  child.name.local.toLowerCase() == 'text')
-              .map((e) => valueOrInnerText(e))
-              .toList());
+      e.attributes.forEach((metaNodeAttribute) {
+        final attributeValue = metaNodeAttribute.value;
 
-  static EpubNavigationDocTitle readNavigationDocTitle(
-    XmlElement docTitleNode,
-  ) =>
-      EpubNavigationDocTitle(
-          titles: docTitleNode.children
-              .where((child) =>
-                  child is XmlElement &&
-                  child.name.local.toLowerCase() == 'text')
-              .map((e) => valueOrInnerText(e))
-              .toList());
+        switch (metaNodeAttribute.name.local.toLowerCase()) {
+          case 'name':
+            meta.name = attributeValue;
+            break;
+          case 'content':
+            meta.content = attributeValue;
+            break;
+          case 'scheme':
+            meta.scheme = attributeValue;
+            break;
+          case 'charset':
+            meta.charset = attributeValue;
+            break;
+        }
+      });
 
-  static EpubNavigationHead readNavigationHead(XmlElement headNode) =>
-      EpubNavigationHead(
-          metadata: headNode.children
-              .where((child) =>
-                  child is XmlElement &&
-                  child.name.local.toLowerCase() == 'meta')
-              .map((e) {
-        final meta = EpubNavigationHeadMeta();
-
-        e.attributes.forEach((metaNodeAttribute) {
-          final attributeValue = metaNodeAttribute.value;
-
-          switch (metaNodeAttribute.name.local.toLowerCase()) {
-            case 'name':
-              meta.name = attributeValue;
-              break;
-            case 'content':
-              meta.content = attributeValue;
-              break;
-            case 'scheme':
-              meta.scheme = attributeValue;
-              break;
-          }
-        });
-
+      if (meta.charset == null) {
         if (meta.name == null || meta.name!.isEmpty) {
           throw Exception(
             'Incorrect EPUB navigation meta: meta name is missing.',
@@ -347,9 +378,11 @@ class NavigationReader {
             'Incorrect EPUB navigation meta: meta content is missing.',
           );
         }
+      }
 
-        return meta;
-      }).toList());
+      return meta;
+    }).toList());
+  }
 
   static EpubNavigationLabel readNavigationLabel(
     XmlElement navigationLabelNode,
@@ -368,11 +401,6 @@ class NavigationReader {
       text: valueOrInnerText(navigationLabelTextNode),
     );
   }
-
-  static EpubNavigationLabel readNavigationLabelV3(
-    XmlElement navigationLabelNode,
-  ) =>
-      EpubNavigationLabel(text: valueOrInnerText(navigationLabelNode).trim());
 
   static EpubNavigationList readNavigationList(XmlElement navigationListNode) {
     final result = EpubNavigationList();
@@ -409,33 +437,6 @@ class NavigationReader {
 
     return result;
   }
-
-  static EpubNavigationMap readNavigationMap(XmlElement navigationMapNode) {
-    return EpubNavigationMap(
-        points: navigationMapNode.children
-            .where((e) =>
-                e is XmlElement && e.name.local.toLowerCase() == 'navpoint')
-            .map((e) => readNavigationPoint(e as XmlElement))
-            .toList());
-  }
-
-  static EpubNavigationMap readNavigationMapV3(XmlElement navigationMapNode) {
-    return EpubNavigationMap(
-      points: navigationMapNode.children
-          .where((e) => e is XmlElement && e.name.local.toLowerCase() == 'li')
-          .map((e) => readNavigationPointV3(e as XmlElement))
-          .toList(),
-    );
-  }
-
-  static EpubNavigationPageList readNavigationPageList(
-    XmlElement navigationPageListNode,
-  ) =>
-      EpubNavigationPageList(
-          targets: navigationPageListNode.children
-              .where((e) => e is XmlElement && e.name.local == 'pageTarget')
-              .map((e) => readNavigationPageTarget(e as XmlElement))
-              .toList());
 
   static EpubNavigationPageTarget readNavigationPageTarget(
     XmlElement navigationPageTargetNode,
@@ -562,6 +563,7 @@ class NavigationReader {
 
   static EpubNavigationPoint readNavigationPointV3(
     XmlElement navigationPointNode,
+    int playOrder,
   ) {
     final result = EpubNavigationPoint();
 
@@ -572,13 +574,19 @@ class NavigationReader {
         case 'a':
         case 'span':
           result.navigationLabels.add(
-            readNavigationLabelV3(navigationPointChildNode),
+            EpubNavigationLabel(
+              text: valueOrInnerText(navigationPointChildNode).trim(),
+            ),
           );
+          result.id = navigationPointChildNode.getAttribute('id');
+          result.playOrder = playOrder.toString();
           result.content = readNavigationContentV3(navigationPointChildNode);
           break;
         case 'ol':
-          readNavigationMapV3(navigationPointChildNode)
-              .points
+          navigationPointChildNode.children
+              .where(
+                  (e) => e is XmlElement && e.name.local.toLowerCase() == 'li')
+              .map((e) => readNavigationPointV3(e as XmlElement, playOrder))
               .forEach((point) => result.childNavigationPoints.add(point));
           break;
       }
