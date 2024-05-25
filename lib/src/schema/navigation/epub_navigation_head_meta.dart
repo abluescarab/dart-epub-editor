@@ -1,4 +1,12 @@
 class EpubNavigationHeadMeta {
+  /* TODO: change metadata elements to maps? i.e.
+      attributes = {
+        'charset': value,
+        'content': value,
+        'http-equiv': value,
+        ...
+      }
+  */
   EpubNavigationHeadMeta({
     this.charset,
     this.content,
