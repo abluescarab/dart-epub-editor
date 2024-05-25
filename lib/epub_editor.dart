@@ -54,9 +54,6 @@ export 'src/schema/opf/epub_package.dart';
 export 'src/schema/opf/epub_spine.dart';
 export 'src/schema/opf/epub_spine_item_ref.dart';
 
-// writers
-export 'src/writers/epub_package_writer.dart'; // export for testing
-
 // utils
 export 'src/utils/enum_from_string.dart';
 export 'src/utils/types/epub_content_type.dart';
