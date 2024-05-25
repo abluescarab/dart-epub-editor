@@ -95,7 +95,7 @@ class RandomString {
 
   /// Merge [a] with [b] and scramble characters.
   String randomMerge(String a, String b) {
-    List<int> mergedCodeUnits = List.from("$a$b".codeUnits);
+    List<int> mergedCodeUnits = List.from('$a$b'.codeUnits);
     mergedCodeUnits.shuffle(rng);
     return String.fromCharCodes(mergedCodeUnits);
   }
@@ -256,7 +256,7 @@ class RandomDataGenerator {
   EpubMetadataTranslatedString randomEpubMetadataTranslatedString() =>
       EpubMetadataTranslatedString(
         value: _randomString.randomAlpha(_length),
-        dir: "ltr",
-        lang: "en",
+        dir: 'ltr',
+        lang: 'en',
       );
 }

@@ -32,7 +32,7 @@ class EpubState extends State<EpubWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Fetch Epub Example",
+      title: 'Fetch Epub Example',
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: SingleChildScrollView(
@@ -56,7 +56,7 @@ class EpubState extends State<EpubWidget> {
                 Padding(padding: EdgeInsets.only(top: 20.0)),
                 TextFormField(
                   decoration: InputDecoration(
-                    labelText: "Enter Url",
+                    labelText: 'Enter Url',
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
@@ -65,7 +65,7 @@ class EpubState extends State<EpubWidget> {
                   ),
                   validator: (val) {
                     if (val!.length == 0) {
-                      return "Url cannot be empty";
+                      return 'Url cannot be empty';
                     } else {
                       return null;
                     }
@@ -73,7 +73,7 @@ class EpubState extends State<EpubWidget> {
                   controller: _urlController,
                   keyboardType: TextInputType.url,
                   style: TextStyle(
-                    fontFamily: "Poppins",
+                    fontFamily: 'Poppins',
                   ),
                 ),
                 Padding(
@@ -90,7 +90,7 @@ class EpubState extends State<EpubWidget> {
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  child: Text("Inspect Book"),
+                  child: Text('Inspect Book'),
                 ),
                 Padding(padding: EdgeInsets.only(top: 25.0)),
                 Text(
@@ -126,7 +126,7 @@ class EpubState extends State<EpubWidget> {
                           child: buildEpubWidget(snapshot.data!),
                         );
                       } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
+                        return Text('${snapshot.error}');
                       }
                       // By default, show a loading spinner
                       // return CircularProgressIndicator();
@@ -152,7 +152,7 @@ Widget buildEpubWidget(epub.EpubBookRef book) {
       child: Column(
     children: <Widget>[
       Text(
-        "Title",
+        'Title',
         style: TextStyle(fontSize: 20.0),
       ),
       Text(
@@ -163,7 +163,7 @@ Widget buildEpubWidget(epub.EpubBookRef book) {
         padding: EdgeInsets.only(top: 15.0),
       ),
       Text(
-        "Author",
+        'Author',
         style: TextStyle(fontSize: 20.0),
       ),
       Text(
@@ -179,7 +179,7 @@ Widget buildEpubWidget(epub.EpubBookRef book) {
             if (snapshot.hasData) {
               return Column(
                 children: <Widget>[
-                  Text("Chapters", style: TextStyle(fontSize: 20.0)),
+                  Text('Chapters', style: TextStyle(fontSize: 20.0)),
                   Text(
                     snapshot.data!.length.toString(),
                     style: TextStyle(fontSize: 15.0),
@@ -187,7 +187,7 @@ Widget buildEpubWidget(epub.EpubBookRef book) {
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+              return Text('${snapshot.error}');
             }
             return Container();
           }),
@@ -200,13 +200,13 @@ Widget buildEpubWidget(epub.EpubBookRef book) {
           if (snapshot.hasData) {
             return Column(
               children: <Widget>[
-                Text("Cover", style: TextStyle(fontSize: 20.0)),
+                Text('Cover', style: TextStyle(fontSize: 20.0)),
                 Image.memory(
                     Uint8List.fromList(image.encodePng(snapshot.data!))),
               ],
             );
           } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
+            return Text('${snapshot.error}');
           }
           return Container();
         },

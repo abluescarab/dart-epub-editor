@@ -70,7 +70,7 @@ class EpubBookRef {
 
     if (manifest.items.isNotEmpty) {
       final coverImageItem = manifest.items
-          .firstWhereOrNull((element) => element.properties == "cover-image");
+          .firstWhereOrNull((element) => element.properties == 'cover-image');
 
       if (coverImageItem != null) {
         return content?.images[coverImageItem.href];
@@ -80,7 +80,7 @@ class EpubBookRef {
     // epub v2
     final coverMetaItem = schema.package.metadata.metaItems.firstWhereOrNull(
         (element) =>
-            element.name != null && element.name!.toLowerCase() == "cover");
+            element.name != null && element.name!.toLowerCase() == 'cover');
 
     if (coverMetaItem == null) {
       return null;
@@ -89,7 +89,7 @@ class EpubBookRef {
     if (coverMetaItem.content == null ||
         coverMetaItem.content!.trim().isEmpty) {
       throw Exception(
-        "Incorrect EPUB metadata: cover item content is missing.",
+        'Incorrect EPUB metadata: cover item content is missing.',
       );
     }
 
@@ -175,7 +175,7 @@ class EpubBookRef {
       }
 
       final source = navPoint.content!.source!;
-      final anchorIndex = source.indexOf("#");
+      final anchorIndex = source.indexOf('#');
 
       String contentFileName;
       String? anchor;
@@ -192,7 +192,7 @@ class EpubBookRef {
       final bookContent = content;
 
       if (bookContent == null) {
-        throw Exception("Incorrect EPUB manifest: content missing");
+        throw Exception('Incorrect EPUB manifest: content missing');
       }
 
       if (!bookContent.html.containsKey(contentFileName)) {

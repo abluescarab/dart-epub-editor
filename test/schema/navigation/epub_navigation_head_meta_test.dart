@@ -25,44 +25,44 @@ main() async {
     testNavigationDocTitle = null;
   });
 
-  group("EpubNavigationHeadMeta", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationHeadMeta', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocTitle, equals(reference));
       });
 
-      test("is false when Content changes", () async {
+      test('is false when Content changes', () async {
         testNavigationDocTitle!.content = generator.randomString();
         expect(testNavigationDocTitle, isNot(reference));
       });
 
-      test("is false when Name changes", () async {
+      test('is false when Name changes', () async {
         testNavigationDocTitle!.name = generator.randomString();
         expect(testNavigationDocTitle, isNot(reference));
       });
 
-      test("is false when Scheme changes", () async {
+      test('is false when Scheme changes', () async {
         testNavigationDocTitle!.scheme = generator.randomString();
         expect(testNavigationDocTitle, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocTitle!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Content changes", () async {
+      test('is false when Content changes', () async {
         testNavigationDocTitle!.content = generator.randomString();
         expect(testNavigationDocTitle!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Name changes", () async {
+      test('is false when Name changes', () async {
         testNavigationDocTitle!.name = generator.randomString();
         expect(testNavigationDocTitle!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Scheme changes", () async {
+      test('is false when Scheme changes', () async {
         testNavigationDocTitle!.scheme = generator.randomString();
         expect(testNavigationDocTitle!.hashCode, isNot(reference.hashCode));
       });

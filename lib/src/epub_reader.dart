@@ -164,37 +164,37 @@ class EpubReader {
 
   /// Reads the path for the ePub root file in the [archive].
   static Future<String> _readRootFilePath(Archive archive) async {
-    const containerFilePath = "META-INF/container.xml";
+    const containerFilePath = 'META-INF/container.xml';
     final containerFileEntry = archive.files
         .firstWhereOrNull((element) => element.name == containerFilePath);
 
     if (containerFileEntry == null) {
       throw Exception(
-        "EPUB parsing error: $containerFilePath file not found in archive.",
+        'EPUB parsing error: $containerFilePath file not found in archive.',
       );
     }
 
     final packageElement =
         XmlDocument.parse(utf8.decode(containerFileEntry.content))
             .findAllElements(
-              "container",
-              namespace: "urn:oasis:names:tc:opendocument:xmlns:container",
+              'container',
+              namespace: 'urn:oasis:names:tc:opendocument:xmlns:container',
             )
             .firstOrNull;
 
     if (packageElement == null) {
-      throw Exception("EPUB parsing error: invalid epub container");
+      throw Exception('EPUB parsing error: invalid epub container');
     }
 
     final rootFileElement = packageElement.descendants.firstWhereOrNull(
-      (element) => (element is XmlElement) && "rootfile" == element.name.local,
+      (element) => (element is XmlElement) && 'rootfile' == element.name.local,
     ) as XmlElement;
 
-    final rootFilePath = rootFileElement.getAttribute("full-path");
+    final rootFilePath = rootFileElement.getAttribute('full-path');
 
     if (rootFilePath == null) {
       throw Exception(
-        "EPUB parsing error: root file not found in $containerFilePath",
+        'EPUB parsing error: root file not found in $containerFilePath',
       );
     }
 

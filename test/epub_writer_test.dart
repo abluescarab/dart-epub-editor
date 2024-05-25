@@ -14,24 +14,24 @@ main() async {
     final fileName = epub.key;
     final fullPath = path.join(
       io.Directory.current.path,
-      "test",
-      "res",
+      'test',
+      'res',
       fileName,
     );
     final file = io.File(fullPath);
 
     if (await file.exists()) {
-      final contents = file.readAsBytes();
+      final contents = await file.readAsBytes();
 
-      epub.value["contents"] = contents;
-      epub.value["book"] = await EpubReader.readBook(contents);
+      epub.value['contents'] = contents;
+      epub.value['book'] = await EpubReader.readBook(contents);
     }
   }
 
-  group("Writer tests", () {
-    test("Book Round Trip", () async {
+  group('Writer tests', () {
+    test('Book Round Trip', () async {
       for (final epub in epubs.entries) {
-        final book = epub.value["book"] as EpubBook?;
+        final book = epub.value['book'] as EpubBook?;
 
         if (book != null) {
           final written = await EpubWriter.writeBook(book);
@@ -42,17 +42,17 @@ main() async {
       }
     });
 
-    group("Epub Package Writer", () {
-      test("write content formats correctly", () {
+    group('Epub Package Writer', () {
+      test('write content formats correctly', () {
         for (final epub in epubs.entries) {
-          final book = epub.value["book"] as EpubBook?;
+          final book = epub.value['book'] as EpubBook?;
 
           if (book != null) {
             final package = EpubPackageWriter.writeContent(
               book.schema.package,
             );
-            final packageSplit = package.split("\n");
-            final originalSplit = (epub.value["package"] as String).split("\n");
+            final packageSplit = package.split('\n');
+            final originalSplit = (epub.value['package'] as String).split('\n');
             final length = packageSplit.length < originalSplit.length
                 ? packageSplit.length
                 : originalSplit.length;
@@ -68,10 +68,10 @@ main() async {
 }
 
 final epubs = {
-  "Frankenstein.epub": {
-    "contents": <int>[],
-    "book": null,
-    "package": """
+  'Frankenstein.epub': {
+    'contents': <int>[],
+    'book': null,
+    'package': """
 <?xml version="1.0" encoding="UTF-8"?>
 <package version="3.0" unique-identifier="id" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.idpf.org/2007/opf">
   <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -171,10 +171,10 @@ final epubs = {
 </package>
 """,
   },
-  "alicesAdventuresUnderGround.epub": {
-    "contents": <int>[],
-    "book": null,
-    "package": """
+  'alicesAdventuresUnderGround.epub': {
+    'contents': <int>[],
+    'book': null,
+    'package': """
 <?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="id" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.idpf.org/2007/opf">
   <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -253,10 +253,10 @@ final epubs = {
 </package>
 """,
   },
-  "hittelOnGoldMines.epub": {
-    "contents": <int>[],
-    "book": null,
-    "package": """
+  'hittelOnGoldMines.epub': {
+    'contents': <int>[],
+    'book': null,
+    'package': """
 <?xml version="1.0" encoding="UTF-8"?>
 <package version="2.0" unique-identifier="id" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.idpf.org/2007/opf">
   <metadata xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/">

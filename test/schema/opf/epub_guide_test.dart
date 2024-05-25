@@ -23,24 +23,24 @@ main() async {
     testGuide = null;
   });
 
-  group("EpubGuide", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubGuide', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testGuide, equals(reference));
       });
 
-      test("is false when Items changes", () async {
+      test('is false when Items changes', () async {
         testGuide!.items.add(generator.randomEpubGuideReference());
         expect(testGuide, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testGuide!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Items changes", () async {
+      test('is false when Items changes', () async {
         testGuide!.items.add(generator.randomEpubGuideReference());
         expect(testGuide!.hashCode, isNot(reference.hashCode));
       });

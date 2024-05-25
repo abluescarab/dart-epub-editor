@@ -28,34 +28,34 @@ main() async {
     testSpineItemRef = null;
   });
 
-  group("EpubSpineItemRef", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubSpineItemRef', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testSpineItemRef, equals(reference));
       });
 
-      test("is false when IsLinear changes", () async {
+      test('is false when IsLinear changes', () async {
         testSpineItemRef!.isLinear = !testSpineItemRef!.isLinear!;
         expect(testSpineItemRef, isNot(reference));
       });
 
-      test("is false when IdRef changes", () async {
+      test('is false when IdRef changes', () async {
         testSpineItemRef!.idRef = randomString.randomAlpha(length);
         expect(testSpineItemRef, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testSpineItemRef!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when IsLinear changes", () async {
+      test('is false when IsLinear changes', () async {
         testSpineItemRef!.isLinear = !testSpineItemRef!.isLinear!;
         expect(testSpineItemRef!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when IdRef changes", () async {
+      test('is false when IdRef changes', () async {
         testSpineItemRef!.idRef = randomString.randomAlpha(length);
         expect(testSpineItemRef!.hashCode, isNot(reference.hashCode));
       });

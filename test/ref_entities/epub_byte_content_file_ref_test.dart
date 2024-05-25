@@ -9,9 +9,9 @@ import 'package:test/test.dart';
 main() async {
   final reference = EpubByteContentFileRef(
     epubBookRef: EpubBookRef(archive: Archive()),
-    contentMimeType: "application/test",
+    contentMimeType: 'application/test',
     contentType: EpubContentType.other,
-    fileName: "orthrosFile",
+    fileName: 'orthrosFile',
   );
 
   EpubByteContentFileRef? testFileRef;
@@ -19,9 +19,9 @@ main() async {
   setUp(() async {
     testFileRef = EpubByteContentFileRef(
       epubBookRef: EpubBookRef(archive: Archive()),
-      contentMimeType: "application/test",
+      contentMimeType: 'application/test',
       contentType: EpubContentType.other,
-      fileName: "orthrosFile",
+      fileName: 'orthrosFile',
     );
   });
 
@@ -29,35 +29,35 @@ main() async {
     testFileRef = null;
   });
 
-  group("EpubByteContentFileRef", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubByteContentFileRef', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testFileRef, equals(reference));
       });
 
-      test("is false when ContentMimeType changes", () async {
-        testFileRef!.contentMimeType = "application/different";
+      test('is false when ContentMimeType changes', () async {
+        testFileRef!.contentMimeType = 'application/different';
         expect(testFileRef, isNot(reference));
       });
 
-      test("is false when ContentType changes", () async {
+      test('is false when ContentType changes', () async {
         testFileRef!.contentType = EpubContentType.css;
         expect(testFileRef, isNot(reference));
       });
 
-      test("is false when FileName changes", () async {
-        testFileRef!.fileName = "a_different_file_name.txt";
+      test('is false when FileName changes', () async {
+        testFileRef!.fileName = 'a_different_file_name.txt';
         expect(testFileRef, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is the same for equivalent content", () async {
+    group('.hashCode', () {
+      test('is the same for equivalent content', () async {
         expect(testFileRef.hashCode, equals(reference.hashCode));
       });
 
       test('changes when ContentMimeType changes', () async {
-        testFileRef!.contentMimeType = "application/orthros";
+        testFileRef!.contentMimeType = 'application/orthros';
         expect(testFileRef.hashCode, isNot(reference.hashCode));
       });
 
@@ -67,7 +67,7 @@ main() async {
       });
 
       test('changes when FileName changes', () async {
-        testFileRef!.fileName = "a_different_file_name";
+        testFileRef!.fileName = 'a_different_file_name';
         expect(testFileRef.hashCode, isNot(reference.hashCode));
       });
     });

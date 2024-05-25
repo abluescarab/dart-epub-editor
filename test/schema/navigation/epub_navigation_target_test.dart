@@ -28,78 +28,78 @@ main() async {
     testNavigationTarget = null;
   });
 
-  group("EpubNavigationTarget", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationTarget', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationTarget, equals(reference));
       });
 
-      test("is false when Class changes", () async {
+      test('is false when Class changes', () async {
         testNavigationTarget!.classAttribute = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
 
-      test("is false when Content changes", () async {
+      test('is false when Content changes', () async {
         testNavigationTarget!.content = generator.randomEpubNavigationContent();
         expect(testNavigationTarget, isNot(reference));
       });
 
-      test("is false when Id changes", () async {
+      test('is false when Id changes', () async {
         testNavigationTarget!.id = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
 
-      test("is false when NavigationLabels changes", () async {
+      test('is false when NavigationLabels changes', () async {
         testNavigationTarget!.navigationLabels = [
           generator.randomEpubNavigationLabel()
         ];
         expect(testNavigationTarget, isNot(reference));
       });
 
-      test("is false when PlayOrder changes", () async {
+      test('is false when PlayOrder changes', () async {
         testNavigationTarget!.playOrder = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
 
-      test("is false when Value changes", () async {
+      test('is false when Value changes', () async {
         testNavigationTarget!.value = generator.randomString();
         expect(testNavigationTarget, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationTarget!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Class changes", () async {
+      test('is false when Class changes', () async {
         testNavigationTarget!.classAttribute = generator.randomString();
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Content changes", () async {
+      test('is false when Content changes', () async {
         testNavigationTarget!.content = generator.randomEpubNavigationContent();
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Id changes", () async {
+      test('is false when Id changes', () async {
         testNavigationTarget!.id = generator.randomString();
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when NavigationLabels changes", () async {
+      test('is false when NavigationLabels changes', () async {
         testNavigationTarget!.navigationLabels = [
           generator.randomEpubNavigationLabel()
         ];
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when PlayOrder changes", () async {
+      test('is false when PlayOrder changes', () async {
         testNavigationTarget!.playOrder = generator.randomString();
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Value changes", () async {
+      test('is false when Value changes', () async {
         testNavigationTarget!.value = generator.randomString();
         expect(testNavigationTarget!.hashCode, isNot(reference.hashCode));
       });

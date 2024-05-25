@@ -45,10 +45,10 @@ class PackageReader {
     Map<String, String> namespaces = {};
 
     attributes
-        .where((p0) => p0.qualifiedName.startsWith("xmlns"))
+        .where((p0) => p0.qualifiedName.startsWith('xmlns'))
         .forEach((element) {
       // skip "opf" and "dc" which are added to the <metadata> element
-      if (element.localName != "opf" && element.localName != "dc") {
+      if (element.localName != 'opf' && element.localName != 'dc') {
         namespaces[element.localName] = element.value;
       }
     });
@@ -407,7 +407,7 @@ class PackageReader {
         dir: metadataItemNode.getAttribute('dir'),
         attributes: _readAttributes(
           metadataItemNode.attributes,
-          exclude: ["id", "lang", "dir"],
+          exclude: ['id', 'lang', 'dir'],
         ),
       );
 

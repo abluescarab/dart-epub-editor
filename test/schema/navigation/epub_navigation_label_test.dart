@@ -21,24 +21,24 @@ main() async {
     testNavigationLabel = null;
   });
 
-  group("EpubNavigationLabel", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationLabel', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationLabel, equals(reference));
       });
 
-      test("is false when Text changes", () async {
+      test('is false when Text changes', () async {
         testNavigationLabel!.text = generator.randomString();
         expect(testNavigationLabel, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationLabel!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Metadata changes", () async {
+      test('is false when Metadata changes', () async {
         testNavigationLabel!.text = generator.randomString();
         expect(testNavigationLabel!.hashCode, isNot(reference.hashCode));
       });

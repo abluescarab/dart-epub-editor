@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 
 main() async {
   final reference = EpubMetadataContributor(
-    name: "orthros",
-    fileAs: "Large",
-    role: "Creator",
+    name: 'orthros',
+    fileAs: 'Large',
+    role: 'Creator',
   );
 
   EpubMetadataContributor? testMetadataContributor;
@@ -24,45 +24,45 @@ main() async {
     testMetadataContributor = null;
   });
 
-  group("EpubMetadataContributor", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubMetadataContributor', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testMetadataContributor, equals(reference));
       });
 
-      test("is false when Contributor changes", () async {
-        testMetadataContributor!.name = "NotOrthros";
+      test('is false when Contributor changes', () async {
+        testMetadataContributor!.name = 'NotOrthros';
         expect(testMetadataContributor, isNot(reference));
       });
 
-      test("is false when FileAs changes", () async {
-        testMetadataContributor!.fileAs = "Small";
+      test('is false when FileAs changes', () async {
+        testMetadataContributor!.fileAs = 'Small';
         expect(testMetadataContributor, isNot(reference));
       });
 
-      test("is false when Role changes", () async {
-        testMetadataContributor!.role = "Copier";
+      test('is false when Role changes', () async {
+        testMetadataContributor!.role = 'Copier';
         expect(testMetadataContributor, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testMetadataContributor!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Contributor changes", () async {
-        testMetadataContributor!.name = "NotOrthros";
+      test('is false when Contributor changes', () async {
+        testMetadataContributor!.name = 'NotOrthros';
         expect(testMetadataContributor!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when FileAs changes", () async {
-        testMetadataContributor!.fileAs = "Small";
+      test('is false when FileAs changes', () async {
+        testMetadataContributor!.fileAs = 'Small';
         expect(testMetadataContributor!.hashCode, isNot(reference.hashCode));
       });
 
-      test("is false when Role changes", () async {
-        testMetadataContributor!.role = "Copier";
+      test('is false when Role changes', () async {
+        testMetadataContributor!.role = 'Copier';
         expect(testMetadataContributor!.hashCode, isNot(reference.hashCode));
       });
     });

@@ -24,24 +24,24 @@ main() async {
     testNavigationDocAuthor = null;
   });
 
-  group("EpubNavigationDocAuthor", () {
-    group(".equals", () {
-      test("is true for equivalent objects", () async {
+  group('EpubNavigationDocAuthor', () {
+    group('.equals', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocAuthor, equals(reference));
       });
 
-      test("is false when Authors changes", () async {
+      test('is false when Authors changes', () async {
         testNavigationDocAuthor!.authors.add(generator.randomString());
         expect(testNavigationDocAuthor, isNot(reference));
       });
     });
 
-    group(".hashCode", () {
-      test("is true for equivalent objects", () async {
+    group('.hashCode', () {
+      test('is true for equivalent objects', () async {
         expect(testNavigationDocAuthor!.hashCode, equals(reference.hashCode));
       });
 
-      test("is false when Authors changes", () async {
+      test('is false when Authors changes', () async {
         testNavigationDocAuthor!.authors.add(generator.randomString());
         expect(testNavigationDocAuthor!.hashCode, isNot(reference.hashCode));
       });
