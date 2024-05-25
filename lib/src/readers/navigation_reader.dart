@@ -351,33 +351,32 @@ class NavigationReader {
         final attributeValue = metaNodeAttribute.value;
 
         switch (metaNodeAttribute.name.local.toLowerCase()) {
-          case 'name':
-            meta.name = attributeValue;
+          case 'charset':
+            meta.charset = attributeValue;
             break;
           case 'content':
             meta.content = attributeValue;
             break;
+          case 'http-equiv':
+            meta.httpEquiv = attributeValue;
+            break;
+          case 'media':
+            meta.media = attributeValue;
+            break;
+          case 'name':
+            meta.name = attributeValue;
+            break;
           case 'scheme':
             meta.scheme = attributeValue;
-            break;
-          case 'charset':
-            meta.charset = attributeValue;
             break;
         }
       });
 
-      if (meta.charset == null) {
-        if (meta.name == null || meta.name!.isEmpty) {
-          throw Exception(
-            'Incorrect EPUB navigation meta: meta name is missing.',
-          );
-        }
-
-        if (meta.content == null) {
-          throw Exception(
-            'Incorrect EPUB navigation meta: meta content is missing.',
-          );
-        }
+      if ((meta.name != null || meta.httpEquiv != null) &&
+          meta.content == null) {
+        throw Exception(
+          'Incorrect EPUB navigation meta: meta content is missing.',
+        );
       }
 
       return meta;

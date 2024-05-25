@@ -54,10 +54,12 @@ class EpubNavigationWriter {
       head.metadata.forEach((item) => builder.element(
             'meta',
             attributes: {
-              if (item.name != null) 'name': item.name!,
-              if (item.content != null) 'content': item.content!,
-              if (item.scheme != null) 'scheme': item.scheme!,
               if (item.charset != null) 'charset': item.charset!,
+              if (item.content != null) 'content': item.content!,
+              if (item.httpEquiv != null) 'http-equiv': item.httpEquiv!,
+              if (item.media != null) 'media': item.media!,
+              if (item.name != null) 'name': item.name!,
+              if (item.scheme != null) 'scheme': item.scheme!,
             },
           ));
     });

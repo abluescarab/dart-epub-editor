@@ -1,25 +1,29 @@
-import 'package:quiver/core.dart';
-
 class EpubNavigationHeadMeta {
   EpubNavigationHeadMeta({
-    this.name,
-    this.content,
-    this.scheme,
     this.charset,
+    this.content,
+    this.httpEquiv,
+    this.media,
+    this.name,
+    this.scheme,
   });
 
-  String? name;
-  String? content;
-  String? scheme;
   String? charset;
+  String? content;
+  String? httpEquiv;
+  String? media;
+  String? name;
+  String? scheme;
 
   @override
-  int get hashCode => hash4(
-        name.hashCode,
-        content.hashCode,
-        scheme.hashCode,
+  int get hashCode => Object.hashAll([
         charset.hashCode,
-      );
+        content.hashCode,
+        httpEquiv.hashCode,
+        media.hashCode,
+        name.hashCode,
+        scheme.hashCode,
+      ]);
 
   @override
   bool operator ==(other) {
@@ -27,9 +31,11 @@ class EpubNavigationHeadMeta {
       return false;
     }
 
-    return name == other.name &&
+    return charset == other.charset &&
         content == other.content &&
-        scheme == other.scheme &&
-        charset == other.charset;
+        httpEquiv == other.httpEquiv &&
+        media == other.media &&
+        name == other.name &&
+        scheme == other.scheme;
   }
 }
