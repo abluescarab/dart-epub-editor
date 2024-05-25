@@ -52,10 +52,8 @@ class EpubReader {
   /// about the book, notably the [title] and [authors].
   /// Additional information is loaded in the [schema] property such as the
   /// Epub version, Publishers, Languages and more.
-  static Future<EpubBookRef> openBook(FutureOr<List<int>> bytes) async {
-    final epubArchive = ZipDecoder().decodeBytes(
-      bytes is Future ? await bytes : bytes,
-    );
+  static Future<EpubBookRef> openBook(List<int> bytes) async {
+    final epubArchive = ZipDecoder().decodeBytes(bytes);
 
     return EpubBookRef(
       archive: epubArchive,
@@ -65,8 +63,8 @@ class EpubReader {
 
   /// Opens the book asynchronously and reads all of its content into the
   /// memory. Does not hold the handle to the EPUB file.
-  static Future<EpubBook> readBook(FutureOr<List<int>> bytes) async {
-    final epubBookRef = await openBook(bytes is Future ? await bytes : bytes);
+  static Future<EpubBook> readBook(List<int> bytes) async {
+    final epubBookRef = await openBook(bytes);
 
     return EpubBook(
       schema: epubBookRef.schema,
