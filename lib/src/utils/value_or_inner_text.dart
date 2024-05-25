@@ -1,6 +1,6 @@
 import 'package:xml/xml.dart';
 
-String valueOrInnerText(dynamic xml) {
+String valueOrInnerText(XmlNode xml) {
   if (xml is XmlElement) {
     return xml.value != null && xml.value!.isNotEmpty
         ? xml.value!
